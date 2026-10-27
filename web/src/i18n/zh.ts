@@ -9,13 +9,14 @@ const zh: Dictionary = {
   'app.title': 'UTSC 职业与实践导航',
   'app.tagline': '比较数据职业方向、确认自己的技能，找到课程与社团实践机会。',
   'app.syntheticBanner':
-    '开发预览（A0）：页面展示的全部数据是 SYNTHETIC 人工合同样例，不是真实市场或活动数据。',
+    '开发预览（A0/A1）：页面展示的全部数据是 SYNTHETIC 人工合同样例，不是真实市场或活动数据。',
   'app.skipToContent': '跳到主内容',
   'app.languageSwitch': '切换语言',
   'app.primaryNav': '主导航',
 
   'nav.home': '首页',
   'nav.sample': '样例数据（只读）',
+  'nav.account': '账户',
   'nav.market': '市场概览',
   'nav.compare': '方向比较',
   'nav.courses': '课程与技能',
@@ -34,7 +35,7 @@ const zh: Dictionary = {
     '加载、错误、空数据和旧数据提示；损坏数据包整体拒收，不会被暗中替换。',
   'home.sampleCta': '打开样例数据展示',
   'home.pendingTitle': '尚未实现（计划阶段）',
-  'home.pendingA1': 'A1 — 账户、数据库与权限（Supabase Auth＋Postgres RLS）。目前没有登录功能。',
+  'home.pendingA1': 'A1 — 数据库、权限与最小账户页已实现（见"账户"）；完整的画像/收藏/路径管理仍在 A4/A6。',
   'home.pendingA2': 'A2 — 市场概览与方向比较页面，含筛选与技能提及图表。',
   'home.pendingA3': 'A3 — 课程—技能映射与经历候选技能提取。',
   'home.pendingA4': 'A4 — 推荐与学习路径。',
@@ -155,11 +156,47 @@ const zh: Dictionary = {
   'ph.noFake':
     '此页面刻意没有内容：不模拟登录、收藏、提交或任何结果。保留导航入口是为了让站点结构可见。',
 
+  'account.intro':
+    '使用真实 Supabase 账户登录后，可读取和保存自己的个人资料。无账户时公共样例页面照常可用；个人数据由数据库行级安全保护，不靠隐藏按钮。',
+  'account.notConfiguredTitle': '尚未配置 Supabase',
+  'account.notConfiguredBody':
+    '本构建没有配置 Supabase 端点，账户功能不可用。公共样例页面仍可浏览。页面不展示任何假用户、假 token 或模拟登录成功。',
+  'account.notConfiguredNote': '设置以下两个环境变量（不含任何私密密钥）后重新启动开发服务器或重新构建：',
+  'account.loadingSession': '正在检查会话……',
+  'account.signInTitle': '登录',
+  'account.signUpTitle': '注册账户',
+  'account.emailLabel': '邮箱',
+  'account.passwordLabel': '密码（至少 8 个字符）',
+  'account.signIn': '登录',
+  'account.signUp': '注册',
+  'account.working': '处理中……',
+  'account.switchToSignUp': '还没有账户？注册',
+  'account.switchToSignIn': '已注册？登录',
+  'account.confirmationRequired':
+    '注册已受理。本项目要求邮箱确认：请查收邮件（本地测试邮件工具 Mailpit：http://127.0.0.1:55424），确认后才能登录。当前并未登录。',
+  'account.errorGeneric': '操作未成功，请重试。',
+  'account.signedInAs': '当前登录',
+  'account.loadingProfile': '正在加载个人资料……',
+  'account.profileLoadFailed': '个人资料加载失败：',
+  'account.displayName': '显示名称',
+  'account.courseIds': '已完成课程 ID',
+  'account.courseIdsPlaceholder': 'course_a, course_b',
+  'account.courseIdsHint':
+    '逗号分隔的课程 ID，保存到您自己的 profiles 行（合同字段 completed_course_ids）。行级安全按所有者限制。',
+  'account.save': '保存资料',
+  'account.saving': '保存中……',
+  'account.saved': '已保存到您自己的行。',
+  'account.saveFailed': '保存失败：',
+  'account.saveStale': '已保存，但保存期间登录账号发生了切换——现在显示的是新账号。',
+  'account.signOut': '退出登录',
+  'account.scopeNote':
+    'A1 范围：仅个人资料读取/保存。收藏、路径与技能提取尚无界面；候选技能不会被自动确认。',
+
   'ph.market.desc': '将展示岗位规模、八类角色／地区／阶段／日期筛选及技能提及率（任务 A2）。',
   'ph.compare.desc': '将比较两个职业方向的技能提及率与共同分母（任务 A2）。',
   'ph.courses.desc': '将展示 UTSC 课程与学习资源到技能的映射，以及候选技能确认（任务 A3）。',
   'ph.opportunities.desc': '将浏览已批准的社团活动与持续机会，并支持筛选（任务 A5）。',
-  'ph.profile.desc': '将在真实账户就绪后提供个人画像、收藏与进度（任务 A1／A4／A6）。',
+  'ph.profile.desc': '账户功能已就绪（见“账户”页）；个人画像、收藏与路径将随任务 A4/A6 提供。',
 
   'notfound.title': '页面不存在',
   'notfound.message': '该地址不匹配本站任何页面。',
@@ -169,7 +206,7 @@ const zh: Dictionary = {
   'errorBoundary.message': '发生了意外错误。出错前展示的数据未受影响，可以返回或重新加载。',
   'errorBoundary.reload': '重新加载页面',
 
-  'footer.preview': '开发预览（A0），不是已部署产品。',
+  'footer.preview': '开发预览（A0/A1），不是已部署产品。',
   'footer.contract': '合同按字节原样同步自上游提交 {commit}。',
   'footer.dataRepo': '数据仓库（Seraphina）',
   'footer.websiteRepo': '网站仓库',

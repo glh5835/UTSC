@@ -4,6 +4,7 @@ import { usePageTitle } from './usePageTitle'
 import { useLanguage } from './i18n/LanguageContext'
 import { HomePage } from './pages/Home'
 import { SampleDataPage } from './pages/SampleData'
+import { AccountPage } from './pages/Account'
 import { PlaceholderPage, type PlaceholderSpec } from './pages/Placeholder'
 import { NotFoundPage } from './pages/NotFound'
 
@@ -12,7 +13,7 @@ const PLACEHOLDERS: Record<string, PlaceholderSpec> = {
   compare: { navKey: 'nav.compare', descKey: 'ph.compare.desc', planRef: 'A2' },
   courses: { navKey: 'nav.courses', descKey: 'ph.courses.desc', planRef: 'A3' },
   opportunities: { navKey: 'nav.opportunities', descKey: 'ph.opportunities.desc', planRef: 'A5' },
-  profile: { navKey: 'nav.profile', descKey: 'ph.profile.desc', planRef: 'A1/A4/A6' },
+  profile: { navKey: 'nav.profile', descKey: 'ph.profile.desc', planRef: 'A4/A6' },
 }
 
 /** Placeholder wrapper that also sets the page title for its route. */
@@ -28,6 +29,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/sample" element={<SampleDataPage />} />
+        <Route path="/account" element={<AccountPage />} />
         {Object.entries(PLACEHOLDERS).map(([path, spec]) => (
           <Route key={path} path={`/${path}`} element={<TitledPlaceholder spec={spec} />} />
         ))}

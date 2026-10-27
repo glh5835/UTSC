@@ -45,9 +45,43 @@ npm run preview     # 本地预览构建产物
 - 旧 Streamlit Demo（根目录 `app.py`、`utsc_nav/`、`data/`、`tests/`）与
   本目录无关，保持不动。
 
-## Supabase（本轮未接入）
+## Supabase（A1：本地栈已实现）
 
-A0 只记录接入方案：A1 将使用 Supabase Auth + Postgres RLS（profiles、
-experiences、user_skills、favorites、learning_paths、path_items；个人表
-按 user_id 授权，公开资源只读；service_role 不进前端）。迁移文件将放在
-仓库根 `supabase/migrations/`。本轮无任何 Supabase 代码、连接或凭据。
+A1 实现了真实 Supabase Auth、六张个人表的数据库迁移与 RLS，以及两账号
++ 未登录的隔离测试。浏览器只使用公开的 publishable/anon key；service_role
+仅限本地测试准备与清理，且只通过被 Git 忽略的环境文件提供，不进入前端
+构建、仓库或测试报告。
+
+本地栈（隔离实例 `utsc-a1-local`，见 `supabase/config.toml`，需要 Docker）：
+
+```powershell
+# 仓库根目录
+npx supabase start        # 首次需拉取镜像；启动时自动重放迁移
+npx supabase status -o env  # 打印本地 URL / anon / service_role 等
+npx supabase db reset     # 从零重放迁移（仅作用于本地隔离实例）
+npx supabase stop         # 停止
+```
+
+网页端连接本地栈：复制 `web/.env.example` 为 `web/.env`（已被 Git 忽略），
+填入本地 URL 与 publishable/anon key（本地栈使用 legacy JWT anon key，
+作用等同 publishable key，见 supabase.com/docs/guides/getting-started/api-keys），
+然后 `npm run dev`。未配置时账户页明确显示"尚未配置"，公共样例照常可用。
+
+本地测试邮件工具：注册确认邮件进入 Mailpit（http://127.0.0.1:55424，CLI 2.122 本地栈自带），
+不发送真实外部邮件。
+
+真实隔离测试（需要本地栈运行中，两真实账号 + 未登录 × 六表允许/拒绝路径）：
+
+```powershell
+# 仓库根目录；key 只来自本地栈，不提交
+UTSC_SUPABASE_PUBLISHABLE_KEY=... UTSC_SUPABASE_SERVICE_ROLE_KEY=... \
+  npm run test:rls
+```
+
+迁移：`supabase/migrations/20261027000000_a1_personal_tables.sql`——
+profiles、experiences、user_skills、favorites、learning_paths、path_items，
+含主键/外键/唯一/检查约束、复合外键保证 path_items 只能挂到本人路径、
+`handle_new_user` 触发器自动建 profile、最小 grants（anon 零权限）与
+六表 RLS 策略（SELECT/INSERT/UPDATE/DELETE 全部 owner-scoped，UPDATE
+同时检查原行与新行防止转移 user_id）。合同字段映射见迁移文件内注释与
+`plans/阶段记录/A1.md`。

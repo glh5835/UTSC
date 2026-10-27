@@ -8,13 +8,14 @@ const en = {
   'app.title': 'UTSC Career & Practice Navigator',
   'app.tagline': 'Compare data career directions, confirm your skills, find courses and club opportunities.',
   'app.syntheticBanner':
-    'Development preview (A0): all data shown is SYNTHETIC contract fixtures, not real market or activity data.',
+    'Development preview (A0/A1): all data shown is SYNTHETIC contract fixtures, not real market or activity data.',
   'app.skipToContent': 'Skip to main content',
   'app.languageSwitch': 'Switch language',
   'app.primaryNav': 'Primary navigation',
 
   'nav.home': 'Home',
   'nav.sample': 'Sample data (read-only)',
+  'nav.account': 'Account',
   'nav.market': 'Market overview',
   'nav.compare': 'Role comparison',
   'nav.courses': 'Courses & skills',
@@ -33,7 +34,7 @@ const en = {
     'Loading, error, empty and stale-data states; broken packages are rejected and never silently replaced.',
   'home.sampleCta': 'Open the sample data viewer',
   'home.pendingTitle': 'Not implemented yet (planned stages)',
-  'home.pendingA1': 'A1 — Accounts, database and permissions (Supabase Auth + Postgres RLS). No login exists yet.',
+  'home.pendingA1': 'A1 — database, permissions and the minimal account page are implemented (see Account); full profile/favorites/pathway management stays in A4/A6.',
   'home.pendingA2': 'A2 — Market overview and role comparison pages with filters and skill mention charts.',
   'home.pendingA3': 'A3 — Course–skill mapping and experience-based candidate skill extraction.',
   'home.pendingA4': 'A4 — Recommendations and learning paths.',
@@ -155,11 +156,47 @@ const en = {
   'ph.noFake':
     'This page intentionally has no content: no login, favorites, submissions or results are simulated. The navigation entry exists so the site structure is visible.',
 
+  'account.intro':
+    'Sign in with a real Supabase account to read and save your own profile. Public sample pages stay available without an account; personal data is protected by database-level row security, not by hidden buttons.',
+  'account.notConfiguredTitle': 'Supabase is not configured',
+  'account.notConfiguredBody':
+    'No Supabase endpoint is set for this build, so account features are unavailable. The public sample pages remain usable. No fake users, tokens or simulated sign-ins are shown.',
+  'account.notConfiguredNote': 'Set the two variables below (without secret keys) and rebuild or restart the dev server:',
+  'account.loadingSession': 'Checking your session…',
+  'account.signInTitle': 'Sign in',
+  'account.signUpTitle': 'Create account',
+  'account.emailLabel': 'Email',
+  'account.passwordLabel': 'Password (min 8 characters)',
+  'account.signIn': 'Sign in',
+  'account.signUp': 'Sign up',
+  'account.working': 'Working…',
+  'account.switchToSignUp': 'Need an account? Sign up',
+  'account.switchToSignIn': 'Already registered? Sign in',
+  'account.confirmationRequired':
+    'Registration accepted. This project requires email confirmation: check your inbox (local test mail tool: Mailpit at http://127.0.0.1:55424) and confirm before signing in. You are NOT signed in yet.',
+  'account.errorGeneric': 'That did not work. Please try again.',
+  'account.signedInAs': 'Signed in as',
+  'account.loadingProfile': 'Loading your profile…',
+  'account.profileLoadFailed': 'Could not load your profile:',
+  'account.displayName': 'Display name',
+  'account.courseIds': 'Completed course IDs',
+  'account.courseIdsPlaceholder': 'course_a, course_b',
+  'account.courseIdsHint':
+    'Comma-separated course IDs, saved to your own profile row (contract field completed_course_ids). Owner-scoped row security applies.',
+  'account.save': 'Save profile',
+  'account.saving': 'Saving…',
+  'account.saved': 'Profile saved to your own row.',
+  'account.saveFailed': 'Saving failed:',
+  'account.saveStale': 'Saved, but the signed-in account changed while saving — showing the new account instead.',
+  'account.signOut': 'Sign out',
+  'account.scopeNote':
+    'A1 scope: profile read/save only. Favorites, learning paths and skill extraction have no interface yet; skills are never confirmed automatically.',
+
   'ph.market.desc': 'Will show job volume, filters by 8 roles, area, level and date, and skill mention rates (task A2).',
   'ph.compare.desc': 'Will compare two career directions with skill mention rates and shared denominators (task A2).',
   'ph.courses.desc': 'Will map UTSC courses and learning resources to skills, with candidate skill confirmation (task A3).',
   'ph.opportunities.desc': 'Will browse approved club activities and ongoing opportunities with filters (task A5).',
-  'ph.profile.desc': 'Will provide personal profile, favorites and progress after real accounts exist (tasks A1/A4/A6).',
+  'ph.profile.desc': 'Accounts exist already (see Account). Profile details, favorites and pathways arrive with tasks A4/A6.',
 
   'notfound.title': 'Page not found',
   'notfound.message': 'The address does not match any page of this site.',
@@ -169,7 +206,7 @@ const en = {
   'errorBoundary.message': 'An unexpected error occurred. The data shown before the error is untouched; you can go back or reload.',
   'errorBoundary.reload': 'Reload page',
 
-  'footer.preview': 'Development preview (A0). Not a deployed product.',
+  'footer.preview': 'Development preview (A0/A1). Not a deployed product.',
   'footer.contract': 'Contract synced verbatim from upstream commit {commit}.',
   'footer.dataRepo': 'Data repository (Seraphina)',
   'footer.websiteRepo': 'Website repository',

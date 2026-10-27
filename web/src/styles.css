@@ -411,6 +411,56 @@ button:hover,
   background: transparent;
 }
 
+/* Account page */
+.account-form,
+.account-form ~ .panel {
+  max-width: 560px;
+}
+.account-form .field,
+.panel .field {
+  display: grid;
+  gap: 4px;
+  margin: 10px 0;
+}
+.account-form .field span,
+.panel .field span {
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+.account-form input,
+.panel input,
+.panel textarea {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
+  width: 100%;
+}
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+.link-button {
+  background: none;
+  border: none;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+.banner-error {
+  background: var(--error-bg);
+  color: var(--error-ink);
+  border: 1px solid var(--error-ink);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+}
+
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--line);

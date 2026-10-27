@@ -65,6 +65,15 @@ npm run preview     # 预览 dist/ 构建产物
 不会暗中替换为有效包。清单中的生成/采集/发布时间按包内原始值显示，不用
 构建时间冒充采集时间；快照超过阈值（默认 180 天）显示旧数据提示。
 
+账户页（A1）使用真实 Supabase Auth：邮箱密码注册、登录、退出、刷新恢复
+会话，并保存/读取本人 profiles 行。需要本地 Supabase 栈（仓库根
+`npx supabase start`，详见 `web/README.md`）或已配置的项目端点，通过
+`web/.env`（被忽略，示例见 `web/.env.example`）的
+`VITE_SUPABASE_URL` 与 `VITE_SUPABASE_PUBLISHABLE_KEY` 提供。注册后若
+项目要求邮箱确认，页面明确显示"已受理、未登录"；本地确认邮件进 Mailpit
+（http://127.0.0.1:55424）。未配置时账户页明确提示，公共样例页面不受
+影响；页面不展示任何假用户或模拟登录。
+
 合同文件（schemas 与 fixtures）是上游 `b828553f` 的按字节原样副本，
 来源与 SHA-256 记录见 `web/public/contracts/PROVENANCE.md`。A1 的
 Supabase 接入方案记录在 `web/README.md`，本轮无任何 Supabase 代码。

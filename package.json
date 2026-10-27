@@ -1,0 +1,16 @@
+{
+  "name": "utsc-repo-tools",
+  "private": true,
+  "description": "Repository-level tooling for the UTSC website: pinned Supabase CLI for local database migrations and RLS tests. The website itself lives in web/.",
+  "version": "0.1.0",
+  "scripts": {
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:reset": "supabase db reset",
+    "supabase:status": "supabase status",
+    "test:rls": "npm --prefix web run test -- rls-isolation.local"
+  },
+  "devDependencies": {
+    "supabase": "2.122.0"
+  }
+}

@@ -15,6 +15,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { to: '/', key: 'nav.home', end: true },
   { to: '/sample', key: 'nav.sample' },
+  { to: '/account', key: 'nav.account' },
   { to: '/market', key: 'nav.market' },
   { to: '/compare', key: 'nav.compare' },
   { to: '/courses', key: 'nav.courses' },
