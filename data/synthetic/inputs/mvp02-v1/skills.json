@@ -1,0 +1,28 @@
+{
+  "contract_version": "utsc-contract-1.0",
+  "data_mode": "SYNTHETIC",
+  "dictionary_version": "synthetic-skills-1",
+  "skills": [
+    {
+      "skill_id": "sql",
+      "display_name": "SQL",
+      "aliases": [
+        "SQL",
+        "Structured Query Language"
+      ],
+      "match_rules": [
+        "case-insensitive word boundary"
+      ]
+    },
+    {
+      "skill_id": "python",
+      "display_name": "Python",
+      "aliases": [
+        "Python"
+      ],
+      "match_rules": [
+        "case-insensitive word boundary"
+      ]
+    }
+  ]
+}

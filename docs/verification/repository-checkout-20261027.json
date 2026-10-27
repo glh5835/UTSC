@@ -1,0 +1,20 @@
+{
+  "verified_on": "2026-10-27",
+  "scope": "SANITIZED_CHECKOUT_WITH_EXISTING_PYTHON_ENVIRONMENT",
+  "program_tests_passed": 231,
+  "fresh_browser_checks": 3,
+  "fresh_browser_passed": true,
+  "fresh_synthetic_prepare": "PREPARED_F10_D8",
+  "second_prepare": "REUSED_WITHOUT_REPLACEMENT",
+  "upstream_pipeline_included": false,
+  "real_recruitment_archives_included": false,
+  "runtime_database_included": false,
+  "virtual_environment_included": false,
+  "private_chat_included": false,
+  "common_credential_pattern_findings": 0,
+  "workspace_protected_files_checked": 166,
+  "data_side_files_checked": 70,
+  "protected_changes": 0,
+  "fresh_machine_dependency_install": "NOT_PERFORMED",
+  "production_deployment": "NOT_PERFORMED"
+}

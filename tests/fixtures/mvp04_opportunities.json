@@ -1,0 +1,190 @@
+{
+  "reference_clock": "2026-10-21T16:00:00Z",
+  "base": {
+    "opportunity_id": "SYN:EVENT",
+    "origin_kind": "TEST_FIXTURE",
+    "organizer": "Invented test organizer",
+    "name": "Synthetic opportunity state check",
+    "opportunity_type": "TEST_ONLY",
+    "source_url": "https://example.invalid/events/test",
+    "registration_url": null,
+    "location_or_online": "Invented",
+    "start_at": "2026-11-01",
+    "end_at": "2026-11-02",
+    "deadline_at": "2026-10-30",
+    "timezone": "America/Toronto",
+    "date_precision": "DATE",
+    "verified_at": "2026-10-21T12:00:00Z",
+    "verified_by": "AGENT_TEST",
+    "review_method": "SYNTHETIC_TEST_ONLY",
+    "review_status": "AGENT_VERIFIED",
+    "registration_status": "UNKNOWN"
+  },
+  "cases": [
+    {
+      "name": "expired",
+      "changes": {
+        "start_at": "2026-10-01",
+        "end_at": "2026-10-02",
+        "deadline_at": null
+      },
+      "expected": "EXPIRED"
+    },
+    {
+      "name": "future",
+      "changes": {},
+      "expected": "UPCOMING"
+    },
+    {
+      "name": "today",
+      "changes": {
+        "start_at": "2026-10-21",
+        "end_at": "2026-10-21",
+        "deadline_at": null
+      },
+      "expected": "TIME_UNCONFIRMED"
+    },
+    {
+      "name": "deadline_today",
+      "changes": {
+        "deadline_at": "2026-10-21"
+      },
+      "expected": "TIME_UNCONFIRMED"
+    },
+    {
+      "name": "deadline_yesterday",
+      "changes": {
+        "deadline_at": "2026-10-20"
+      },
+      "expected": "EXPIRED"
+    },
+    {
+      "name": "missing_year",
+      "changes": {
+        "start_at": "11-01"
+      },
+      "expected": "DATE_UNKNOWN"
+    },
+    {
+      "name": "invalid_date",
+      "changes": {
+        "start_at": "2026-02-30"
+      },
+      "expected": "DATE_UNKNOWN"
+    },
+    {
+      "name": "unknown_zone",
+      "changes": {
+        "timezone": null
+      },
+      "expected": "DATE_UNKNOWN"
+    },
+    {
+      "name": "cancelled",
+      "changes": {
+        "registration_status": "CANCELLED"
+      },
+      "expected": "CANCELLED"
+    },
+    {
+      "name": "past_start_no_end",
+      "changes": {
+        "start_at": "2026-10-20",
+        "end_at": null,
+        "deadline_at": null
+      },
+      "expected": "PAST_START_END_UNKNOWN"
+    },
+    {
+      "name": "closed_future",
+      "changes": {
+        "registration_status": "CLOSED"
+      },
+      "expected": "UPCOMING"
+    },
+    {
+      "name": "missing_check_time",
+      "changes": {
+        "verified_at": null
+      },
+      "expected": "UPCOMING"
+    },
+    {
+      "name": "stale_check",
+      "changes": {
+        "verified_at": "2026-10-01T12:00:00Z"
+      },
+      "expected": "UPCOMING"
+    },
+    {
+      "name": "precise_live",
+      "changes": {
+        "date_precision": "DATETIME",
+        "start_at": "2026-10-21T09:00:00-04:00",
+        "end_at": "2026-10-21T15:00:00-04:00",
+        "deadline_at": null
+      },
+      "expected": "IN_PROGRESS"
+    },
+    {
+      "name": "precise_expired",
+      "changes": {
+        "date_precision": "DATETIME",
+        "start_at": "2026-10-21T09:00:00-04:00",
+        "end_at": "2026-10-21T11:00:00-04:00",
+        "deadline_at": null
+      },
+      "expected": "EXPIRED"
+    },
+    {
+      "name": "dst_ambiguous",
+      "changes": {
+        "date_precision": "DATETIME",
+        "start_at": "2026-11-01T01:30:00",
+        "end_at": null,
+        "deadline_at": null
+      },
+      "expected": "DATE_UNKNOWN"
+    },
+    {
+      "name": "dst_fold_early",
+      "changes": {
+        "date_precision": "DATETIME",
+        "start_at": "2026-11-01T01:30:00-04:00",
+        "end_at": "2026-11-01T03:00:00-05:00",
+        "deadline_at": null
+      },
+      "expected": "UPCOMING"
+    },
+    {
+      "name": "dst_fold_late",
+      "changes": {
+        "date_precision": "DATETIME",
+        "start_at": "2026-11-01T01:30:00-05:00",
+        "end_at": "2026-11-01T03:00:00-05:00",
+        "deadline_at": null
+      },
+      "expected": "UPCOMING"
+    },
+    {
+      "name": "dst_gap",
+      "changes": {
+        "date_precision": "DATETIME",
+        "start_at": "2026-03-08T02:30:00-05:00",
+        "end_at": null,
+        "deadline_at": null
+      },
+      "expected": "DATE_UNKNOWN"
+    },
+    {
+      "name": "utc_timestamp",
+      "changes": {
+        "date_precision": "DATETIME",
+        "start_at": "2026-11-01T05:30:00Z",
+        "end_at": "2026-11-01T08:00:00Z",
+        "deadline_at": null
+      },
+      "expected": "UPCOMING"
+    }
+  ]
+}

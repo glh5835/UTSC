@@ -1,0 +1,153 @@
+{
+  "contract_version": "utsc-contract-1.0",
+  "data_mode": "SYNTHETIC",
+  "snapshot_id": "syn-mvp02-v1",
+  "input_schema": "utsc-job-input-1",
+  "source_batches": [
+    {
+      "batch_id": "syn-mvp02-input-v1",
+      "provider": "Independent explicit-title SYNTHETIC examples",
+      "source_ref": "New artificial titles; existing MVP-01 raw and independent answers preserved",
+      "path": "inputs/mvp02-v1/jobs.jsonl",
+      "format": "jsonl",
+      "bytes": 9780,
+      "sha256": "33d174f418ae8bbef5f9260fc714b54f67b9334219b7eed87c4f8c1ca991eedc"
+    }
+  ],
+  "usage": {
+    "code_use_status": "ALLOWED",
+    "data_use_status": "ALLOWED",
+    "internal_demo_status": "ALLOWED",
+    "redistribution_status": "ALLOWED",
+    "evidence_ref": "Independently authored MVP-02 fixture, not a real employer dataset or human review",
+    "confirmed_by": "Local fixture author (Codex)",
+    "confirmed_date": "2026-10-21",
+    "attribution": "UTSC Career Navigator synthetic fixture; no real employer or vacancy"
+  },
+  "collected_start": "2026-10-01T11:00:00Z",
+  "collected_end": "2026-10-01T12:00:00Z",
+  "collection_timezone": "UTC",
+  "time_basis": "FIXTURE",
+  "built_at": "2026-10-21T12:04:01.833088Z",
+  "posted_range": {
+    "start": "2026-09-30",
+    "end": "2026-09-30",
+    "precision": "DATE",
+    "basis": "FIXTURE"
+  },
+  "versions": {
+    "cleaning": {
+      "version": "text-clean-1",
+      "path": "inputs/mvp02-v1/rules.json",
+      "sha256": "07d508b02cc54a174f81f76cef0cce0cf61ad6361e42f0a61113cc4d00d35c3b"
+    },
+    "classification": {
+      "version": "title-classification-2",
+      "path": "inputs/mvp02-v1/rules.json",
+      "sha256": "07d508b02cc54a174f81f76cef0cce0cf61ad6361e42f0a61113cc4d00d35c3b"
+    },
+    "dictionary": {
+      "version": "synthetic-skills-1",
+      "path": "inputs/mvp02-v1/skills.json",
+      "sha256": "52994952f76ad8c6476373f98b815b48460ed41b6058def8c16dd47df5ea1694"
+    },
+    "matching": {
+      "version": "literal-word-matching-1",
+      "path": "inputs/mvp02-v1/rules.json",
+      "sha256": "07d508b02cc54a174f81f76cef0cce0cf61ad6361e42f0a61113cc4d00d35c3b"
+    },
+    "areas": {
+      "version": "synthetic-area-map-2",
+      "path": "inputs/mvp02-v1/rules.json",
+      "sha256": "07d508b02cc54a174f81f76cef0cce0cf61ad6361e42f0a61113cc4d00d35c3b"
+    },
+    "statistics": {
+      "version": "utsc-statistics-1",
+      "path": "inputs/mvp02-v1/rules.json",
+      "sha256": "07d508b02cc54a174f81f76cef0cce0cf61ad6361e42f0a61113cc4d00d35c3b"
+    }
+  },
+  "policy": {
+    "contract_version": "utsc-contract-1.0",
+    "data_mode": "SYNTHETIC",
+    "scope": "DECLARED_NOT_EXECUTED",
+    "execution_profile": "utsc-analysis-1",
+    "description_min_chars": 100,
+    "max_age_days": 35,
+    "alphabetic_min_ratio": 0.35,
+    "template_patterns": [
+      "(?:description unavailable[.\\s]*)+",
+      "(?:no description provided[.\\s]*)+"
+    ],
+    "country_aliases": {
+      "ca": "CA",
+      "canada": "CA"
+    },
+    "province_aliases": {
+      "ontario": "ON",
+      "quebec": "QC"
+    },
+    "area_map": {
+      "CA|ON|Toronto": "TORONTO_GTA",
+      "CA|QC|Montreal": "MONTREAL_METRO"
+    },
+    "area_map_scope": "TEST_FIXTURE_ONLY",
+    "blocking_reasons": [
+      "INVALID_COLLECTION_TIME",
+      "DUPLICATE_CONFLICT",
+      "ID_MISMATCH",
+      "UNKNOWN_COUNTRY",
+      "UNKNOWN_AREA",
+      "ROLE_AMBIGUOUS",
+      "ROLE_UNCLASSIFIED",
+      "STAGE_AMBIGUOUS",
+      "STAGE_UNCLASSIFIED",
+      "SENIOR_TITLE",
+      "EXPERIENCE_CONFLICT"
+    ],
+    "role_rules": {
+      "DATA_ANALYST": [
+        "\\bdata\\s+analyst\\b"
+      ],
+      "BUSINESS_ANALYST": [
+        "\\bbusiness\\s+analyst\\b"
+      ],
+      "BI": [
+        "\\bbusiness\\s+intelligence\\b",
+        "\\bBI\\s+(?:analyst|developer)\\b"
+      ],
+      "DATA_SCIENTIST": [
+        "\\bdata\\s+(?:scientist|science)\\b"
+      ],
+      "DATA_ENGINEER": [
+        "\\bdata\\s+engineer\\b"
+      ]
+    },
+    "stage_rules": {
+      "INTERNSHIP_COOP": [
+        "\\b(?:internship|intern|co[- ]?op)\\b"
+      ],
+      "NEW_GRADUATE": [
+        "\\b(?:new\\s+grad(?:uate)?|recent\\s+grad(?:uate)?|graduate)\\b"
+      ],
+      "ENTRY_LEVEL": [
+        "\\b(?:entry[- ]level|junior|jr\\b\\.?)\\b"
+      ]
+    },
+    "senior_pattern": "\\b(?:senior|sr\\b\\.?|lead|manager|director|principal|staff)\\b",
+    "experience_pattern": "\\b(\\d+)(?:\\s*[-–]\\s*\\d+)?\\s*\\+?\\s*(?:years?|yrs?)\\s+(?:of\\s+)?(?:relevant\\s+)?(?:work\\s+)?experience\\b",
+    "experience_conflict_min": 3,
+    "out_of_scope_role_rules": [
+      "\\b(?:product|operations?|risk|financial|finance)\\s+analyst\\b"
+    ]
+  },
+  "counts": {
+    "input_rows": 12,
+    "candidate_jobs": null,
+    "formal_jobs": null,
+    "analyzable_descriptions": null,
+    "pending_jobs": null,
+    "excluded_jobs": null
+  },
+  "quality_ref": null
+}

@@ -1,0 +1,74 @@
+{
+  "contract_version": "utsc-contract-1.0",
+  "data_mode": "SYNTHETIC",
+  "scope": "DECLARED_NOT_EXECUTED",
+  "execution_profile": "utsc-analysis-1",
+  "description_min_chars": 100,
+  "max_age_days": 35,
+  "alphabetic_min_ratio": 0.35,
+  "template_patterns": [
+    "(?:description unavailable[.\\s]*)+",
+    "(?:no description provided[.\\s]*)+"
+  ],
+  "country_aliases": {
+    "ca": "CA",
+    "canada": "CA"
+  },
+  "province_aliases": {
+    "ontario": "ON",
+    "quebec": "QC"
+  },
+  "area_map": {
+    "CA|ON|Toronto": "TORONTO_GTA",
+    "CA|QC|Montreal": "MONTREAL_METRO"
+  },
+  "area_map_scope": "TEST_FIXTURE_ONLY",
+  "blocking_reasons": [
+    "INVALID_COLLECTION_TIME",
+    "DUPLICATE_CONFLICT",
+    "ID_MISMATCH",
+    "UNKNOWN_COUNTRY",
+    "UNKNOWN_AREA",
+    "ROLE_AMBIGUOUS",
+    "ROLE_UNCLASSIFIED",
+    "STAGE_AMBIGUOUS",
+    "STAGE_UNCLASSIFIED",
+    "SENIOR_TITLE",
+    "EXPERIENCE_CONFLICT"
+  ],
+  "role_rules": {
+    "DATA_ANALYST": [
+      "\\bdata\\s+analyst\\b"
+    ],
+    "BUSINESS_ANALYST": [
+      "\\bbusiness\\s+analyst\\b"
+    ],
+    "BI": [
+      "\\bbusiness\\s+intelligence\\b",
+      "\\bBI\\s+(?:analyst|developer)\\b"
+    ],
+    "DATA_SCIENTIST": [
+      "\\bdata\\s+(?:scientist|science)\\b"
+    ],
+    "DATA_ENGINEER": [
+      "\\bdata\\s+engineer\\b"
+    ]
+  },
+  "stage_rules": {
+    "INTERNSHIP_COOP": [
+      "\\b(?:internship|intern|co[- ]?op)\\b"
+    ],
+    "NEW_GRADUATE": [
+      "\\b(?:new\\s+grad(?:uate)?|recent\\s+grad(?:uate)?|graduate)\\b"
+    ],
+    "ENTRY_LEVEL": [
+      "\\b(?:entry[- ]level|junior|jr\\b\\.?)\\b"
+    ]
+  },
+  "senior_pattern": "\\b(?:senior|sr\\b\\.?|lead|manager|director|principal|staff)\\b",
+  "experience_pattern": "\\b(\\d+)(?:\\s*[-–]\\s*\\d+)?\\s*\\+?\\s*(?:years?|yrs?)\\s+(?:of\\s+)?(?:relevant\\s+)?(?:work\\s+)?experience\\b",
+  "experience_conflict_min": 3,
+  "out_of_scope_role_rules": [
+    "\\b(?:product|operations?|risk|financial|finance)\\s+analyst\\b"
+  ]
+}

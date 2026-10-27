@@ -1,0 +1,39 @@
+{
+  "checked_on": "2026-10-27",
+  "scope": "LOCAL_SYNTHETIC_DEMO",
+  "program_tests_passed": 231,
+  "browser_checks_passed": 15,
+  "browser_checks": [
+    "Chinese overview, chart labels and F10/D8",
+    "One-click English overview and matching chart values",
+    "Area filter and empty state survive language switch",
+    "Comparison values and machine-readable CSV unchanged across languages",
+    "Comparison role choices and zero-denominator warning preserved",
+    "Identical-role guard remains functional",
+    "Profile text, skill choices, generated results and downloads survive toggle",
+    "Chinese action headings and reasons",
+    "Resource filters and explicit no-opportunity state in both languages",
+    "Data quality tabs and raw provenance remain accessible",
+    "Language persists through browser reload via URL",
+    "Historical mode never falls back to synthetic data in either language",
+    "390px mobile toggle and page width",
+    "Language button supports keyboard activation",
+    "Maintenance controls localized without saving or publishing edits"
+  ],
+  "page_errors": [],
+  "console_errors": [],
+  "data_mode": "SYNTHETIC",
+  "human_classification_review": "NOT_PERFORMED",
+  "student_trial": "NOT_PERFORMED",
+  "production_deployment": "NOT_PERFORMED",
+  "fresh_machine_install": "NOT_PERFORMED",
+  "baseline": {
+    "formal_jobs": 10,
+    "analyzable_descriptions": 8,
+    "sql_mentions": 4,
+    "python_mentions": 3,
+    "real_selected_opportunities": 0
+  },
+  "preserved_original_files": 150,
+  "protected_file_changes": 0
+}

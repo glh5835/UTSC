@@ -1,0 +1,10 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.bat text eol=crlf
+*.docx binary
+*.xlsx binary
+*.png binary
+# Fixture manifests pin exact bytes; never normalize bundled source data.
+data/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

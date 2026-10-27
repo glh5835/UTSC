@@ -1,0 +1,1 @@
+{"analyzable_descriptions":8,"description_insufficient":2,"exploratory":true,"filterable_candidates":10,"filters":{"area":"ALL_CANADA","role":null,"stage":null},"formal_jobs":10,"skills":[{"count":3,"denominator":8,"display_name":"Python","rate":0.375,"skill_id":"python"},{"count":4,"denominator":8,"display_name":"SQL","rate":0.5,"skill_id":"sql"}],"unassignable_candidates":0}

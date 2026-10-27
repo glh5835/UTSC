@@ -1,0 +1,26 @@
+{
+  "contract_version": "utsc-contract-1.0",
+  "data_mode": "SYNTHETIC",
+  "scope": "DECLARED_NOT_EXECUTED",
+  "description_min_chars": 100,
+  "max_age_days": 35,
+  "blocking_reasons": [
+    "DUPLICATE_CONFLICT",
+    "UNKNOWN_COUNTRY",
+    "UNKNOWN_AREA",
+    "ROLE_AMBIGUOUS",
+    "STAGE_AMBIGUOUS",
+    "SENIOR_TITLE",
+    "EXPERIENCE_CONFLICT"
+  ],
+  "area_map": {
+    "CA|ON|Toronto": "TORONTO_GTA"
+  },
+  "area_map_scope": "TEST_FIXTURE_ONLY",
+  "cleaning": "text-clean-1",
+  "resource_recheck_days": 90,
+  "opportunity_recheck_days": 7,
+  "classification": "fixture labels are expectations only",
+  "matching": "case-insensitive word boundaries",
+  "statistics": "unique job/skill; usable-description denominator; NOT EXECUTED"
+}

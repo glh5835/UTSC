@@ -1,0 +1,103 @@
+{
+  "contract_version": "utsc-contract-1.0",
+  "data_mode": "SYNTHETIC",
+  "snapshot_id": "syn-mvp01-v1",
+  "input_schema": "utsc-job-input-1",
+  "source_batches": [
+    {
+      "batch_id": "syn-input-v1",
+      "provider": "Locally authored artificial examples",
+      "source_ref": "Independent fixture designed in plans/验收追踪表.md; no external collection",
+      "path": "raw/jobs-v1.jsonl",
+      "bytes": 10608,
+      "sha256": "6313f69758d22d6534b1ebe6e84559a9fce8d8d4134a0e0b9c8ba2e9968945d1",
+      "format": "jsonl"
+    }
+  ],
+  "usage": {
+    "code_use_status": "ALLOWED",
+    "data_use_status": "ALLOWED",
+    "internal_demo_status": "ALLOWED",
+    "redistribution_status": "ALLOWED",
+    "evidence_ref": "Independent artificial input authored for this workspace; no upstream data or code",
+    "confirmed_by": "Local fixture author (Codex)",
+    "confirmed_date": "2026-10-21",
+    "attribution": "UTSC Career Navigator synthetic fixture; no real employer or vacancy"
+  },
+  "collected_start": "2026-10-01T11:00:00Z",
+  "collected_end": "2026-10-01T12:00:00Z",
+  "collection_timezone": "UTC",
+  "time_basis": "FIXTURE",
+  "built_at": "2026-10-21T11:43:27.803543Z",
+  "posted_range": {
+    "start": "2026-09-30",
+    "end": "2026-09-30",
+    "precision": "DATE",
+    "basis": "FIXTURE"
+  },
+  "versions": {
+    "cleaning": {
+      "version": "text-clean-1",
+      "path": "config/declared-policy.json",
+      "sha256": "01c71483f1a16e21b6c1dc5605fe66647f98efb9ef5602682d721299ad303f82"
+    },
+    "classification": {
+      "version": "fixture-classification-1",
+      "path": "config/declared-policy.json",
+      "sha256": "01c71483f1a16e21b6c1dc5605fe66647f98efb9ef5602682d721299ad303f82"
+    },
+    "dictionary": {
+      "version": "synthetic-skills-1",
+      "path": "config/skills.json",
+      "sha256": "52994952f76ad8c6476373f98b815b48460ed41b6058def8c16dd47df5ea1694"
+    },
+    "matching": {
+      "version": "fixture-matching-1",
+      "path": "config/declared-policy.json",
+      "sha256": "01c71483f1a16e21b6c1dc5605fe66647f98efb9ef5602682d721299ad303f82"
+    },
+    "areas": {
+      "version": "fixture-area-map-1",
+      "path": "config/declared-policy.json",
+      "sha256": "01c71483f1a16e21b6c1dc5605fe66647f98efb9ef5602682d721299ad303f82"
+    },
+    "statistics": {
+      "version": "utsc-statistics-1",
+      "path": "config/declared-policy.json",
+      "sha256": "01c71483f1a16e21b6c1dc5605fe66647f98efb9ef5602682d721299ad303f82"
+    }
+  },
+  "policy": {
+    "scope": "DECLARED_NOT_EXECUTED",
+    "description_min_chars": 100,
+    "max_age_days": 35,
+    "blocking_reasons": [
+      "DUPLICATE_CONFLICT",
+      "UNKNOWN_COUNTRY",
+      "UNKNOWN_AREA",
+      "ROLE_AMBIGUOUS",
+      "STAGE_AMBIGUOUS",
+      "SENIOR_TITLE",
+      "EXPERIENCE_CONFLICT"
+    ],
+    "area_map": {
+      "CA|ON|Toronto": "TORONTO_GTA"
+    },
+    "area_map_scope": "TEST_FIXTURE_ONLY",
+    "cleaning": "text-clean-1",
+    "resource_recheck_days": 90,
+    "opportunity_recheck_days": 7,
+    "classification": "fixture labels are expectations only",
+    "matching": "case-insensitive word boundaries",
+    "statistics": "unique job/skill; usable-description denominator; NOT EXECUTED"
+  },
+  "counts": {
+    "input_rows": 12,
+    "candidate_jobs": null,
+    "formal_jobs": null,
+    "analyzable_descriptions": null,
+    "pending_jobs": null,
+    "excluded_jobs": null
+  },
+  "quality_ref": null
+}

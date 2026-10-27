@@ -1,0 +1,18 @@
+{
+  "data_mode": "SYNTHETIC",
+  "method": "Independent case table from MVP-00; actual-title input authored separately; not human review",
+  "base": {"input_rows": 12, "C": 10, "F": 10, "Q": 0, "E": 0, "D": 8, "duplicate_observations": 2},
+  "jobs": {
+    "SYN:01": {"role": "DATA_ANALYST", "stage": "ENTRY_LEVEL", "usable": true, "skills": ["sql"]},
+    "SYN:02": {"role": "DATA_ANALYST", "stage": "ENTRY_LEVEL", "usable": true, "skills": ["python"]},
+    "SYN:03": {"role": "DATA_ANALYST", "stage": "ENTRY_LEVEL", "usable": true, "skills": ["python", "sql"]},
+    "SYN:04": {"role": "DATA_ANALYST", "stage": "ENTRY_LEVEL", "usable": true, "skills": []},
+    "SYN:05": {"role": "DATA_ANALYST", "stage": "ENTRY_LEVEL", "usable": false, "skills": []},
+    "SYN:06": {"role": "DATA_ANALYST", "stage": "ENTRY_LEVEL", "usable": false, "skills": []},
+    "SYN:07": {"role": "BI", "stage": "ENTRY_LEVEL", "usable": true, "skills": ["sql"]},
+    "SYN:08": {"role": "BI", "stage": "ENTRY_LEVEL", "usable": true, "skills": ["sql"]},
+    "SYN:09": {"role": "BI", "stage": "ENTRY_LEVEL", "usable": true, "skills": ["python"]},
+    "SYN:10": {"role": "BI", "stage": "ENTRY_LEVEL", "usable": true, "skills": []}
+  },
+  "skills": {"sql": {"count": 4, "denominator": 8, "rate": 0.5}, "python": {"count": 3, "denominator": 8, "rate": 0.375}}
+}

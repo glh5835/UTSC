@@ -1,0 +1,38 @@
+{
+  "contract_version": "utsc-contract-1.0",
+  "data_mode": "SYNTHETIC",
+  "status": "MVP02_EXPECTATIONS_NOT_EXECUTED",
+  "input_rows": 12,
+  "canonical_ids": [
+    "SYN:01",
+    "SYN:02",
+    "SYN:03",
+    "SYN:04",
+    "SYN:05",
+    "SYN:06",
+    "SYN:07",
+    "SYN:08",
+    "SYN:09",
+    "SYN:10"
+  ],
+  "future_expected": {
+    "C": 10,
+    "F": 10,
+    "Q": 0,
+    "E": 0,
+    "D": 8,
+    "description_insufficient": 2,
+    "sql": {
+      "count": 4,
+      "denominator": 8
+    },
+    "python": {
+      "count": 3,
+      "denominator": 8
+    }
+  },
+  "expected_clean_lengths": {
+    "SYN:05": 99,
+    "SYN:10": 100
+  }
+}
