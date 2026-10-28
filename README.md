@@ -2,11 +2,19 @@
 
 面向 UTSC 学生的职业与实践导航项目。此仓库独立管理网站开发、项目文档和现有中英文 Demo。
 
-**当前可运行版本是 Streamlit 本地模拟 Demo。** React＋TypeScript＋Vite、Supabase Auth 与数据库权限属于后续 A0／A1，尚未实现；GitHub 仓库上传不代表网站已部署。
+**当前有两个可运行部分**：根目录 Streamlit 中英文模拟 Demo（启动方式见下），
+以及 `web/` 下 A0–A3 交付的 React＋TypeScript＋Vite 网站（基础导航、共同
+合同样例、运行时校验、中英文切换、真实 Supabase Auth 账户、市场概览／
+方向比较，以及课程完成自述、私有经历、本地候选技能抽取和显式确认，见
+[web/README.md](web/README.md)）。
+生产部署尚未进行；GitHub 仓库上传不代表网站已部署。
 
 ![中文 Demo 界面](docs/images/demo-zh.png)
 
-## 当前功能
+## 旧 Streamlit Demo 功能
+
+以下列表描述根目录 Demo；A2 正式网站页面在 `web/`，两者数据与账号状态
+互相独立。
 
 - 市场概览：职业方向、地区、职业阶段筛选，显示样本量及可分析描述分母。
 - 两个方向比较：技能提及率、零分母提示、来源和日期、CSV 下载。
@@ -15,7 +23,9 @@
 - 数据质量：纳入／待审／排除、技能依据及完整发布来源。
 - **全局 English／中文 一键切换**，保留当前会话筛选、比较方向及填写内容；语言通过网址参数保留。
 
-岗位原文、官方课程名称和来源证据保持原文，机器可读 CSV 保留稳定字段。个人资料只保存在当前会话，尚无真实账户或收藏持久化。
+岗位原文、官方课程名称和来源证据保持原文，机器可读 CSV 保留稳定字段。
+旧 Demo 的个人资料只保存在当前会话；`web/` 的 A1 已提供真实 Supabase
+账户与本人资料读写，但收藏仍未实现。
 
 ## 快速启动
 
@@ -48,8 +58,8 @@ py -3.12 -m venv .venv
 | `data/synthetic/` | 旧 Demo 的人工固定输入及分析样例 |
 | `data/resources/` | 旧课程与实践资源摘要、来源与练习 |
 | `tests/`、`scripts/` | 本 Demo 的检查与显式准备工具 |
-| `web/` | 后续 React 网站，当前仅有目录说明 |
-| `supabase/` | 后续迁移和权限测试，当前仅有目录说明 |
+| `web/` | A0–A3 React＋TypeScript＋Vite 网站：导航、合同样例、运行时校验、账户、市场与比较、课程／经历与显式技能确认（`cd web && npm ci && npm run dev`） |
+| `supabase/` | A1／A3 数据库迁移与本地隔离栈配置（`npx supabase start`，需要 Docker） |
 | `docs/`、`plans/` | 当前开发说明、冻结计划书和历史阶段记录 |
 
 数据负责人 Seraphina 的 [Python 数据仓库](https://github.com/wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market)保持独立，本仓库不包含其管线和真实招聘包。后续消费双方约定的公开合同包；根目录旧模拟契约不能冒充新 S0 v1。
@@ -62,6 +72,17 @@ py -3.12 -m venv .venv
 
 2026-10-27 中英文 Demo 实际通过 **231 项程序测试和 15 组浏览器检查**。页面和控制台错误均为 0，包含手机和键盘操作；见[验证摘要](docs/verification/demo-20261027.json)。本机检查不代表真实市场、多人权限、生产部署或异机安装验收。
 
-下一阶段执行 A0：在 `web/` 建立 React 基础架构、只读共同 fixtures、导航与状态反馈，并保留中英切换。A1 再接入真实 Supabase Auth、数据库迁移和两账号隔离检查。
+阶段记录：A0 已于 2026-10-27 在 `web/` 完成——React＋TypeScript＋Vite
+骨架、合同 v1（上游 `b828553f`）schemas 与三组 fixtures 原样同步、
+运行时数据校验层、导航与只读样例展示、中英文切换与空／错／加载／旧数据
+状态（[阶段记录](plans/阶段记录/A0.md)）。A1 已于 2026-10-27 完成
+真实 Supabase Auth、六表迁移与 RLS（[阶段记录](plans/阶段记录/A1.md)），
+2026-10-28 按独立复核完成账号隔离修复、真实权限矩阵验收与合同溯源
+修正（见 A1 记录的复核章节）。A2 已于 2026-10-28 完成本地功能验收：
+八角色市场概览、筛选、技能提及率、角色比较及中英／手机／异常状态回归通过
+（[阶段记录](plans/阶段记录/A2.md)）；未合并数据候选的隔离联调通过，但正式
+1.1 合同升级与真实数据发布仍待双方决定。A3 已于 2026-10-28 完成课程完成
+自述、私有经历、本地英文候选抽取与显式技能确认，并通过真实 A1+A3 权限
+矩阵和浏览器流程（[阶段记录](plans/阶段记录/A3.md)）。A4–A8 未开始。
 
 阅读[项目文档导航](docs/README.md)、[冻结计划书](docs/references/UTSC_Two_Person_Code_Plan.docx)、[数据协作边界](docs/data-integration.md)和 [AGENTS.md](AGENTS.md)。不要提交依赖环境、数据库、密钥、聊天、个人下载或原始招聘响应。

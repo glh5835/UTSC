@@ -2,8 +2,9 @@
 
 This is the independent website repository requested by the project owner.
 The existing root Python application is the preserved Streamlit demo. The
-planned React + TypeScript + Vite website belongs in `web/`; Supabase migrations
-belong in `supabase/`. Neither integration is implemented by this bootstrap.
+React + TypeScript + Vite website lives in `web/`; Supabase migrations live in
+`supabase/`. A0–A3 are implemented locally; A4–A8 remain out of scope until
+explicitly authorized.
 
 ## Ownership and boundaries
 
@@ -28,14 +29,18 @@ belong in `supabase/`. Neither integration is implemented by this bootstrap.
   text. Official source content may remain in its original language.
 - Do not put credentials, `service_role` keys, student records, downloads,
   Instagram sessions or upstream raw recruitment responses into Git.
-- Use the agreed contract fixtures for future A0 work. Runtime LLM calls,
-  club self-service submissions and automated notifications are outside v1.
+- Use the agreed 1.0.0 contract fixtures and upstream rules; never promote an
+  unmerged candidate contract silently. Runtime LLM calls, club self-service
+  submissions and automated notifications are outside v1.
 
 ## Validation
 
 - Run the relevant tests. Full legacy regression: `python -m pytest tests -q`.
 - `python scripts/prepare_demo.py` explicitly prepares a clean synthetic
   runtime only when it will not overwrite existing state.
+- Website checks: `cd web && npm run typecheck && npm run test && npm run build`.
+  Real Auth/RLS acceptance is `npm run test:rls-acceptance` from the root; a
+  skipped vitest wrapper is not a substitute.
 - Check real rendered pages for UI changes, including English/Chinese,
   keyboard operation and mobile layout. See `docs/app_setup.md`.
 - Store generated QA evidence under ignored `artifacts/`, not in public Git.

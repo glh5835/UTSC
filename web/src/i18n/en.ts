@@ -1,0 +1,428 @@
+/**
+ * English is the source-of-truth dictionary. Chinese (zh.ts) must define
+ * every key listed here — TypeScript enforces `Record<TxKey, string>`.
+ * Interpolation placeholders use {name} and are substituted by t().
+ */
+
+const en = {
+  'app.title': 'UTSC Career & Practice Navigator',
+  'app.tagline': 'Compare data career directions, confirm your skills, find courses and club opportunities.',
+  'app.syntheticBanner':
+    'Development preview (A0–A3): public market and course samples are SYNTHETIC; private experiences and explicitly confirmed skills belong to your real account. No live market or official course availability is claimed.',
+  'app.skipToContent': 'Skip to main content',
+  'app.languageSwitch': 'Switch language',
+  'app.primaryNav': 'Primary navigation',
+
+  'nav.home': 'Home',
+  'nav.sample': 'Sample data (read-only)',
+  'nav.account': 'Account',
+  'nav.market': 'Market overview',
+  'nav.compare': 'Role comparison',
+  'nav.courses': 'Courses & skills',
+  'nav.opportunities': 'Opportunities',
+  'nav.profile': 'Profile',
+
+  'home.title': 'Home',
+  'home.intro':
+    'This site is being built for UTSC students. A0–A3 deliver the foundation, shared contract validation, real Supabase accounts (A1), public market pages (A2), and private experiences with deterministic candidate extraction and explicit skill confirmation (A3).',
+  'home.workingTitle': 'Working now',
+  'home.workingItem1':
+    'Basic navigation with a global English/Chinese switch that keeps canonical IDs, filters and the current page unchanged.',
+  'home.workingItem2':
+    'Read-only sample data viewer loading the agreed contract fixtures through a runtime validation layer.',
+  'home.workingItem3':
+    'Loading, error, empty and stale-data states; broken packages are rejected and never silently replaced.',
+  'home.sampleCta': 'Open the sample data viewer',
+  'home.pendingTitle': 'Stage status (A1–A3 implemented; later stages planned)',
+  'home.pendingA1': 'A1 — database, permissions and the minimal account page are implemented (see Account); full profile/favorites/pathway management stays in A4/A6.',
+  'home.pendingA2': 'A2 — public market overview and role comparison are implemented and locally accepted (see Market/Compare); D4 fixed cases match in an isolated unmerged-candidate check, while formal 1.1 contract/package release still needs a joint decision.',
+  'home.pendingA3': 'A3 — course completion self-report, private experience CRUD, deterministic local English candidate extraction and explicit skill confirmation are implemented (see Courses/Profile); recommendations remain A4.',
+  'home.pendingA4': 'A4 — Recommendations and learning paths.',
+  'home.pendingA5': 'A5 — Opportunity browsing, classification filters and calendar export.',
+  'home.pendingA6': 'A6 — Personal profile, favorites and saved progress (requires A1 accounts).',
+  'home.pendingA7': 'A7 — Publishing adapter and ICS calendar export.',
+  'home.pendingA8': 'A8 — Deployment and end-to-end acceptance.',
+  'home.honestyNote':
+    'A3 extraction runs locally and never confirms a skill automatically; course samples remain synthetic and do not establish current availability. Favorites, submissions, recommendations, paths and publishing are not implemented and none are simulated.',
+
+  'sample.title': 'Sample data (read-only)',
+  'sample.intro':
+    'Load one of the three jointly agreed contract fixtures. Every bundle is validated at runtime against the upstream schemas plus cross-record checks; a bundle with any problem is rejected as a whole and nothing from it is shown.',
+  'sample.selectorLegend': 'Choose a data package',
+  'fixture.valid.label': 'Valid package',
+  'fixture.valid.description': 'Synthetic sample with one job, skills, course, resource and opportunity.',
+  'fixture.empty.label': 'Empty package',
+  'fixture.empty.description': 'Valid structure with zero records; shows empty states.',
+  'fixture.invalid.label': 'Broken package',
+  'fixture.invalid.description': 'Intentionally violates the contract; must be clearly rejected.',
+  'sample.syntheticBadge': 'SYNTHETIC',
+  'sample.loading': 'Loading and validating data…',
+  'sample.errorTitle': 'Could not load data files',
+  'sample.errorMessage': 'The data package could not be fetched. Check that the local server is running, then retry.',
+  'sample.retry': 'Retry',
+  'sample.rejectedTitle': 'This data package was rejected',
+  'sample.rejectedMessage':
+    'Validation found problems, so nothing from this package is displayed. The previously loaded package is not substituted silently — choose another package or retry.',
+  'sample.loadedOk': 'Package loaded and validated.',
+  'sample.provenanceHeading': 'Data source',
+  'sample.provenanceLine':
+    'Verbatim copies from the data side contract (upstream commit {commit}). See the provenance record under public/contracts/.',
+  'sample.issueHeading': 'Validation issues:',
+
+  'manifest.title': 'Package manifest',
+  'manifest.schemaVersion': 'Contract (schema) version',
+  'manifest.datasetVersion': 'Dataset version',
+  'manifest.generatedAt': 'Generated at (UTC)',
+  'manifest.collectedFrom': 'Collection start (UTC)',
+  'manifest.collectedTo': 'Collection end (UTC)',
+  'manifest.postingFrom': 'Posting date from',
+  'manifest.postingTo': 'Posting date to',
+  'manifest.queryConfigVersion': 'Query config version',
+  'manifest.runStatus': 'Run status',
+  'manifest.sampleCount': 'Sample count (jobs)',
+  'manifest.timesNote':
+    'Times are shown exactly as stored in the package (UTC instants and date-only values). No build or view time is substituted.',
+
+  'stale.banner':
+    'This snapshot is old: generated {days} days ago (threshold {threshold} days). Data may be out of date.',
+
+  'section.skills': 'Skills ({count})',
+  'section.jobs': 'Market jobs ({count})',
+  'section.courses': 'Courses ({count})',
+  'section.resources': 'Learning resources ({count})',
+  'section.opportunities': 'Approved opportunities ({count})',
+
+  'empty.bundle': 'This package contains no records. Each section below shows its empty state.',
+  'empty.skills': 'No skills in this package.',
+  'empty.jobs': 'No market jobs in this package.',
+  'empty.courses': 'No courses in this package.',
+  'empty.resources': 'No learning resources in this package.',
+  'empty.opportunities': 'No approved opportunities in this package.',
+
+  'skill.id': 'skill_id',
+  'skill.label': 'Label',
+  'skill.category': 'Category',
+  'skill.aliases': 'Aliases',
+
+  'field.employer': 'Employer',
+  'field.source': 'Source',
+  'field.sourceJobId': 'Source job ID',
+  'field.role': 'Role (role_id)',
+  'field.roleSubtype': 'Role subtype',
+  'field.classification': 'Classification',
+  'field.careerLevel': 'Career level',
+  'field.marketArea': 'Market area',
+  'field.posted': 'Posted',
+  'field.firstSeen': 'First seen (UTC)',
+  'field.lastSeen': 'Last seen (UTC)',
+  'field.technicalSkills': 'Technical skills',
+  'field.softSkills': 'Soft skills',
+  'field.descriptionStatus': 'Description status',
+  'field.analyzable': 'Analyzable description',
+  'field.yes': 'Yes',
+  'field.no': 'No',
+  'field.notSet': 'Not set',
+  'field.noRoleId': 'No counted role (review)',
+  'field.timezone': 'Timezone',
+  'field.sourceUrl': 'Original source',
+  'field.officialUrl': 'Official page',
+  'field.calendarYear': 'Calendar year',
+  'field.candidateSkills': 'Candidate skills',
+  'field.evidence': 'Evidence (original text)',
+  'field.verifiedAt': 'Verified at (UTC)',
+  'field.prerequisiteNote': 'Prerequisites',
+  'field.resourceType': 'Type',
+  'field.level': 'Level',
+  'field.eligibilityNote': 'Eligibility',
+  'field.kind': 'Kind',
+  'field.activityTypes': 'Activity types',
+  'field.topics': 'Topics',
+  'field.skills': 'Skills',
+  'field.beginnerLevel': 'Difficulty',
+  'field.format': 'Format',
+  'field.location': 'Location',
+  'field.start': 'Starts',
+  'field.end': 'Ends',
+  'field.deadline': 'Deadline',
+  'field.reviewStatus': 'Review status',
+  'field.reasons': 'Classification evidence (original text)',
+  'field.registrationUrl': 'Registration',
+  'field.changePending': 'Pending change under review',
+  'field.originalNote':
+    'Official names and source evidence are kept in their original language; canonical IDs are not translated.',
+
+  'ph.title': '{page} — not implemented yet',
+  'ph.planRef': 'Planned task: {ref}',
+  'ph.noFake':
+    'This page intentionally has no content: no login, favorites, submissions or results are simulated. The navigation entry exists so the site structure is visible.',
+
+  'market.intro':
+    'Formal market statistics over a versioned contract package: eight canonical roles, area/level/posted-date filters and skill mention rates. Public page — no sign-in needed.',
+  'market.upstreamNote':
+    'Contract schemas are verbatim copies of upstream commit {commit}. Package provenance is recorded under public/contracts/.',
+  'market.datasetLegend': 'Choose a data package',
+  'market.dataset.demo.label': 'A2 demo package',
+  'market.dataset.demo.note':
+    'Website-constructed SYNTHETIC sample for development and manual-expected-value tests. Contract-valid, but NOT upstream data and NOT a real market snapshot.',
+  'market.dataset.websiteSide': 'website-side',
+  'market.loading': 'Loading and validating data…',
+  'market.errorMessage': 'The data package could not be fetched. Check that the local server is running, then retry.',
+  'market.datasetHeading': 'Dataset',
+  'market.runStatusCaveat': 'incomplete run',
+  'market.timesNote':
+    'Generation, collection and posting times are shown separately, exactly as stored in the package. No build or view time is substituted.',
+  'market.partialBanner': 'This package is marked PARTIAL: the collection run did not finish, so counts may understate the market.',
+  'market.filterHeading': 'Filters',
+  'market.filterSemanticsNote':
+    'An unticked dimension means no restriction (全部). Ticks within one dimension combine as OR; different dimensions combine as AND.',
+  'market.orSemantics': 'OR within this dimension',
+  'market.dimension.role': 'Role',
+  'market.dimension.area': 'Region',
+  'market.dimension.level': 'Career stage',
+  'market.dimension.date': 'Posted date',
+  'market.allRoles': 'All roles',
+  'market.allAreas': 'All regions',
+  'market.allLevels': 'All stages',
+  'market.allDates': 'All dates',
+  'market.inclusiveBounds': 'bounds include the end dates',
+  'market.dateFrom': 'Posted from',
+  'market.dateTo': 'Posted to',
+  'market.dateNote':
+    'Bounds match the contract posted_date and include the boundary days. Jobs with an unknown posting date never satisfy an active date filter.',
+  'market.dateDraftNote':
+    'Date edits stay in the form until you apply a valid range; results do not change while a range is incomplete or reversed.',
+  'market.dateApply': 'Apply date range',
+  'market.dateRangeInvalid': 'Enter valid calendar dates before applying. Your input has been kept.',
+  'market.dateRangeReversed':
+    'The start date must not be later than the end date. Your input has been kept; correct it and apply again.',
+  'market.clearFilters': 'Clear all filters',
+  'market.filterActive': 'Filters are active — the URL carries the current filter set.',
+  'market.summaryHeading': 'Sample and description coverage',
+  'market.formalSample': 'F — formal-scope jobs matching the filters',
+  'market.formalOutOfFormal': 'of {total} formal-scope jobs in the package',
+  'market.analyzableDescriptions': 'D — with analyzable description (D/F)',
+  'market.notAnalyzable': 'Excluded from description analysis',
+  'market.notAnalyzableSplit': 'missing description {missing}, unavailable {unavailable}, present but not analyzable {present}',
+  'market.metricsNote':
+    'F = distinct formal jobs under the filters; D = F ∩ analyzable description. Every skill rate below uses the same D as denominator; a job counts at most once per skill.',
+  'market.rolesHeading': 'Sample distribution over the eight canonical roles',
+  'market.roleDistributionNote':
+    'This table intentionally ignores selected roles so all eight remain visible; region, stage and date filters still apply. Its counts therefore need not sum to the F shown above.',
+  'market.col.role': 'Role',
+  'market.col.skill': 'Skill (canonical id)',
+  'market.col.sample': 'Jobs (F)',
+  'market.col.analyzable': 'Analyzable (D)',
+  'market.col.jobsMentioning': 'Jobs mentioning (N/D)',
+  'market.col.rate': 'Mention rate (N/D)',
+  'market.col.bar': 'Bar (same values as printed here)',
+  'market.exclusionsNote':
+    'Not counted above: {roleReview} role-pending, {roleOutside} outside-scope, {levelReview} level-unknown/pending jobs. They are never shown as a ninth role.',
+  'market.techSkills': 'Technical skills ({count})',
+  'market.softSkills': 'Soft skills ({count})',
+  'market.noAnalyzableData': '暂无可分析数据 / No analyzable data: D = 0, so no mention rate is shown (not even 0%).',
+  'market.noAnalyzableDataShort': 'no analyzable data',
+  'market.smallSampleHint':
+    'Small sample: only {d} analyzable descriptions (< {threshold}). This is a product notice threshold, NOT a statement about statistical significance.',
+  'market.rateNote': 'Rate = N/D with D = {d}. Raw fractions keep full precision; only the display is rounded.',
+  'market.subtypeLegend':
+    'Sub-labels of {role} (role_subtype), not extra categories:',
+  'market.noMatchingJobs': 'No formal-scope jobs match the current filters. Adjust or clear the filters.',
+  'market.failedTitle': 'This package is unusable',
+  'market.failedRefusal':
+    'The package manifest says the collection run FAILED. No statistics are computed from it — choose another package or retry. A failed run is never presented as data.',
+  'market.emptyPackage':
+    'This package contains no records at all (empty dataset), so there is nothing to count. This is different from “no results under the current filters”.',
+
+  'market.scopeNote':
+    'Formal statistics count only classified roles within the eight canonical ids and classified levels within internship/new_grad/entry_level. needs_review, outside_scope, unknown and potential_senior are excluded from these numbers.',
+
+  'compare.intro':
+    'Compare roles of the eight canonical directions under the same region, stage and date conditions. Each role always uses its own sample and its own analyzable-description denominator.',
+  'compare.pickHeading': 'Roles to compare',
+  'compare.pickNote': 'Select two or more roles. The comparison keeps the shared region/stage/date filter below.',
+  'compare.pickMore': 'Select at least two roles to compare.',
+  'compare.techHeading': 'Technical skill mention rates by role',
+  'compare.softHeading': 'Soft skill mention rates by role',
+  'compare.smallSampleNote': 'One or more roles has fewer than {threshold} analyzable descriptions — product notice, not a statistical claim.',
+  'compare.col.metric': 'Metric / skill',
+  'compare.row.sample': 'F (sample)',
+  'compare.row.analyzable': 'D (analyzable)',
+  'compare.note': 'Each cell is N/D for that role’s own denominator; “—” means the denominator is zero for that role.',
+
+  'account.intro':
+    'Sign in with a real Supabase account to read and save your own profile. Public sample pages stay available without an account; personal data is protected by database-level row security, not by hidden buttons.',
+  'account.notConfiguredTitle': 'Supabase is not configured',
+  'account.notConfiguredBody':
+    'No Supabase endpoint is set for this build, so account features are unavailable. The public sample pages remain usable. No fake users, tokens or simulated sign-ins are shown.',
+  'account.notConfiguredNote': 'Set the two variables below (without secret keys) and rebuild or restart the dev server:',
+  'account.loadingSession': 'Checking your session…',
+  'account.signInTitle': 'Sign in',
+  'account.signUpTitle': 'Create account',
+  'account.emailLabel': 'Email',
+  'account.passwordLabel': 'Password (min 8 characters)',
+  'account.signIn': 'Sign in',
+  'account.signUp': 'Sign up',
+  'account.working': 'Working…',
+  'account.switchToSignUp': 'Need an account? Sign up',
+  'account.switchToSignIn': 'Already registered? Sign in',
+  'account.confirmationRequired':
+    'Registration accepted. This project requires email confirmation: check your inbox (local test mail tool: Mailpit at http://127.0.0.1:55424) and confirm before signing in. You are NOT signed in yet.',
+  'account.errorGeneric': 'That did not work. Please try again.',
+  'account.signedInAs': 'Signed in as',
+  'account.loadingProfile': 'Loading your profile…',
+  'account.profileLoadFailed': 'Could not load your profile:',
+  'account.displayName': 'Display name',
+  'account.courseIds': 'Completed course IDs',
+  'account.courseIdsPlaceholder': 'course_a, course_b',
+  'account.courseIdsHint':
+    'Comma-separated course IDs, saved to your own profile row (contract field completed_course_ids). Owner-scoped row security applies.',
+  'account.save': 'Save profile',
+  'account.saving': 'Saving…',
+  'account.saved': 'Profile saved to your own row.',
+  'account.saveFailed': 'Saving failed:',
+  'account.saveStale': 'Saved, but the signed-in account changed while saving — showing the new account instead.',
+  'account.signOut': 'Sign out',
+  'account.courseSummary': 'Completed courses are managed from the courses page. {count} course(s) are marked.',
+  'account.manageCourses': 'Manage completed courses',
+  'account.manageSkills': 'Manage experiences and confirmed skills',
+  'account.scopeNote':
+    'A3 scope: account identity, display name, self-reported courses, private experiences, local English extraction and explicitly confirmed skills. Course mappings and extraction never confirm skills automatically.',
+
+  'a3.common.cancel': 'Cancel',
+  'a3.course.intro':
+    'Browse the approved 1.0.0 course/skill sample, mark courses you personally completed, and explicitly confirm any course-mapped candidate skill. A course mapping is never proof that you already have the skill.',
+  'a3.course.synthetic':
+    'SYNTHETIC contract fixture — not a current UTSC course offering, timetable entry or eligibility decision.',
+  'a3.course.historical':
+    'Calendar year and verification time are historical source data. Always check the official link for current availability and prerequisites.',
+  'a3.course.empty': 'This package contains no courses.',
+  'a3.course.official': 'Open official course page',
+  'a3.course.courseId': 'Course ID',
+  'a3.course.calendar': 'Calendar year',
+  'a3.course.verified': 'Evidence verified at',
+  'a3.course.prereq': 'Prerequisite note',
+  'a3.course.none': 'Not stated',
+  'a3.course.evidence': 'Mapping evidence',
+  'a3.course.candidateHeading': 'Course-mapped candidate skills',
+  'a3.course.candidateNote':
+    'These are unconfirmed candidates derived from course evidence. Nothing is added to your skills unless you select it and press confirm.',
+  'a3.course.noCandidates': 'No candidate skills are mapped to this course.',
+  'a3.course.markCompleted': 'I completed this course',
+  'a3.course.completed': 'Marked completed by you',
+  'a3.course.remove': 'Withdraw course completion',
+  'a3.course.removeWarning':
+    'Withdrawing this course will also remove {count} skill confirmation(s) whose source is this course. Confirmations from other courses, experiences or manual entry are kept.',
+  'a3.course.confirmRemove': 'Withdraw course and course-sourced skills',
+  'a3.course.marked': 'Course saved as completed by you. This did not confirm any skill.',
+  'a3.course.removed': 'Course completion withdrawn; only course-sourced confirmations for it were removed.',
+  'a3.course.confirmSelected': 'Confirm selected course skills',
+  'a3.course.alreadyConfirmed': 'Already confirmed from this course',
+  'a3.course.signInHint': 'Sign in to mark course completion and explicitly confirm candidate skills.',
+  'a3.course.signIn': 'Go to account sign-in',
+  'a3.course.unconfigured': 'Supabase is not configured; course browsing works, but personal completion cannot be saved.',
+  'a3.course.loadingCatalog': 'Loading and validating the public course package…',
+  'a3.course.catalogError': 'The course package could not be loaded.',
+  'a3.course.retry': 'Retry',
+  'a3.course.loadingProfile': 'Loading your course selections…',
+  'a3.course.saveError': 'The change was not saved:',
+
+  'a3.profile.intro':
+    'Save your own experiences, review deterministic local candidate skills, and explicitly confirm only the skills you claim. Extraction and course mapping never write confirmed skills automatically.',
+  'a3.profile.signedOut': 'Sign in to manage your experiences and confirmed skills. Public courses and market pages remain available without an account.',
+  'a3.profile.signIn': 'Go to account sign-in',
+  'a3.profile.unconfigured': 'Supabase is not configured, so personal experiences and skills cannot be loaded or saved.',
+  'a3.profile.loading': 'Loading your private profile data…',
+  'a3.profile.loadError': 'Your private data could not be loaded:',
+  'a3.profile.catalogUnavailable':
+    'The public course/skill catalog is unavailable, so automatic extraction and manual catalog selection are paused. Your private experiences remain visible and preserved.',
+  'a3.profile.retry': 'Retry',
+  'a3.profile.actionError': 'The change was not saved:',
+  'a3.profile.refreshWarning': 'The change was saved, but the latest view could not be reloaded. Reload the page before retrying.',
+  'a3.profile.experienceHeading': 'My experiences',
+  'a3.profile.experienceNote':
+    'Experience text is private to your account. Extraction runs locally in this browser using the English rule set; no model or external analysis API is called.',
+  'a3.profile.experienceLabel': 'Experience text (English)',
+  'a3.profile.charCount': '{count} / {max} characters',
+  'a3.profile.add': 'Add experience',
+  'a3.profile.save': 'Save changes',
+  'a3.profile.edit': 'Edit',
+  'a3.profile.delete': 'Delete',
+  'a3.profile.editWarning':
+    'Saving changed text also removes {count} skill confirmation(s) sourced from this experience. Re-confirm only evidence you still claim.',
+  'a3.profile.deleteWarning':
+    'Deleting this experience also removes {count} skill confirmation(s) sourced from it. Confirmations from courses, manual entry or other experiences are kept.',
+  'a3.profile.confirmDelete': 'Delete experience and its sourced skills',
+  'a3.profile.noExperiences': 'No saved experiences yet.',
+  'a3.profile.emptyText': 'Enter a non-empty experience before saving.',
+  'a3.profile.created': 'Created',
+  'a3.profile.updated': 'Updated',
+  'a3.profile.noCompletedCourses': 'No completed courses are marked yet.',
+  'a3.profile.experienceSaved': 'Experience saved. No skill was confirmed automatically.',
+  'a3.profile.experienceUpdated': 'Experience updated. Its old skill confirmations were removed; explicitly re-confirm current evidence.',
+  'a3.profile.experienceDeleted': 'Experience and its sourced skill confirmations were deleted.',
+  'a3.profile.candidates': 'Candidate skills',
+  'a3.profile.candidatesNote':
+    'Candidates keep their original evidence and interpretation. affirmed may be explicitly confirmed from this experience; negated, planned and ambiguous evidence cannot auto-confirm anything.',
+  'a3.profile.noCandidates': 'No catalog skill mentions were found in this text.',
+  'a3.profile.ruleVersion': 'Extraction rule set {version}',
+  'a3.profile.interpretation.affirmed': 'Affirmed',
+  'a3.profile.interpretation.negated': 'Negated',
+  'a3.profile.interpretation.planned': 'Planned / future',
+  'a3.profile.interpretation.ambiguous': 'Ambiguous / not self-evidence',
+  'a3.profile.confirmFromExperience': 'Confirm {skill} from this experience',
+  'a3.profile.alreadyConfirmed': 'Confirmed from this experience',
+  'a3.profile.nonAffirmed':
+    'This evidence cannot confirm that you personally have the skill. If you still want to record it, use the explicit manual confirmation section below.',
+  'a3.profile.languageNotice':
+    'Detected language: {language}. Automatic extraction is only supported for English; no candidate was inferred. You can still add a canonical skill manually.',
+  'a3.profile.confirmedHeading': 'My confirmed skills',
+  'a3.profile.confirmedNote':
+    'Only explicit confirmations appear here. Each row explains its source; removing one source does not remove confirmations from other sources.',
+  'a3.profile.noSkills': 'No confirmed skills yet.',
+  'a3.profile.source.course': 'Course source',
+  'a3.profile.source.experience': 'Experience source',
+  'a3.profile.source.manual': 'Manual self-confirmation',
+  'a3.profile.unknownCourse': 'Unknown course ID retained',
+  'a3.profile.missingExperience': 'Source experience is missing',
+  'a3.profile.unknownSkill': 'Unknown skill ID retained',
+  'a3.profile.confirmedAt': 'Confirmed at',
+  'a3.profile.revoke': 'Remove this confirmation',
+  'a3.profile.manualHeading': 'Add a skill manually',
+  'a3.profile.manualNote':
+    'Manual confirmation records your own statement. Choose a canonical skill from the shared catalog; unknown names cannot create IDs.',
+  'a3.profile.manualSelect': 'Choose a canonical skill',
+  'a3.profile.manualAdd': 'Confirm selected skill manually',
+  'a3.profile.manualHint': 'Manual confirmations have source “manual” and no source record.',
+  'a3.profile.coursesHeading': 'Completed courses (your self-report)',
+  'a3.profile.coursesNote': 'Course completion is self-reported and never confirms a skill by itself.',
+  'a3.profile.manageCourses': 'Manage completed courses',
+  'a3.profile.unknownCourses': 'Unknown course IDs are kept and shown rather than silently deleted:',
+  'a3.profile.skillConfirmed': 'Skill confirmed explicitly.',
+  'a3.profile.skillRevoked': 'Skill confirmation removed.',
+  'a3.profile.experienceSourceExcerpt': 'Experience text',
+
+  'ph.courses.desc': 'Will map UTSC courses and learning resources to skills, with candidate skill confirmation (task A3).',
+  'ph.opportunities.desc': 'Will browse approved club activities and ongoing opportunities with filters (task A5).',
+  'ph.profile.desc': 'Accounts exist already (see Account). Profile details, favorites and pathways arrive with tasks A4/A6.',
+
+  'notfound.title': 'Page not found',
+  'notfound.message': 'The address does not match any page of this site.',
+  'notfound.back': 'Back to home',
+
+  'errorBoundary.title': 'Something went wrong rendering this page',
+  'errorBoundary.message': 'An unexpected error occurred. The data shown before the error is untouched; you can go back or reload.',
+  'errorBoundary.reload': 'Reload page',
+
+  'footer.preview': 'Development preview (A0–A3). Not a deployed product.',
+  'footer.contract': 'Contract synced verbatim from upstream commit {commit}.',
+  'footer.dataRepo': 'Data repository (Seraphina)',
+  'footer.websiteRepo': 'Website repository',
+  'footer.provenance': 'Provenance record',
+  'footer.langNote': 'Language switch affects interface text only; IDs, filters and current page are unchanged.',
+} as const
+
+export type TxKey = keyof typeof en
+
+export type Dictionary = Record<TxKey, string>
+
+export default en

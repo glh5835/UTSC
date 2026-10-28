@@ -1,7 +1,9 @@
 # UTSC Demo 启动与开发说明
 
-当前可运行的是根目录 Streamlit 中英文模拟 Demo，已在 Windows 与
-Python 3.12.14 验证。React、Supabase、真实登录和生产部署尚未实现。
+当前仓库有两个可运行部分：根目录 Streamlit 中英文模拟 Demo（已在
+Windows 与 Python 3.12.14 验证），以及 `web/` 下的 React＋TypeScript＋Vite
+网站（A0–A3 基础、真实 Supabase Auth 账户页、市场概览与方向比较、课程／
+经历与显式技能确认，已在 Windows 与 Node v24.19 验证）。生产部署尚未进行。
 
 ## 新 checkout
 
@@ -34,6 +36,82 @@ SQL 4/8，Python 3/8。课程与活动状态会随实际复核期限变化。
 HISTORICAL 没有真实发布时保持空状态，不以模拟数据替代。当前真实精选
 活动为 0，15 条官方课程摘要是代理在 2026-10-21 的来源检查，不保证
 当期开课、名额或个人资格。
+
+## React 网站（A0–A3，web/）
+
+`web/` 是 React＋TypeScript＋Vite 项目：A0 提供基础导航、共同合同
+fixtures 的只读样例、运行时数据校验和全局中英文切换（默认英文，
+`?lang=zh` 或页面右上角切换；规范 ID、筛选与当前页不随语言改变）；
+A1 提供真实 Supabase Auth 与本人资料；A2 提供公开的市场概览与方向比较；
+A3 提供课程完成自述、私有经历增删改、本地英文候选抽取和显式技能确认。
+公开市场／课程样例带 SYNTHETIC 标记，私有经历与确认技能是真实账户数据。
+候选 D4／D7 联调只存在于被忽略的隔离副本，不随正式站点发布。
+
+前置条件：Node.js ≥ 22.12（Vite 7 官方要求；实际验证用 v24.19）。
+首次安装需要 npm 包源网络，不需要任何 API key 或生产凭据。
+
+```powershell
+cd web
+npm ci          # 按 package-lock.json 精确安装依赖
+npm run dev     # 开发服务器，默认 http://localhost:5173
+```
+
+```powershell
+npm run typecheck   # TypeScript 严格检查
+npm run test        # vitest：校验层、标签覆盖、旧数据判断、账户隔离回归（本地栈 RLS 矩阵需凭据，缺失时跳过）
+npm run build       # tsc --noEmit + vite build（生产构建验证）
+npm run preview     # 预览 dist/ 构建产物
+```
+
+样例数据页可加载三组合同 fixtures：有效包展示全部内容；空包展示各分区
+空状态；损坏包被运行时校验层整体拒收并逐条列出问题，可重试或切换其他包，
+不会暗中替换为有效包。清单中的生成/采集/发布时间按包内原始值显示，不用
+构建时间冒充采集时间；快照超过阈值（默认 180 天）显示旧数据提示。
+
+市场概览（`#/market`）与方向比较（`#/compare`）只使用八类规范角色，
+支持同维多选 OR、跨维 AND、含边界当天的发布日期筛选，并把筛选保存在
+网址中；未知日期不会满足生效的日期条件。技能提及率始终按 F 中去重、
+`description_analyzable=true` 的岗位数 D 作分母，D=0 显示为暂无可分析
+数据而不是 0%。网页侧 SYNTHETIC 演示包的固定预期值、中英切换、键盘、
+错误／空／拒收状态及 390px 布局已在 2026-10-28 验收，细节见
+`plans/阶段记录/A2.md`。
+
+课程页（`#/courses`）读取已批准的 1.0.0 合同样例，明确标注 SYNTHETIC、
+历史核实时间与官方链接；未登录可浏览。登录后可将课程标记为本人完成，
+该状态只写入 `profiles.completed_course_ids`，不会自动确认技能。课程映射
+候选默认不勾选，只有用户主动选择并确认后才写入 `user_skills`。
+
+个人画像页（`#/profile`）保存本人经历并显示原文、证据和抽取解释。英文
+抽取在本浏览器按规则 `1.0.0` 确定性执行，不调用模型或外部 API；主语、
+否定和计划按分句局部关联到具体技能，第三人称或无法确定归属的候选保守标为
+ambiguous，不能自动成为本人技能。手动添加只能从共享技能目录选择 canonical
+ID。经历编辑会清理该经历来源的旧确认，删除经历或撤回课程只清理对应来源，
+其他来源保留；未知旧课程／技能 ID 保留并提示。
+
+A3 迁移：`supabase/migrations/20261028000000_a3_skill_sources.sql`。它增加
+经历文本长度、来源引用与清理触发器，不新增或改名合同 enum。应用到现有
+本地隔离栈使用 `npx supabase migration up --local`，**不要为此重置数据库**。
+真实 A1+A3 验收命令：`npm run test:rls-acceptance`；报告写入
+`artifacts/kimi-a3-20261028/`。
+
+账户页（A1）使用真实 Supabase Auth：邮箱密码注册、登录、退出、刷新恢复
+会话，并保存/读取本人 profiles 行。需要本地 Supabase 栈（仓库根
+`npx supabase start`，详见 `web/README.md`）或已配置的项目端点，通过
+`web/.env`（被忽略，示例见 `web/.env.example`）的
+`VITE_SUPABASE_URL` 与 `VITE_SUPABASE_PUBLISHABLE_KEY` 提供。注册后若
+项目要求邮箱确认，页面明确显示"已受理、未登录"；本地确认邮件进 Mailpit
+（http://127.0.0.1:55424）。未配置时账户页明确提示，公共样例页面不受
+影响；页面不展示任何假用户或模拟登录。
+
+默认合同文件（schema_version 1.0.0 与 fixtures）仍是上游 `b828553f` 的
+按字节原样副本，来源与 SHA-256 记录见
+`web/public/contracts/PROVENANCE.md`。A1 Supabase 实现与 A2 市场页说明
+见 `web/README.md`；候选 1.1.0 合同只在隔离测试环境验证，尚未替换正式
+副本。
+
+浏览器验收（导航、中英文切换、键盘操作、390px 手机布局、损坏包拒收与
+错误恢复）已于 2026-10-27 实际执行，截图证据在被忽略的
+`artifacts/qa-a0/`；该检查不代表生产部署或多账号验收。
 
 ## 端口和维护
 
@@ -72,6 +150,8 @@ HISTORICAL 没有真实发布时保持空状态，不以模拟数据替代。当
 
 ## 下一阶段
 
-在 `web/` 执行 A0：React＋TypeScript＋Vite、只读共同合同 fixtures、
-导航和空／错／加载状态，沿用中英文切换。Supabase Auth、数据库迁移与
-RLS 属于后续 A1，必须用两账号和未登录状态验证，不能拿本机维护替代。
+A0–A2 的骨架、合同校验、账户／RLS、市场与比较页已完成本地验收。A3 已
+完成课程完成自述、私有经历增删改、本地英文候选抽取、显式技能确认与来源
+一致性，A1+A3 真实权限矩阵 49/49、浏览器流程 33 项通过；这不代表人工
+课程核实、推荐或正式数据发布，详见 `plans/阶段记录/A3.md`。正式 1.1
+合同升级与公开数据包仍待双方决定；A4–A8 未执行。
