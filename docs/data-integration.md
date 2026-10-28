@@ -41,3 +41,11 @@ A2 已在 `web/` 增加市场概览和方向比较，并只读复核了数据侧
 sample_count 与公开数据边界；公开包不得包含学生记录、凭据、Instagram
 会话或未经授权的原始招聘响应。A1 的真实 Supabase Auth、迁移与 RLS 已
 实装，详见 `web/README.md` 和 A1 记录。
+
+A3 继续使用已批准的 1.0.0 合同与同一上游提交 `b828553f`，没有采用候选
+1.1.0。网站按字节同步了 `contracts/rules/experience-skill-extraction.json`，
+并将提取 schema 与 `valid_experience_skill_candidates.json` 仅放在测试目录；
+路径与 SHA-256 见 `web/public/contracts/PROVENANCE.md`。私有
+`user-record.schema.json` 和 `private_user_record.json` 仍未进入 public。
+课程映射和经历抽取只产生候选，用户明确确认后才写入 `user_skills`；课程、
+经历、手动三种来源及其清理关系由网站迁移维护，不改变共享合同枚举。

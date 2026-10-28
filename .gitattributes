@@ -13,3 +13,5 @@ data/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 # line-ending normalization would invalidate the SHA-256 records in
 # web/public/contracts/PROVENANCE.md.
 web/public/contracts/** -text
+# A3 contract test samples are byte-frozen copies too.
+web/tests/fixtures/** -text

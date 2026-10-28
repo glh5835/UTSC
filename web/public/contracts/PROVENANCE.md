@@ -64,15 +64,33 @@ Deliberately **not** synced into the website public assets:
 
 - `contracts/schemas/user-record.schema.json` and
   `contracts/fixtures/private_user_record.json` — private user data interface,
-  never part of a public bundle.
+  never part of a public bundle. A3 checked the schema against the existing
+  personal tables but did not copy the private fixture or schema to public.
 - Remaining ingestion/review fixtures (`valid_raw_post.json`,
   `valid_ocr_result.json`, `valid_review_patch.json`,
-  `valid_opportunity_draft.json`, `valid_organizer.json`,
-  `valid_experience_skill_candidates.json`) and their schemas — these describe
-  the data side Instagram ingestion/review handoff, which A0 does not consume.
-- `contracts/rules/*.json` — extraction and recommendation rules are consumed
-  from A3/A4 onward; A0 reads no rules.
+  `valid_opportunity_draft.json`, `valid_organizer.json`) and their schemas —
+  these describe the data side Instagram ingestion/review handoff.
+- `contracts/rules/recommendation*.json` — A4 rules, not consumed by A3.
 - Anything outside `contracts/` (pipeline code, real data packages).
+
+## A3 experience extraction sync (2026-10-28)
+
+A3 adds only the English experience-extraction rule and its test samples.
+They are byte-for-byte copies from the same commit
+`b828553f91cf6cd6ae5b0766e7fbf4c6b1822535`, fetched from a fixed-SHA
+codeload archive whose ZIP CRC was verified.
+
+| Website path | Upstream path | SHA-256 | Visibility |
+| --- | --- | --- | --- |
+| `rules/experience-skill-extraction.json` | `contracts/rules/experience-skill-extraction.json` | `13c999b3e1eb44072d068737c4a498bacf6d6a31b0641cca2b3fab42c5f0e993` | public rule |
+| `../tests/fixtures/experience-skill-extraction.schema.json` | `contracts/schemas/experience-skill-extraction.schema.json` | `3185c7854218d3288433900a2b9df289d5142118224db2e81ecb7a7877bfcfc3` | test-only schema |
+| `../tests/fixtures/valid_experience_skill_candidates.json` | `contracts/fixtures/valid_experience_skill_candidates.json` | `213501fb43c66a1c31f7156395719e0fe8bb564909a9827b465729ca2a96b409` | test-only synthetic sample |
+
+The rule has `rule_set_version: 1.0.0`, `language_scope: ["en"]` and
+`language_notice_for: ["other", "unknown"]`. The website extracts candidates
+locally, requires explicit confirmation, and never writes candidates directly
+to confirmed skills. The test schema references the existing public
+`common.schema.json` `$id` registry and is not served to browsers.
 
 If upstream changes the contract, re-sync from the new reviewed commit, update
 this file with the new commit and hashes, and review the impact on

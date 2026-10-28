@@ -162,11 +162,123 @@ describe('profile controller: cross-account late-response isolation', () => {
     expect(controller.getPhase()).toEqual({ kind: 'loading' })
 
     const saveResult = await savePromise
-    expect(saveResult).toEqual({ ok: false, message: 'network reset' })
+    expect(saveResult).toEqual({ ok: false, message: 'network reset', staleOwner: true })
 
     bLoad.d.resolve(row('B-NAME', []))
     await tick()
     expect(controller.getPhase()).toMatchObject({ kind: 'ready', data: { display_name: 'B-NAME' } })
+  })
+
+  it("A's late UPDATE database error is returned as stale and never reaches B", async () => {
+    const fake = makeFakeSupabase()
+    const controller = createProfileController(() => fake as unknown as SupabaseClient)
+    controller.setIdentity(fakeUser(ID_A))
+    fake.ops[0].d.resolve(row('A-NAME', []))
+    await tick()
+
+    const savePromise = controller.save({ display_name: 'A-EDIT', completed_course_ids: [] })
+    const write = fake.ops.find((op) => op.kind === 'write')!
+    controller.setIdentity(fakeUser(ID_B))
+    const bLoad = fake.ops.at(-1)!
+    write.d.resolve({ data: null, error: { message: 'A_LATE_UPDATE_ERROR' } })
+
+    expect(await savePromise).toEqual({
+      ok: false,
+      message: 'A_LATE_UPDATE_ERROR',
+      staleOwner: true,
+    })
+    expect(controller.getPhase()).toEqual({ kind: 'loading' })
+    bLoad.d.resolve(row('B-NAME', []))
+    await tick()
+    expect(controller.getPhase()).toMatchObject({ kind: 'ready', data: { display_name: 'B-NAME' } })
+  })
+
+  it("A's late re-read database error is returned as stale before B's view", async () => {
+    const fake = makeFakeSupabase()
+    const controller = createProfileController(() => fake as unknown as SupabaseClient)
+    controller.setIdentity(fakeUser(ID_A))
+    fake.ops[0].d.resolve(row('A-NAME', []))
+    await tick()
+
+    const savePromise = controller.save({ display_name: 'A-EDIT', completed_course_ids: [] })
+    fake.ops.find((op) => op.kind === 'write')!.d.resolve({ data: null, error: null })
+    await tick()
+    const reRead = fake.ops.at(-1)!
+    controller.setIdentity(fakeUser(ID_B))
+    const bLoad = fake.ops.at(-1)!
+    reRead.d.resolve({ data: null, error: { message: 'A_LATE_REREAD_ERROR' } })
+
+    expect(await savePromise).toEqual({
+      ok: false,
+      message: 'A_LATE_REREAD_ERROR',
+      staleOwner: true,
+    })
+    expect(controller.getPhase()).toEqual({ kind: 'loading' })
+    bLoad.d.resolve(row('B-NAME', []))
+    await tick()
+    expect(controller.getPhase()).toMatchObject({ kind: 'ready', data: { display_name: 'B-NAME' } })
+  })
+
+  it("A's late UPDATE error after sign-out cannot restore a page or error state", async () => {
+    const fake = makeFakeSupabase()
+    const controller = createProfileController(() => fake as unknown as SupabaseClient)
+    controller.setIdentity(fakeUser(ID_A))
+    fake.ops[0].d.resolve(row('A-NAME', []))
+    await tick()
+
+    const savePromise = controller.save({ display_name: 'A-EDIT', completed_course_ids: [] })
+    const write = fake.ops.find((op) => op.kind === 'write')!
+    controller.setIdentity(null)
+    write.d.resolve({ data: null, error: { message: 'A_AFTER_SIGNOUT' } })
+    expect(await savePromise).toEqual({ ok: false, message: 'A_AFTER_SIGNOUT', staleOwner: true })
+    expect(controller.getPhase()).toEqual({ kind: 'idle' })
+  })
+
+  it('A→B→A uses the generation, so a late A error is stale despite the same user id', async () => {
+    const fake = makeFakeSupabase()
+    const controller = createProfileController(() => fake as unknown as SupabaseClient)
+    controller.setIdentity(fakeUser(ID_A))
+    fake.ops[0].d.resolve(row('A-NAME', []))
+    await tick()
+
+    const savePromise = controller.save({ display_name: 'A-EDIT', completed_course_ids: [] })
+    const write = fake.ops.find((op) => op.kind === 'write')!
+    controller.setIdentity(fakeUser(ID_B))
+    const bLoad = fake.ops.at(-1)!
+    controller.setIdentity(fakeUser(ID_A))
+    const freshALoad = fake.ops.at(-1)!
+    expect(bLoad.owner).toBe(ID_B)
+    expect(freshALoad.owner).toBe(ID_A)
+    write.d.resolve({ data: null, error: { message: 'OLD_A_SAME_ID' } })
+
+    expect(await savePromise).toEqual({ ok: false, message: 'OLD_A_SAME_ID', staleOwner: true })
+    expect(controller.getPhase()).toEqual({ kind: 'loading' })
+    freshALoad.d.resolve(row('A-FRESH', ['course_fresh']))
+    await tick()
+    expect(controller.getPhase()).toMatchObject({ kind: 'ready', data: { display_name: 'A-FRESH' } })
+  })
+
+  it('same-account UPDATE, re-read and network failures remain normal current errors', async () => {
+    const fake = makeFakeSupabase()
+    const controller = createProfileController(() => fake as unknown as SupabaseClient)
+    controller.setIdentity(fakeUser(ID_A))
+    fake.ops[0].d.resolve(row('A-NAME', []))
+    await tick()
+
+    const updateFailure = controller.save({ display_name: 'A-1', completed_course_ids: [] })
+    fake.ops.filter((op) => op.kind === 'write').at(-1)!.d.resolve({ data: null, error: { message: 'CURRENT_UPDATE' } })
+    expect(await updateFailure).toEqual({ ok: false, message: 'CURRENT_UPDATE' })
+
+    const readFailure = controller.save({ display_name: 'A-2', completed_course_ids: [] })
+    fake.ops.filter((op) => op.kind === 'write').at(-1)!.d.resolve({ data: null, error: null })
+    await tick()
+    fake.ops.filter((op) => op.kind === 'read').at(-1)!.d.resolve({ data: null, error: { message: 'CURRENT_READ' } })
+    expect(await readFailure).toEqual({ ok: false, message: 'CURRENT_READ' })
+
+    const networkFailure = controller.save({ display_name: 'A-3', completed_course_ids: [] })
+    fake.ops.filter((op) => op.kind === 'write').at(-1)!.d.reject(new Error('CURRENT_NETWORK'))
+    expect(await networkFailure).toEqual({ ok: false, message: 'CURRENT_NETWORK' })
+    expect(controller.getPhase()).toMatchObject({ kind: 'ready', data: { display_name: 'A-NAME' } })
   })
 
   it("A's late INITIAL load is discarded when it lands after a switch to B", async () => {

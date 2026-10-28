@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import type { User } from '@supabase/supabase-js'
 import { useAuth } from '../auth/AuthContext'
 import { useProfile } from '../auth/useProfile'
@@ -131,16 +132,15 @@ function SignedInView({ user, onSignOut }: { user: User; onSignOut: () => Promis
   const { t } = useLanguage()
   const { phase, save } = useProfile(user)
   const [displayName, setDisplayName] = useState('')
-  const [courseIds, setCourseIds] = useState('')
   const [hydrated, setHydrated] = useState(false)
-  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error' | 'stale'>('idle')
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [saveError, setSaveError] = useState('')
 
-  // Hydrate form inputs when the profile arrives — but only once per account,
-  // so that switching language or re-rendering never overwrites user edits.
+  // Hydrate the name when the profile arrives — but only once per account, so
+  // a language switch never overwrites unsaved text. Course completion is
+  // managed by A3's course page and passed through unchanged here.
   if (phase.kind === 'ready' && !hydrated) {
     setDisplayName(phase.data.display_name ?? '')
-    setCourseIds(phase.data.completed_course_ids.join(', '))
     setHydrated(true)
   }
   if ((phase.kind === 'idle' || phase.kind === 'loading' || phase.kind === 'error') && hydrated) {
@@ -149,19 +149,17 @@ function SignedInView({ user, onSignOut }: { user: User; onSignOut: () => Promis
 
   async function handleSave(event: FormEvent) {
     event.preventDefault()
-    if (saveState === 'saving') return
+    if (saveState === 'saving' || phase.kind !== 'ready') return
     setSaveState('saving')
     setSaveError('')
-    const ids = courseIds
-      .split(',')
-      .map((id) => id.trim())
-      .filter((id) => id.length > 0)
-    const result = await save({ display_name: displayName.trim() || null, completed_course_ids: ids })
+    const result = await save({
+      display_name: displayName.trim() || null,
+      completed_course_ids: phase.data.completed_course_ids,
+    })
+    if ('staleOwner' in result && result.staleOwner) return
     if (!result.ok) {
       setSaveState('error')
       setSaveError(result.message)
-    } else if ('staleOwner' in result && result.staleOwner) {
-      setSaveState('stale')
     } else {
       setSaveState('saved')
     }
@@ -191,21 +189,14 @@ function SignedInView({ user, onSignOut }: { user: User; onSignOut: () => Promis
               onChange={(e) => setDisplayName(e.target.value)}
             />
           </label>
-          <label className="field">
-            <span>{t('account.courseIds')}</span>
-            <textarea
-              rows={2}
-              value={courseIds}
-              onChange={(e) => setCourseIds(e.target.value)}
-              placeholder={t('account.courseIdsPlaceholder')}
-            />
-          </label>
-          <p className="note">{t('account.courseIdsHint')}</p>
+          <p className="note">{t('account.courseSummary', { count: phase.data.completed_course_ids.length })}</p>
+          <p>
+            <Link to="/courses">{t('account.manageCourses')}</Link>
+            {' · '}
+            <Link to="/profile">{t('account.manageSkills')}</Link>
+          </p>
           {saveState === 'saved' ? (
             <p className="state state-ok" role="status">{t('account.saved')}</p>
-          ) : null}
-          {saveState === 'stale' ? (
-            <p className="banner banner-warn" role="status">{t('account.saveStale')}</p>
           ) : null}
           {saveState === 'error' ? (
             <p className="banner banner-error" role="alert">

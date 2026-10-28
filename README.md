@@ -3,9 +3,10 @@
 面向 UTSC 学生的职业与实践导航项目。此仓库独立管理网站开发、项目文档和现有中英文 Demo。
 
 **当前有两个可运行部分**：根目录 Streamlit 中英文模拟 Demo（启动方式见下），
-以及 `web/` 下 A0–A2 交付的 React＋TypeScript＋Vite 网站（基础导航、共同
-合同 fixtures 只读样例、运行时校验、中英文切换、真实 Supabase Auth 账户页
-与六表个人数据 RLS，以及市场概览／方向比较页，见 [web/README.md](web/README.md)）。
+以及 `web/` 下 A0–A3 交付的 React＋TypeScript＋Vite 网站（基础导航、共同
+合同样例、运行时校验、中英文切换、真实 Supabase Auth 账户、市场概览／
+方向比较，以及课程完成自述、私有经历、本地候选技能抽取和显式确认，见
+[web/README.md](web/README.md)）。
 生产部署尚未进行；GitHub 仓库上传不代表网站已部署。
 
 ![中文 Demo 界面](docs/images/demo-zh.png)
@@ -57,8 +58,8 @@ py -3.12 -m venv .venv
 | `data/synthetic/` | 旧 Demo 的人工固定输入及分析样例 |
 | `data/resources/` | 旧课程与实践资源摘要、来源与练习 |
 | `tests/`、`scripts/` | 本 Demo 的检查与显式准备工具 |
-| `web/` | A0–A2 React＋TypeScript＋Vite 网站：导航、只读合同样例、运行时校验、中英文切换、Supabase Auth 账户页、市场与比较页（`cd web && npm ci && npm run dev`） |
-| `supabase/` | A1 数据库迁移与本地隔离栈配置（`npx supabase start`，需要 Docker） |
+| `web/` | A0–A3 React＋TypeScript＋Vite 网站：导航、合同样例、运行时校验、账户、市场与比较、课程／经历与显式技能确认（`cd web && npm ci && npm run dev`） |
+| `supabase/` | A1／A3 数据库迁移与本地隔离栈配置（`npx supabase start`，需要 Docker） |
 | `docs/`、`plans/` | 当前开发说明、冻结计划书和历史阶段记录 |
 
 数据负责人 Seraphina 的 [Python 数据仓库](https://github.com/wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market)保持独立，本仓库不包含其管线和真实招聘包。后续消费双方约定的公开合同包；根目录旧模拟契约不能冒充新 S0 v1。
@@ -80,6 +81,8 @@ py -3.12 -m venv .venv
 修正（见 A1 记录的复核章节）。A2 已于 2026-10-28 完成本地功能验收：
 八角色市场概览、筛选、技能提及率、角色比较及中英／手机／异常状态回归通过
 （[阶段记录](plans/阶段记录/A2.md)）；未合并数据候选的隔离联调通过，但正式
-1.1 合同升级与真实数据发布仍待双方决定。A3–A8 未开始。
+1.1 合同升级与真实数据发布仍待双方决定。A3 已于 2026-10-28 完成课程完成
+自述、私有经历、本地英文候选抽取与显式技能确认，并通过真实 A1+A3 权限
+矩阵和浏览器流程（[阶段记录](plans/阶段记录/A3.md)）。A4–A8 未开始。
 
 阅读[项目文档导航](docs/README.md)、[冻结计划书](docs/references/UTSC_Two_Person_Code_Plan.docx)、[数据协作边界](docs/data-integration.md)和 [AGENTS.md](AGENTS.md)。不要提交依赖环境、数据库、密钥、聊天、个人下载或原始招聘响应。

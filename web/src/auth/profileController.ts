@@ -14,7 +14,9 @@ export type ProfilePhase =
 
 export type ProfileUpdate = { display_name: string | null; completed_course_ids: string[] }
 
-export type SaveResult = { ok: false; message: string } | { ok: true; staleOwner?: true }
+export type SaveResult =
+  | { ok: false; message: string; staleOwner?: true }
+  | { ok: true; staleOwner?: true }
 
 const PROFILE_COLUMNS = 'display_name, completed_course_ids, updated_at'
 
@@ -85,6 +87,12 @@ export function createProfileController(getClient: () => SupabaseClient | null) 
     }
   }
 
+  function staleResult(ok: boolean, message = ''): SaveResult {
+    return ok
+      ? { ok: true, staleOwner: true }
+      : { ok: false, message, staleOwner: true }
+  }
+
   async function save(update: ProfileUpdate): Promise<SaveResult> {
     const supabase = getClient()
     const ownerKey = owner
@@ -94,29 +102,34 @@ export function createProfileController(getClient: () => SupabaseClient | null) 
     }
     try {
       const { error } = await supabase.from('profiles').update(update).eq('id', ownerKey)
+      // Every completion branch checks the live generation before inspecting
+      // or exposing the result. A stale UPDATE error is not the new account's
+      // error, so the caller must be able to discard it.
+      if (gen !== generation) {
+        return staleResult(error === null, error?.message ?? '')
+      }
       if (error) {
         return { ok: false, message: error.message }
       }
+
       // Re-read so the displayed cache always reflects the database.
       const { data, error: readError } = await supabase
         .from('profiles')
         .select(PROFILE_COLUMNS)
         .eq('id', ownerKey)
         .single()
+      if (gen !== generation) {
+        return staleResult(readError === null, readError?.message ?? '')
+      }
       if (readError) {
         return { ok: false, message: readError.message }
-      }
-      // Late-response guard: read the live generation NOW, after the network
-      // wait. If the account changed while this save was in flight, the data
-      // belongs to the previous account and must not touch current state.
-      if (gen !== generation) {
-        return { ok: true, staleOwner: true }
       }
       apply(gen, { kind: 'ready', data: toProfileData(data) })
       return { ok: true }
     } catch (reason) {
-      // The failure belongs to the generation that issued the save; the
-      // current account's state is never touched by it.
+      if (gen !== generation) {
+        return staleResult(false, toMessage(reason))
+      }
       return { ok: false, message: toMessage(reason) }
     }
   }

@@ -87,7 +87,10 @@ function mutationPayload(table, marker) {
     case 'experiences':
       return { text: marker }
     case 'user_skills':
-      return { source_id: marker }
+      // A3 requires manual confirmations to have a null source_id, so mutate
+      // the contract timestamp instead of making the generic CRUD probe
+      // invalid. This keeps payload-validity proof meaningful.
+      return { confirmed_at: '2026-01-01T00:00:00Z' }
     case 'favorites':
       return { created_at: '2026-01-01T00:00:00Z' }
     case 'learning_paths':

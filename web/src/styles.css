@@ -285,6 +285,7 @@ h3 {
   margin-left: 6px;
   background: transparent;
   border: none;
+  white-space: nowrap;
   font-size: 0.8em;
   color: var(--ink-muted);
 }
@@ -540,6 +541,12 @@ button:hover,
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  flex-shrink: 0;
+  max-width: 100%;
+}
+.market-option > span {
+  overflow-wrap: normal;
+  word-break: normal;
 }
 .market-date-row {
   display: flex;
@@ -605,4 +612,60 @@ button:hover,
   .bar-cell {
     min-width: 90px;
   }
+}
+
+/* ── A3 courses, experiences and confirmed skills ── */
+.a3-course-list,
+.a3-experience-list {
+  display: grid;
+  gap: 1rem;
+}
+.a3-course,
+.a3-experience,
+.a3-candidate,
+.a3-confirmed-skill {
+  overflow-wrap: anywhere;
+}
+.a3-experience {
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 8px;
+  padding: 1rem;
+}
+.a3-candidates {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #f7f9fc;
+  border: 1px solid #dce4ee;
+  border-radius: 8px;
+}
+.a3-candidate {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #e5eaf1;
+}
+.a3-candidate:last-child {
+  border-bottom: 0;
+}
+.a3-candidate blockquote {
+  margin: 0.4rem 0;
+  padding-left: 0.75rem;
+  border-left: 3px solid #9aaec8;
+}
+.user-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.a3-skill-list {
+  padding-left: 1.1rem;
+}
+.a3-confirmed-skill {
+  margin-bottom: 0.9rem;
+}
+.a3-experience textarea,
+.a3-candidates + button,
+select {
+  max-width: 100%;
+}
+select {
+  min-height: 2.2rem;
+  margin-right: 0.5rem;
 }

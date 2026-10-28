@@ -20,6 +20,10 @@ export const UPSTREAM_CONTRACT_COMMIT = 'b828553f91cf6cd6ae5b0766e7fbf4c6b182253
 export const UPSTREAM_DATA_REPO_URL =
   'https://github.com/wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market'
 
+/** A3 uses the already-approved 1.0.0 valid fixture rather than inventing a
+ * second course contract. Its synthetic label is shown on every course card. */
+export const COURSE_CATALOG_PATH = '/contracts/fixtures/valid_bundle.json'
+
 export interface FixtureSource {
   id: FixtureId
   /** URL path served from web/public. */

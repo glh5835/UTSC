@@ -4,9 +4,10 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
 import { runMatrix } from './rls-matrix.mjs'
+import { runA3Matrix } from './a3-rls-matrix.mjs'
 
 /**
- * Independent A1 RLS acceptance command (2026-10-28 review requirement).
+ * Independent A1 + A3 RLS acceptance command (2026-10-28 review requirements).
  *
  * Unlike the vitest suite (which SKIPS quietly when credentials are absent),
  * this command FAILS LOUDLY and exits non-zero when:
@@ -70,35 +71,41 @@ async function main() {
 
   const started = new Date().toISOString()
   console.log(`RLS acceptance: running full matrix against ${url} (started ${started})`)
-  const result = await runMatrix(
+  const a1 = await runMatrix(
     { url, publicKey, secret, createClient },
-    (line) => console.log('  ' + line),
+    (line) => console.log('  [A1] ' + line),
+  )
+  const a3 = await runA3Matrix(
+    { url, publicKey, secret, createClient },
+    (line) => console.log('  [A3] ' + line),
   )
   const finished = new Date().toISOString()
-  const passed = result.checks.filter((c) => c.passed).length
-  const failed = result.checks.filter((c) => !c.passed)
+  const checks = [...a1.checks, ...a3.checks]
+  const passed = checks.filter((c) => c.passed).length
+  const failed = checks.filter((c) => !c.passed)
   const summary = {
     started,
     finished,
     url,
-    total: result.checks.length,
+    total: checks.length,
     passed,
     failed: failed.length,
-    allPassed: result.allPassed && failed.length === 0,
+    allPassed: a1.allPassed && a3.allPassed && failed.length === 0,
+    groups: { a1: { total: a1.checks.length, passed: a1.checks.filter((c) => c.passed).length }, a3: { total: a3.checks.length, passed: a3.checks.filter((c) => c.passed).length } },
     failedChecks: failed,
-    checks: result.checks,
+    checks,
   }
   if (outFile) {
     fs.mkdirSync(path.dirname(outFile), { recursive: true })
     fs.writeFileSync(outFile, JSON.stringify(summary, null, 2), 'utf8')
   }
   if (!summary.allPassed) {
-    console.error(`RLS ACCEPTANCE FAILED: ${passed}/${result.checks.length} checks passed; failures:`)
+    console.error(`RLS ACCEPTANCE FAILED: ${passed}/${checks.length} checks passed; failures:`)
     for (const f of failed) console.error(`  - ${f.name}: ${f.message}`)
     if (outFile) console.error(`Report: ${outFile}`)
     process.exit(1)
   }
-  console.log(`RLS ACCEPTANCE PASSED: ${passed}/${result.checks.length} checks passed (real signup + password login, two accounts both directions, anonymous, metadata self-escalation, cascade deletion).`)
+  console.log(`RLS ACCEPTANCE PASSED: ${passed}/${checks.length} checks across A1 and A3 (real signup + password login, two-account isolation, anonymous, metadata escalation, A3 course/experience/skill source integrity, cascade deletion).`)
   if (outFile) console.log(`Report: ${outFile}`)
 }
 

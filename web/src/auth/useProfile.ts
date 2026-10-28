@@ -30,6 +30,9 @@ export function useProfile(user: User | null | undefined) {
 
   useEffect(() => {
     controller.setIdentity(user)
+    // Unmounting (including an account-keyed view being replaced) invalidates
+    // the old generation so in-flight results are returned as stale.
+    return () => controller.setIdentity(null)
   }, [controller, user?.id])
 
   const save = useCallback(
