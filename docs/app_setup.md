@@ -2,8 +2,8 @@
 
 当前仓库有两个可运行部分：根目录 Streamlit 中英文模拟 Demo（已在
 Windows 与 Python 3.12.14 验证），以及 `web/` 下的 React＋TypeScript＋Vite
-网站（A0 骨架 + A1 真实 Supabase Auth 账户页，已在 Windows 与 Node v24.19
-验证）。生产部署尚未进行。
+网站（A0–A2 基础、真实 Supabase Auth 账户页、市场概览与方向比较，已在
+Windows 与 Node v24.19 验证）。生产部署尚未进行。
 
 ## 新 checkout
 
@@ -37,12 +37,14 @@ HISTORICAL 没有真实发布时保持空状态，不以模拟数据替代。当
 活动为 0，15 条官方课程摘要是代理在 2026-10-21 的来源检查，不保证
 当期开课、名额或个人资格。
 
-## React 网站（A0，web/）
+## React 网站（A0–A2，web/）
 
-A0 在 `web/` 建立 React＋TypeScript＋Vite 项目：基础导航、共同合同
-fixtures 的只读样例展示、运行时数据校验和全局中英文切换（默认英文，
-`?lang=zh` 或页面右上角切换；规范 ID、筛选与当前页不随语言改变）。
-所有样例数据带 SYNTHETIC 标记。
+`web/` 是 React＋TypeScript＋Vite 项目：A0 提供基础导航、共同合同
+fixtures 的只读样例、运行时数据校验和全局中英文切换（默认英文，
+`?lang=zh` 或页面右上角切换；规范 ID、筛选与当前页不随语言改变）；
+A1 提供真实 Supabase Auth 与本人资料；A2 提供公开的市场概览与方向比较。
+站内默认样例和演示包带 SYNTHETIC 标记，不是真实市场数据。候选 D4／D7
+联调只存在于被忽略的隔离副本，不随正式站点发布。
 
 前置条件：Node.js ≥ 22.12（Vite 7 官方要求；实际验证用 v24.19）。
 首次安装需要 npm 包源网络，不需要任何 API key 或生产凭据。
@@ -65,6 +67,14 @@ npm run preview     # 预览 dist/ 构建产物
 不会暗中替换为有效包。清单中的生成/采集/发布时间按包内原始值显示，不用
 构建时间冒充采集时间；快照超过阈值（默认 180 天）显示旧数据提示。
 
+市场概览（`#/market`）与方向比较（`#/compare`）只使用八类规范角色，
+支持同维多选 OR、跨维 AND、含边界当天的发布日期筛选，并把筛选保存在
+网址中；未知日期不会满足生效的日期条件。技能提及率始终按 F 中去重、
+`description_analyzable=true` 的岗位数 D 作分母，D=0 显示为暂无可分析
+数据而不是 0%。网页侧 SYNTHETIC 演示包的固定预期值、中英切换、键盘、
+错误／空／拒收状态及 390px 布局已在 2026-10-28 验收，细节见
+`plans/阶段记录/A2.md`。
+
 账户页（A1）使用真实 Supabase Auth：邮箱密码注册、登录、退出、刷新恢复
 会话，并保存/读取本人 profiles 行。需要本地 Supabase 栈（仓库根
 `npx supabase start`，详见 `web/README.md`）或已配置的项目端点，通过
@@ -74,9 +84,11 @@ npm run preview     # 预览 dist/ 构建产物
 （http://127.0.0.1:55424）。未配置时账户页明确提示，公共样例页面不受
 影响；页面不展示任何假用户或模拟登录。
 
-合同文件（schemas 与 fixtures）是上游 `b828553f` 的按字节原样副本，
-来源与 SHA-256 记录见 `web/public/contracts/PROVENANCE.md`。A1 的
-Supabase 接入方案记录在 `web/README.md`，本轮无任何 Supabase 代码。
+默认合同文件（schema_version 1.0.0 与 fixtures）仍是上游 `b828553f` 的
+按字节原样副本，来源与 SHA-256 记录见
+`web/public/contracts/PROVENANCE.md`。A1 Supabase 实现与 A2 市场页说明
+见 `web/README.md`；候选 1.1.0 合同只在隔离测试环境验证，尚未替换正式
+副本。
 
 浏览器验收（导航、中英文切换、键盘操作、390px 手机布局、损坏包拒收与
 错误恢复）已于 2026-10-27 实际执行，截图证据在被忽略的
@@ -123,4 +135,6 @@ A0 已完成 `web/` 骨架、只读共同合同 fixtures、导航和空／错／
 数据状态，以及中英文切换。A1 已接入真实 Supabase Auth、数据库迁移与
 RLS，并用独立验收命令以两真实账号和未登录状态验证越权读写全部被拒
 （`npm run test:rls-acceptance`，见 `web/README.md` 与
-`plans/阶段记录/A1.md`）。A2（市场页面）尚未开始。
+`plans/阶段记录/A1.md`）。A2 市场概览与方向比较已完成本地功能验收，
+并完成未合并 D4／D7 候选包的隔离对照；正式 1.1 合同升级、公开数据包与
+A3–A8 尚未执行，见 `plans/阶段记录/A2.md`。

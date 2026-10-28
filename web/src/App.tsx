@@ -5,12 +5,12 @@ import { useLanguage } from './i18n/LanguageContext'
 import { HomePage } from './pages/Home'
 import { SampleDataPage } from './pages/SampleData'
 import { AccountPage } from './pages/Account'
+import { MarketPage } from './features/market/MarketPage'
+import { ComparePage } from './features/market/ComparePage'
 import { PlaceholderPage, type PlaceholderSpec } from './pages/Placeholder'
 import { NotFoundPage } from './pages/NotFound'
 
 const PLACEHOLDERS: Record<string, PlaceholderSpec> = {
-  market: { navKey: 'nav.market', descKey: 'ph.market.desc', planRef: 'A2' },
-  compare: { navKey: 'nav.compare', descKey: 'ph.compare.desc', planRef: 'A2' },
   courses: { navKey: 'nav.courses', descKey: 'ph.courses.desc', planRef: 'A3' },
   opportunities: { navKey: 'nav.opportunities', descKey: 'ph.opportunities.desc', planRef: 'A5' },
   profile: { navKey: 'nav.profile', descKey: 'ph.profile.desc', planRef: 'A4/A6' },
@@ -30,6 +30,8 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/sample" element={<SampleDataPage />} />
         <Route path="/account" element={<AccountPage />} />
+        <Route path="/market" element={<MarketPage />} />
+        <Route path="/compare" element={<ComparePage />} />
         {Object.entries(PLACEHOLDERS).map(([path, spec]) => (
           <Route key={path} path={`/${path}`} element={<TitledPlaceholder spec={spec} />} />
         ))}

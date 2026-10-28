@@ -1,9 +1,11 @@
-# UTSC web — React＋TypeScript＋Vite（A0/A1）
+# UTSC web — React＋TypeScript＋Vite（A0–A2）
 
 A0 交付基础导航、共同合同 fixtures 的只读样例展示、运行时数据校验层和
-全局中英文切换；A1 在其上接入真实 Supabase Auth、六张个人表迁移与 RLS、
-账户页资料读写。样例数据仍全部带 SYNTHETIC 标记，不是真实市场或活动
-数据；A2（市场页面）尚未实现，页面上已明确标注，不模拟任何收藏或发布。
+全局中英文切换；A1 接入真实 Supabase Auth、六张个人表迁移与 RLS、账户页
+资料读写；A2 增加公开市场概览与方向比较。默认样例和演示包仍全部带
+SYNTHETIC 标记，不是真实市场或活动数据。市场页支持八角色／地区／阶段／
+发布日期筛选、按可分析描述 D 计算的技能提及率，以及每角色独立分母的
+比较；筛选保存在网址中。A3–A8 未实现，也不模拟收藏、提交或发布。
 
 ## 启动
 
@@ -20,7 +22,7 @@ npm run dev     # 开发服务器，默认 http://localhost:5173
 
 ```powershell
 npm run typecheck   # tsc --noEmit
-npm run test        # vitest run（校验层/标签覆盖/旧数据判断）
+npm run test        # vitest run（校验层、标签、旧数据、账户隔离、A2 统计与筛选）
 npm run build       # tsc --noEmit + vite build，产物在 dist/
 npm run preview     # 本地预览构建产物
 ```
@@ -32,8 +34,9 @@ npm run preview     # 本地预览构建产物
 | `public/contracts/` | 数据侧合同 v1 的原样副本（schemas + 三组 bundle fixtures），`PROVENANCE.md` 记录上游提交、路径与 SHA-256 |
 | `src/data/` | 数据加载与运行时校验层（ajv + Draft 2020-12 上游 schema，加交叉引用/重复 ID/sample_count/时间顺序/公开边界检查）、fixture 来源配置、枚举显示标签、快照旧数据判断 |
 | `src/i18n/` | 英文/中文字典与语言上下文；URL `?lang=` 与 localStorage 同步 |
-| `src/pages/`、`src/components/` | 首页、只读样例数据页、待开发占位页、布局与状态组件 |
-| `tests/` | 针对实际行为的检查：直接读取 `public/contracts/` 下发货文件做校验层测试；标签覆盖对照上游 schema 枚举 |
+| `src/pages/`、`src/components/` | 首页、只读样例数据页、账户页、市场／比较入口、待开发占位页、布局与状态组件 |
+| `src/features/market/` | 市场筛选、canonical 八角色、F／D／N 统计、角色分布说明、比较页和 1.0 数据加载；候选 1.1 校验只在隔离测试副本 |
+| `tests/` | 校验层、标签覆盖、旧数据判断、A1 账户隔离、A2 手算固定值／筛选 URL／加载竞态与真实 RLS 独立包装 |
 
 ## 数据边界
 

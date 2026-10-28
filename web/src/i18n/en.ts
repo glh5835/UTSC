@@ -8,7 +8,7 @@ const en = {
   'app.title': 'UTSC Career & Practice Navigator',
   'app.tagline': 'Compare data career directions, confirm your skills, find courses and club opportunities.',
   'app.syntheticBanner':
-    'Development preview (A0/A1): all data shown is SYNTHETIC contract fixtures, not real market or activity data.',
+    'Development preview (A0–A2): all data shown is SYNTHETIC (contract fixtures and a website-side demo package), not real market or activity data.',
   'app.skipToContent': 'Skip to main content',
   'app.languageSwitch': 'Switch language',
   'app.primaryNav': 'Primary navigation',
@@ -24,7 +24,7 @@ const en = {
 
   'home.title': 'Home',
   'home.intro':
-    'This site is being built for UTSC students. A0 (this release) delivers the project foundation: React + TypeScript + Vite skeleton, the shared data contract, runtime validation, and a read-only sample data viewer.',
+    'This site is being built for UTSC students. A0–A2 deliver the foundation, the shared data contract, runtime validation, a read-only sample viewer, real Supabase accounts (A1), and the public market and role-comparison pages (A2).',
   'home.workingTitle': 'Working now',
   'home.workingItem1':
     'Basic navigation with a global English/Chinese switch that keeps canonical IDs, filters and the current page unchanged.',
@@ -35,7 +35,7 @@ const en = {
   'home.sampleCta': 'Open the sample data viewer',
   'home.pendingTitle': 'Not implemented yet (planned stages)',
   'home.pendingA1': 'A1 — database, permissions and the minimal account page are implemented (see Account); full profile/favorites/pathway management stays in A4/A6.',
-  'home.pendingA2': 'A2 — Market overview and role comparison pages with filters and skill mention charts.',
+  'home.pendingA2': 'A2 — public market overview and role comparison are implemented and locally accepted (see Market/Compare); D4 fixed cases match in an isolated unmerged-candidate check, while formal 1.1 contract/package release still needs a joint decision.',
   'home.pendingA3': 'A3 — Course–skill mapping and experience-based candidate skill extraction.',
   'home.pendingA4': 'A4 — Recommendations and learning paths.',
   'home.pendingA5': 'A5 — Opportunity browsing, classification filters and calendar export.',
@@ -43,7 +43,7 @@ const en = {
   'home.pendingA7': 'A7 — Publishing adapter and ICS calendar export.',
   'home.pendingA8': 'A8 — Deployment and end-to-end acceptance.',
   'home.honestyNote':
-    'No login, favorites, submissions or publishing are implemented in A0, and none are simulated. Nothing on this site should be read as real recruitment, course availability or activity information.',
+    'Login and accounts use real Supabase Auth (A1); favorites, submissions and publishing are not implemented and none are simulated. Nothing on this site should be read as a formally released recruitment package, course availability or real activity information.',
 
   'sample.title': 'Sample data (read-only)',
   'sample.intro':
@@ -156,6 +156,99 @@ const en = {
   'ph.noFake':
     'This page intentionally has no content: no login, favorites, submissions or results are simulated. The navigation entry exists so the site structure is visible.',
 
+  'market.intro':
+    'Formal market statistics over a versioned contract package: eight canonical roles, area/level/posted-date filters and skill mention rates. Public page — no sign-in needed.',
+  'market.upstreamNote':
+    'Contract schemas are verbatim copies of upstream commit {commit}. Package provenance is recorded under public/contracts/.',
+  'market.datasetLegend': 'Choose a data package',
+  'market.dataset.demo.label': 'A2 demo package',
+  'market.dataset.demo.note':
+    'Website-constructed SYNTHETIC sample for development and manual-expected-value tests. Contract-valid, but NOT upstream data and NOT a real market snapshot.',
+  'market.dataset.websiteSide': 'website-side',
+  'market.loading': 'Loading and validating data…',
+  'market.errorMessage': 'The data package could not be fetched. Check that the local server is running, then retry.',
+  'market.datasetHeading': 'Dataset',
+  'market.runStatusCaveat': 'incomplete run',
+  'market.timesNote':
+    'Generation, collection and posting times are shown separately, exactly as stored in the package. No build or view time is substituted.',
+  'market.partialBanner': 'This package is marked PARTIAL: the collection run did not finish, so counts may understate the market.',
+  'market.filterHeading': 'Filters',
+  'market.filterSemanticsNote':
+    'An unticked dimension means no restriction (全部). Ticks within one dimension combine as OR; different dimensions combine as AND.',
+  'market.orSemantics': 'OR within this dimension',
+  'market.dimension.role': 'Role',
+  'market.dimension.area': 'Region',
+  'market.dimension.level': 'Career stage',
+  'market.dimension.date': 'Posted date',
+  'market.allRoles': 'All roles',
+  'market.allAreas': 'All regions',
+  'market.allLevels': 'All stages',
+  'market.allDates': 'All dates',
+  'market.inclusiveBounds': 'bounds include the end dates',
+  'market.dateFrom': 'Posted from',
+  'market.dateTo': 'Posted to',
+  'market.dateNote':
+    'Bounds match the contract posted_date and include the boundary days. Jobs with an unknown posting date never satisfy an active date filter.',
+  'market.dateDraftNote':
+    'Date edits stay in the form until you apply a valid range; results do not change while a range is incomplete or reversed.',
+  'market.dateApply': 'Apply date range',
+  'market.dateRangeInvalid': 'Enter valid calendar dates before applying. Your input has been kept.',
+  'market.dateRangeReversed':
+    'The start date must not be later than the end date. Your input has been kept; correct it and apply again.',
+  'market.clearFilters': 'Clear all filters',
+  'market.filterActive': 'Filters are active — the URL carries the current filter set.',
+  'market.summaryHeading': 'Sample and description coverage',
+  'market.formalSample': 'F — formal-scope jobs matching the filters',
+  'market.formalOutOfFormal': 'of {total} formal-scope jobs in the package',
+  'market.analyzableDescriptions': 'D — with analyzable description (D/F)',
+  'market.notAnalyzable': 'Excluded from description analysis',
+  'market.notAnalyzableSplit': 'missing description {missing}, unavailable {unavailable}, present but not analyzable {present}',
+  'market.metricsNote':
+    'F = distinct formal jobs under the filters; D = F ∩ analyzable description. Every skill rate below uses the same D as denominator; a job counts at most once per skill.',
+  'market.rolesHeading': 'Sample distribution over the eight canonical roles',
+  'market.roleDistributionNote':
+    'This table intentionally ignores selected roles so all eight remain visible; region, stage and date filters still apply. Its counts therefore need not sum to the F shown above.',
+  'market.col.role': 'Role',
+  'market.col.skill': 'Skill (canonical id)',
+  'market.col.sample': 'Jobs (F)',
+  'market.col.analyzable': 'Analyzable (D)',
+  'market.col.jobsMentioning': 'Jobs mentioning (N/D)',
+  'market.col.rate': 'Mention rate (N/D)',
+  'market.col.bar': 'Bar (same values as printed here)',
+  'market.exclusionsNote':
+    'Not counted above: {roleReview} role-pending, {roleOutside} outside-scope, {levelReview} level-unknown/pending jobs. They are never shown as a ninth role.',
+  'market.techSkills': 'Technical skills ({count})',
+  'market.softSkills': 'Soft skills ({count})',
+  'market.noAnalyzableData': '暂无可分析数据 / No analyzable data: D = 0, so no mention rate is shown (not even 0%).',
+  'market.noAnalyzableDataShort': 'no analyzable data',
+  'market.smallSampleHint':
+    'Small sample: only {d} analyzable descriptions (< {threshold}). This is a product notice threshold, NOT a statement about statistical significance.',
+  'market.rateNote': 'Rate = N/D with D = {d}. Raw fractions keep full precision; only the display is rounded.',
+  'market.subtypeLegend':
+    'Sub-labels of {role} (role_subtype), not extra categories:',
+  'market.noMatchingJobs': 'No formal-scope jobs match the current filters. Adjust or clear the filters.',
+  'market.failedTitle': 'This package is unusable',
+  'market.failedRefusal':
+    'The package manifest says the collection run FAILED. No statistics are computed from it — choose another package or retry. A failed run is never presented as data.',
+  'market.emptyPackage':
+    'This package contains no records at all (empty dataset), so there is nothing to count. This is different from “no results under the current filters”.',
+
+  'market.scopeNote':
+    'Formal statistics count only classified roles within the eight canonical ids and classified levels within internship/new_grad/entry_level. needs_review, outside_scope, unknown and potential_senior are excluded from these numbers.',
+
+  'compare.intro':
+    'Compare roles of the eight canonical directions under the same region, stage and date conditions. Each role always uses its own sample and its own analyzable-description denominator.',
+  'compare.pickHeading': 'Roles to compare',
+  'compare.pickNote': 'Select two or more roles. The comparison keeps the shared region/stage/date filter below.',
+  'compare.pickMore': 'Select at least two roles to compare.',
+  'compare.techHeading': 'Technical skill mention rates by role',
+  'compare.softHeading': 'Soft skill mention rates by role',
+  'compare.smallSampleNote': 'One or more roles has fewer than {threshold} analyzable descriptions — product notice, not a statistical claim.',
+  'compare.col.metric': 'Metric / skill',
+  'compare.row.sample': 'F (sample)',
+  'compare.row.analyzable': 'D (analyzable)',
+  'compare.note': 'Each cell is N/D for that role’s own denominator; “—” means the denominator is zero for that role.',
+
   'account.intro':
     'Sign in with a real Supabase account to read and save your own profile. Public sample pages stay available without an account; personal data is protected by database-level row security, not by hidden buttons.',
   'account.notConfiguredTitle': 'Supabase is not configured',
@@ -192,8 +285,6 @@ const en = {
   'account.scopeNote':
     'A1 scope: profile read/save only. Favorites, learning paths and skill extraction have no interface yet; skills are never confirmed automatically.',
 
-  'ph.market.desc': 'Will show job volume, filters by 8 roles, area, level and date, and skill mention rates (task A2).',
-  'ph.compare.desc': 'Will compare two career directions with skill mention rates and shared denominators (task A2).',
   'ph.courses.desc': 'Will map UTSC courses and learning resources to skills, with candidate skill confirmation (task A3).',
   'ph.opportunities.desc': 'Will browse approved club activities and ongoing opportunities with filters (task A5).',
   'ph.profile.desc': 'Accounts exist already (see Account). Profile details, favorites and pathways arrive with tasks A4/A6.',
@@ -206,7 +297,7 @@ const en = {
   'errorBoundary.message': 'An unexpected error occurred. The data shown before the error is untouched; you can go back or reload.',
   'errorBoundary.reload': 'Reload page',
 
-  'footer.preview': 'Development preview (A0/A1). Not a deployed product.',
+  'footer.preview': 'Development preview (A0–A2). Not a deployed product.',
   'footer.contract': 'Contract synced verbatim from upstream commit {commit}.',
   'footer.dataRepo': 'Data repository (Seraphina)',
   'footer.websiteRepo': 'Website repository',

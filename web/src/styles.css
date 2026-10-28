@@ -1,4 +1,4 @@
-/* UTSC Career & Practice Navigator — A0 foundation styles.
+/* UTSC Career & Practice Navigator — A0–A2 website styles.
    System font stack, no webfonts, responsive down to small phones. */
 
 :root {
@@ -517,5 +517,92 @@ button:hover,
 @media (prefers-reduced-motion: reduce) {
   .skip-link {
     transition: none;
+  }
+}
+
+/* ── A2 market pages ── */
+.market-filter fieldset.market-dimension {
+  border: 1px solid var(--border, #d8dee6);
+  border-radius: 8px;
+  margin: 0 0 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+.market-dimension legend {
+  font-weight: 600;
+  padding: 0 0.35rem;
+}
+.market-option-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+}
+.market-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.market-date-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.market-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.market-table th,
+.market-table td {
+  text-align: left;
+  padding: 0.35rem 0.5rem;
+  border-bottom: 1px solid var(--border, #e2e8f0);
+  vertical-align: top;
+}
+.market-table td.num,
+.market-table th.num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.market-table thead th {
+  border-bottom: 2px solid var(--border, #d8dee6);
+}
+.bar-cell {
+  width: 28%;
+  min-width: 120px;
+}
+.bar-track {
+  background: #eef2f7;
+  border-radius: 4px;
+  height: 12px;
+  width: 100%;
+  overflow: hidden;
+}
+.bar-fill {
+  background: #3567a6;
+  height: 100%;
+}
+.chip-active-all {
+  background: #e6efe6;
+  border: 1px solid #b8d2b8;
+}
+.chip-muted {
+  background: #eef2f7;
+  border: 1px solid #ccd6e0;
+}
+.compare-scroll {
+  overflow-x: auto;
+}
+.compare-table th[scope='col'] code.chip-id {
+  display: inline-block;
+}
+.sr-only-sm {
+  /* column header for the decorative bar; visually hidden on wide screens,
+     announced by screen readers, shown on very narrow layouts */
+}
+@media (max-width: 560px) {
+  .sr-only-sm {
+    position: static;
+  }
+  .bar-cell {
+    min-width: 90px;
   }
 }

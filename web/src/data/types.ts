@@ -19,7 +19,9 @@ export interface Manifest {
   posting_from: string | null
   posting_to: string | null
   query_config_version: string
-  run_status: 'complete' | 'partial'
+  /** The upstream manifest schema allows "failed"; such packages must never
+   * drive normal statistics (the market pages refuse them). */
+  run_status: 'complete' | 'partial' | 'failed'
   sample_count: number
 }
 

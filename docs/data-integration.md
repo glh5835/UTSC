@@ -26,10 +26,18 @@ schema 与 valid／empty／invalid 三组 bundle fixtures，复制到
 的人工输入；`data/resources/` 是带来源和核对日期的旧资源摘要。
 它们没有接入新的真实招聘记录，也不能直接当作 S0 v1 的正式包。
 
-下一阶段应增加市场／比较等消费页面（A2 起），从已同步的共同 fixtures
-继续开发，再切换到数据负责人交付并验证的公开包。网站端的运行时校验层
-（`web/src/data/validation.ts`）按合同 README 要求实现了 schema 之外的
-交叉引用、唯一性、时间顺序、sample_count 与公开数据边界检查；损坏包
-整体拒收。公开包不得包含学生记录、凭据、Instagram 会话或未经授权的
-原始招聘响应。A1 的 Supabase 接入方案记录在 `web/README.md`：仅方案，
-无代码、迁移或 RLS 实现。
+A2 已在 `web/` 增加市场概览和方向比较，并只读复核了数据侧未合并 PR 的
+固定提交：D4 `f8d2950`、D7 `60bcba3`。隔离重建包为 419 条岗位、316 条
+可分析描述，manifest 为 `run_status=partial`，不含原始描述或私有记录；
+网页与 D4 三个固定统计案例的 F、D、N、比率一致。该结果只证明本地联调，
+不是合同合并、人工分类验收、正式发布或实时市场。
+
+候选 D7 把 `schema_version` 定为 1.1.0，并新增必填 `organizers` 以及
+机会的 responsibilities／time_commitment／compensation_status／ccr_status、
+资源的可选 mapping_evidence。现有 1.0.0 契约副本与默认数据源保持不变；
+候选 schema 只在隔离副本以其独立校验器加载。正式升级需双方明确决定并
+重新同步、迁移消费代码，不能删除字段、放宽 `additionalProperties` 或改
+版本号冒充旧合同。网站运行时校验层继续检查跨记录引用、唯一性、时间顺序、
+sample_count 与公开数据边界；公开包不得包含学生记录、凭据、Instagram
+会话或未经授权的原始招聘响应。A1 的真实 Supabase Auth、迁移与 RLS 已
+实装，详见 `web/README.md` 和 A1 记录。

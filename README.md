@@ -3,14 +3,17 @@
 面向 UTSC 学生的职业与实践导航项目。此仓库独立管理网站开发、项目文档和现有中英文 Demo。
 
 **当前有两个可运行部分**：根目录 Streamlit 中英文模拟 Demo（启动方式见下），
-以及 `web/` 下 A0/A1 交付的 React＋TypeScript＋Vite 网站（基础导航、共同
-合同 fixtures 只读样例、运行时校验、中英文切换；A1 另有真实 Supabase Auth
-账户页与六表个人数据 RLS，见 [web/README.md](web/README.md)）。
+以及 `web/` 下 A0–A2 交付的 React＋TypeScript＋Vite 网站（基础导航、共同
+合同 fixtures 只读样例、运行时校验、中英文切换、真实 Supabase Auth 账户页
+与六表个人数据 RLS，以及市场概览／方向比较页，见 [web/README.md](web/README.md)）。
 生产部署尚未进行；GitHub 仓库上传不代表网站已部署。
 
 ![中文 Demo 界面](docs/images/demo-zh.png)
 
-## 当前功能
+## 旧 Streamlit Demo 功能
+
+以下列表描述根目录 Demo；A2 正式网站页面在 `web/`，两者数据与账号状态
+互相独立。
 
 - 市场概览：职业方向、地区、职业阶段筛选，显示样本量及可分析描述分母。
 - 两个方向比较：技能提及率、零分母提示、来源和日期、CSV 下载。
@@ -19,7 +22,9 @@
 - 数据质量：纳入／待审／排除、技能依据及完整发布来源。
 - **全局 English／中文 一键切换**，保留当前会话筛选、比较方向及填写内容；语言通过网址参数保留。
 
-岗位原文、官方课程名称和来源证据保持原文，机器可读 CSV 保留稳定字段。个人资料只保存在当前会话，尚无真实账户或收藏持久化。
+岗位原文、官方课程名称和来源证据保持原文，机器可读 CSV 保留稳定字段。
+旧 Demo 的个人资料只保存在当前会话；`web/` 的 A1 已提供真实 Supabase
+账户与本人资料读写，但收藏仍未实现。
 
 ## 快速启动
 
@@ -52,7 +57,7 @@ py -3.12 -m venv .venv
 | `data/synthetic/` | 旧 Demo 的人工固定输入及分析样例 |
 | `data/resources/` | 旧课程与实践资源摘要、来源与练习 |
 | `tests/`、`scripts/` | 本 Demo 的检查与显式准备工具 |
-| `web/` | A0/A1 React＋TypeScript＋Vite 网站：导航、只读合同 fixtures 样例、运行时校验、中英文切换、Supabase Auth 账户页（`cd web && npm ci && npm run dev`） |
+| `web/` | A0–A2 React＋TypeScript＋Vite 网站：导航、只读合同样例、运行时校验、中英文切换、Supabase Auth 账户页、市场与比较页（`cd web && npm ci && npm run dev`） |
 | `supabase/` | A1 数据库迁移与本地隔离栈配置（`npx supabase start`，需要 Docker） |
 | `docs/`、`plans/` | 当前开发说明、冻结计划书和历史阶段记录 |
 
@@ -72,6 +77,9 @@ py -3.12 -m venv .venv
 状态（[阶段记录](plans/阶段记录/A0.md)）。A1 已于 2026-10-27 完成
 真实 Supabase Auth、六表迁移与 RLS（[阶段记录](plans/阶段记录/A1.md)），
 2026-10-28 按独立复核完成账号隔离修复、真实权限矩阵验收与合同溯源
-修正（见 A1 记录的复核章节）。A2 尚未开始。
+修正（见 A1 记录的复核章节）。A2 已于 2026-10-28 完成本地功能验收：
+八角色市场概览、筛选、技能提及率、角色比较及中英／手机／异常状态回归通过
+（[阶段记录](plans/阶段记录/A2.md)）；未合并数据候选的隔离联调通过，但正式
+1.1 合同升级与真实数据发布仍待双方决定。A3–A8 未开始。
 
 阅读[项目文档导航](docs/README.md)、[冻结计划书](docs/references/UTSC_Two_Person_Code_Plan.docx)、[数据协作边界](docs/data-integration.md)和 [AGENTS.md](AGENTS.md)。不要提交依赖环境、数据库、密钥、聊天、个人下载或原始招聘响应。

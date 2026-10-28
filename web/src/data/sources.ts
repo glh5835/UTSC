@@ -1,7 +1,7 @@
 import type { UtscBundle } from './types'
 
 /**
- * Front-end source configuration for A0 sample data.
+ * Front-end source configuration for the A0–A2 sample data.
  *
  * The three bundles are the jointly agreed contract fixtures from the data
  * side. They are SYNTHETIC by agreement (contracts/README.md: "Fixtures are
@@ -10,9 +10,9 @@ import type { UtscBundle } from './types'
  * the frozen contract files themselves; the JSON under public/contracts/ is a
  * verbatim copy (see public/contracts/PROVENANCE.md).
  *
- * A1+ will replace or supplement these entries with versioned published
- * packages; the synthetic flag must stay false only for reviewed real
- * packages that the data side has verified.
+ * Published versioned packages can supplement these entries after the data
+ * side and website owner agree; the synthetic flag must stay false only for
+ * reviewed real packages that the data side has verified.
  */
 
 export const UPSTREAM_CONTRACT_COMMIT = 'b828553f91cf6cd6ae5b0766e7fbf4c6b1822535'
