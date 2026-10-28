@@ -2,8 +2,8 @@
 
 当前仓库有两个可运行部分：根目录 Streamlit 中英文模拟 Demo（已在
 Windows 与 Python 3.12.14 验证），以及 `web/` 下的 React＋TypeScript＋Vite
-网站骨架（A0，已在 Windows 与 Node v24.19 验证）。Supabase、真实登录和
-生产部署尚未实现。
+网站（A0 骨架 + A1 真实 Supabase Auth 账户页，已在 Windows 与 Node v24.19
+验证）。生产部署尚未进行。
 
 ## 新 checkout
 
@@ -55,7 +55,7 @@ npm run dev     # 开发服务器，默认 http://localhost:5173
 
 ```powershell
 npm run typecheck   # TypeScript 严格检查
-npm run test        # vitest：校验层、标签覆盖、旧数据判断（34 项）
+npm run test        # vitest：校验层、标签覆盖、旧数据判断、账户隔离回归（本地栈 RLS 矩阵需凭据，缺失时跳过）
 npm run build       # tsc --noEmit + vite build（生产构建验证）
 npm run preview     # 预览 dist/ 构建产物
 ```
@@ -120,5 +120,7 @@ Supabase 接入方案记录在 `web/README.md`，本轮无任何 Supabase 代码
 ## 下一阶段
 
 A0 已完成 `web/` 骨架、只读共同合同 fixtures、导航和空／错／加载／旧
-数据状态，以及中英文切换。A1 再接入真实 Supabase Auth、数据库迁移与
-RLS，必须用两账号和未登录状态验证越权读写均失败，不能拿本机维护替代。
+数据状态，以及中英文切换。A1 已接入真实 Supabase Auth、数据库迁移与
+RLS，并用独立验收命令以两真实账号和未登录状态验证越权读写全部被拒
+（`npm run test:rls-acceptance`，见 `web/README.md` 与
+`plans/阶段记录/A1.md`）。A2（市场页面）尚未开始。

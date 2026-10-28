@@ -1,9 +1,9 @@
-# UTSC web — React＋TypeScript＋Vite（A0）
+# UTSC web — React＋TypeScript＋Vite（A0/A1）
 
-冻结计划 A0 的项目骨架：基础导航、共同合同 fixtures 的只读样例展示、
-运行时数据校验层和全局中英文切换。**当前所有数据都是 SYNTHETIC 人工
-合同样例**，不是真实市场或活动数据；A1（账户/数据库）、A2（市场页面）
-尚未实现，页面上已明确标注，不模拟任何登录、收藏或发布。
+A0 交付基础导航、共同合同 fixtures 的只读样例展示、运行时数据校验层和
+全局中英文切换；A1 在其上接入真实 Supabase Auth、六张个人表迁移与 RLS、
+账户页资料读写。样例数据仍全部带 SYNTHETIC 标记，不是真实市场或活动
+数据；A2（市场页面）尚未实现，页面上已明确标注，不模拟任何收藏或发布。
 
 ## 启动
 
@@ -70,12 +70,16 @@ npx supabase stop         # 停止
 本地测试邮件工具：注册确认邮件进入 Mailpit（http://127.0.0.1:55424，CLI 2.122 本地栈自带），
 不发送真实外部邮件。
 
-真实隔离测试（需要本地栈运行中，两真实账号 + 未登录 × 六表允许/拒绝路径）：
+真实隔离验收（需要本地栈运行中）：独立验收命令运行完整权限矩阵——两真实
+账号（真实注册→邮箱确认→密码登录）双向六表读/伪造插/改/删/转 owner、
+未登录四操作、跨用户路径绑定、自改 metadata 提权、删号级联逐表核对；
+缺少凭据、栈不可达或任何失败都非零退出，跳过不会伪装成通过：
 
 ```powershell
 # 仓库根目录；key 只来自本地栈，不提交
+npm run test:rls-acceptance   # 独立验收（报告写入 artifacts/）
 UTSC_SUPABASE_PUBLISHABLE_KEY=... UTSC_SUPABASE_SERVICE_ROLE_KEY=... \
-  npm run test:rls
+  npm run test:rls            # 同一矩阵的 vitest 包装（无凭据时跳过）
 ```
 
 迁移：`supabase/migrations/20261027000000_a1_personal_tables.sql`——

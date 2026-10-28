@@ -116,7 +116,11 @@ export function AccountPage() {
       ) : phase.kind === 'signedOut' ? (
         authForm
       ) : (
-        <SignedInView user={phase.user} onSignOut={signOut} />
+        // key on the user id: switching accounts remounts the signed-in view,
+        // so the previous account's form inputs, save state and errors are
+        // dropped immediately; a language switch keeps the key (and the
+        // user's unsaved input).
+        <SignedInView key={phase.user.id} user={phase.user} onSignOut={signOut} />
       )}
       <p className="note">{t('account.scopeNote')}</p>
     </>

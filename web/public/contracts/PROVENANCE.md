@@ -8,28 +8,48 @@ no edits) from the data side contract at a single reviewed commit.
 - Upstream commit: `b828553f91cf6cd6ae5b0766e7fbf4c6b1822535` (merge of PR #1
   "Add shared v1 data contracts"; this is the jointly reviewed v1 contract
   baseline recorded in `docs/data-integration.md`).
-- Sync date: 2026-10-27.
+- Sync date: 2026-10-27. Hash records corrected: 2026-10-28 (see below).
 - Contract version: `1.0.0`, JSON Schema Draft 2020-12.
 - Sync method: direct `cp` from a fresh `git clone` at that commit; the clone
   HEAD was re-verified as `b828553f` at copy time and the clone working tree
-  was clean. SHA-256 below was computed from the copied bytes.
+  was clean. SHA-256 below is computed over the **upstream bytes** (LF line
+  endings, as stored in the upstream Git objects). `.gitattributes` marks
+  `web/public/contracts/** -text`, so a fresh checkout of this repository
+  materializes those exact bytes regardless of `core.autocrlf`.
 
-## Files and SHA-256
+## Correction record (2026-10-28)
+
+The 2026-10-27 table below was found inaccurate during the A1 review:
+
+- The original SHA-256 values had been computed over the **working-tree
+  bytes** of the copying machine, which had CRLF line endings (the files were
+  checked out before the `-text` attribute existed). Five records
+  (`manifest`, `skill`, `course`, `resource`, `opportunity`) additionally
+  referenced the hash of a *different* file's working-tree bytes.
+- All 12 Git blobs at this repository's HEAD were verified byte-for-byte
+  identical to the upstream files at `b828553f` (fetched as raw bytes and
+  compared). No contract content was changed; the divergence was line-ending
+  conversion plus mis-recorded hashes only.
+- Remediation: the 12 working-tree files were restored to the exact upstream
+  bytes (from the verified Git blobs), and the table below was rebuilt from
+  the upstream byte hashes. Verified again inside a temporary clean checkout.
+
+## Files and SHA-256 (upstream bytes; verified 2026-10-28)
 
 | Path | Upstream path | SHA-256 |
 | --- | --- | --- |
-| `schemas/bundle.schema.json` | `contracts/schemas/bundle.schema.json` | `1d50d430d87f36c41ea4a394f0fd600aca73979c20210c5c83d39d77e831c5e0` |
-| `schemas/common.schema.json` | `contracts/schemas/common.schema.json` | `39e485d9ffb2a19d6bdbb7d0433e0a7d7bc4bb0a3c6b5e0d2cc7eb66a8095f49` |
-| `schemas/manifest.schema.json` | `contracts/schemas/manifest.schema.json` | `f9f86ef0fed391336ec93b98c602e3b19bd92f888b0297db289257f7acb1faf8` |
-| `schemas/market-job.schema.json` | `contracts/schemas/market-job.schema.json` | `1c16277e750297afb1799384de22d411930c32d962ddcaa59e1671c9a29b751e` |
-| `schemas/skill.schema.json` | `contracts/schemas/skill.schema.json` | `524a60dbd7806a9407ca75f1acfa10c324c7d72e40b3eb90a20081747c3de000` |
-| `schemas/course.schema.json` | `contracts/schemas/course.schema.json` | `c7ab1319df780892f359c2f805299e22370b271db5a73ad69fda0ebecccc1b75` |
-| `schemas/resource.schema.json` | `contracts/schemas/resource.schema.json` | `3219a91077497c691db27f516a666f06929fd7977612d324798763738b8e3bbc` |
-| `schemas/opportunity.schema.json` | `contracts/schemas/opportunity.schema.json` | `e00c4c9d425da4a45c55f2f6364d80cb3446d88d50bb785d7c087ff9dbd36cb8` |
-| `fixtures/valid_bundle.json` | `contracts/fixtures/valid_bundle.json` | `4f83261ae54c9e7f24dd247789eb1a486d5578a34abeaa964c5aeb695b9c4f9c` |
-| `fixtures/empty_bundle.json` | `contracts/fixtures/empty_bundle.json` | `9f12e3f1d132f73683b69c267de82ea3cb3c544d2d3fccbc811d2fad276d42ab` |
-| `fixtures/invalid_bundle.json` | `contracts/fixtures/invalid_bundle.json` | `bba01eafdfa78e7a1d11b455cafd41f8ba9fedd120d57231eb675a334a887db6` |
-| `upstream-contract-README.md` | `contracts/README.md` | `19760fe0b838d3202068b066f5971ae58acfc4ffc04576968b86ad48509a8b7d` |
+| `schemas/bundle.schema.json` | `contracts/schemas/bundle.schema.json` | `a409b3e712545537688576e11dc89c49563aaa1e189e3c0bcd6020b7922c49cd` |
+| `schemas/common.schema.json` | `contracts/schemas/common.schema.json` | `06b1bf0e082e49ae8c1545fe3c49baade923fa0f5cc1182c8900fda52002a6b0` |
+| `schemas/manifest.schema.json` | `contracts/schemas/manifest.schema.json` | `b7541ca26089313a2a3af953e07e1798a357d75f30d4cc3dd45f27e8db10b3b5` |
+| `schemas/market-job.schema.json` | `contracts/schemas/market-job.schema.json` | `9ffb24ea936e56f96f7147c729471371ad056a744c63ae2d0226e36545602cc0` |
+| `schemas/skill.schema.json` | `contracts/schemas/skill.schema.json` | `a989714bda3bef2730a4cfbc894534ce2a5db1bb218698364a6e7d4cc566a822` |
+| `schemas/course.schema.json` | `contracts/schemas/course.schema.json` | `6504b19da58604b66ba56457562761425da67c633608caa8f58590f170d5c5eb` |
+| `schemas/resource.schema.json` | `contracts/schemas/resource.schema.json` | `ab68713ed2898faaff468ddff3ad77d3dc192afafb15741b545378dda6bc6869` |
+| `schemas/opportunity.schema.json` | `contracts/schemas/opportunity.schema.json` | `e25643e8fadf99ec86b5b523fd469dc1f5ae93114f069ae95d6507105e8b69a5` |
+| `fixtures/valid_bundle.json` | `contracts/fixtures/valid_bundle.json` | `45103ee454d9367f83c600affc2ef1fce8bd6f2bff78fc53709847bb962ce08e` |
+| `fixtures/empty_bundle.json` | `contracts/fixtures/empty_bundle.json` | `f1a5ca85c6629dae9e2e3e6fccf27fc31a2d306514551fa5d5e75304df8d807c` |
+| `fixtures/invalid_bundle.json` | `contracts/fixtures/invalid_bundle.json` | `10e1e3df279db70532b8745608e19781daa6f0bb89d37a4d7476978fb8faadba` |
+| `upstream-contract-README.md` | `contracts/README.md` | `7a758301d899919751e2d377e99b99b14123a350724e499e5bbc2bfbd89941bc` |
 
 ## Scope of the sync
 
