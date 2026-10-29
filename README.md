@@ -7,7 +7,13 @@
 合同样例、运行时校验、中英文切换、真实 Supabase Auth 账户、市场概览／
 方向比较，以及课程完成自述、私有经历、本地候选技能抽取和显式确认，见
 [web/README.md](web/README.md)）。
-生产部署尚未进行；GitHub 仓库上传不代表网站已部署。
+完整生产验收尚未完成；公开演示版本与 Supabase 接入步骤见
+[演示部署说明](docs/preview-deployment.md)。GitHub 合并、静态演示发布、数据库
+迁移和真实账户生产验收是分别记录的状态。
+
+[打开公开演示网站](https://utsc-public-demo.rockycandy4096.chatgpt.site/)：
+市场与课程数据均为 SYNTHETIC，账户服务尚未连接。
+[2026-10-29 实际验收记录](docs/verification/preview-20261029.json)。
 
 ![中文 Demo 界面](docs/images/demo-zh.png)
 

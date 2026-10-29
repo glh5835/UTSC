@@ -5,6 +5,7 @@ import { UPSTREAM_CONTRACT_COMMIT, UPSTREAM_DATA_REPO_URL } from '../data/source
 import type { TxKey } from '../i18n/en'
 import { LanguageToggle } from './LanguageToggle'
 import { ErrorBoundary } from './ErrorBoundary'
+import { SUPABASE_CONFIGURED } from '../lib/supabase'
 
 interface NavItem {
   to: string
@@ -51,6 +52,9 @@ export function Layout({ children }: { children: ReactNode }) {
         </nav>
         <p className="synthetic-banner" role="note">
           {t('app.syntheticBanner')}
+        </p>
+        <p className="synthetic-banner" role="note">
+          {t(SUPABASE_CONFIGURED ? 'app.connectedPreview' : 'app.publicDemo')}
         </p>
       </header>
       <main id="main-content" className="site-main">

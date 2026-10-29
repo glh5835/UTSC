@@ -20,6 +20,7 @@ state/
 *.zip
 node_modules/
 web/dist/
+web/static-dist/
 web/.vite/
 supabase/.temp/
 /20261026/

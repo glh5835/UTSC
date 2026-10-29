@@ -1,0 +1,150 @@
+{
+  "date_beijing": "2026-10-29",
+  "purpose": "Public SYNTHETIC demonstration preview; not full production acceptance",
+  "baseline_main": "aa04d5ae373d945abf07ae10c7790bbcdcac74b7",
+  "source_branch": "deploy/public-demo-preview",
+  "site_version": 2,
+  "site_source_commit": "1f46ea06989ddcdc832a4cff65ee4fbb7093a42b",
+  "url": "https://utsc-public-demo.rockycandy4096.chatgpt.site/",
+  "access": "public; anonymous HTTP verified without cookies or authorization",
+  "supabase_connected": false,
+  "database_migrations_executed": false,
+  "database_reset_executed": false,
+  "checks": {
+    "typescript": "passed",
+    "vitest": {
+      "passed": 141,
+      "skipped": 3,
+      "note": "Real database checks skipped: no target project credentials. Old PR RLS/browser results are not rerun here."
+    },
+    "deployment_security_tests": {
+      "passed": 11,
+      "failed": 0
+    },
+    "negative_build_probes": [
+      "unexpected VITE_ variable rejected without value echo",
+      "server key in public slot rejected without value echo",
+      "connected build without project rejected"
+    ],
+    "build": "passed",
+    "chunk_size_warning": "Existing JS chunk remains larger than 500 kB; no bundle splitting in this task"
+  },
+  "anonymous_http": {
+    "origin": "https://utsc-public-demo.rockycandy4096.chatgpt.site",
+    "authenticated": false,
+    "status": 200,
+    "final_url": "https://utsc-public-demo.rockycandy4096.chatgpt.site/",
+    "security_headers_passed": true,
+    "headers": {
+      "cache-control": "no-store",
+      "content-security-policy": "default-src 'none'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()",
+      "referrer-policy": "no-referrer",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "DENY",
+      "x-robots-tag": "noindex, nofollow, noarchive"
+    },
+    "checks": [
+      {
+        "name": "anonymous index with security headers",
+        "passed": true
+      },
+      {
+        "name": "/robots.txt",
+        "status": 200,
+        "matches_build": true,
+        "passed": true
+      },
+      {
+        "name": "/demo/a2-market-demo.json",
+        "status": 200,
+        "matches_build": true,
+        "passed": true
+      },
+      {
+        "name": "/contracts/fixtures/valid_bundle.json",
+        "status": 200,
+        "matches_build": true,
+        "passed": true
+      },
+      {
+        "name": "/contracts/schemas/bundle.schema.json",
+        "status": 200,
+        "matches_build": true,
+        "passed": true
+      },
+      {
+        "name": "/assets/index-DqyY175Y.js",
+        "status": 200,
+        "matches_build": true,
+        "passed": true
+      },
+      {
+        "name": "/assets/index-DivzsGS8.css",
+        "status": 200,
+        "matches_build": true,
+        "passed": true
+      },
+      {
+        "name": "/.env",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "name": "/.git/config",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "name": "/src/main.tsx",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "name": "/supabase/migrations/20261028000000_a3_skill_sources.sql",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "name": "/user-records.json",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "name": "/_headers",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "name": "HEAD",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "name": "POST",
+        "status": 405,
+        "passed": true
+      }
+    ],
+    "all_passed": true
+  },
+  "browser_observations": [
+    "English/Chinese and synthetic/disconnected notices visible",
+    "Market sample F=22 D=18; filter to data_analyst retained when switching language (local built preview)",
+    "Courses browseable; personal save unavailable",
+    "Account route has no email entry form while unconfigured",
+    "Profile route explicitly unavailable while unconfigured (local built preview)",
+    "Keyboard Enter navigation to account (local built preview)",
+    "Hash deep-link refresh retains Chinese market route",
+    "Broken fixture shows explicit rejection heading on deployed site",
+    "No application-origin warnings/errors observed; extension metadata errors excluded"
+  ],
+  "not_verified": [
+    "Live Supabase Auth, emails, migrations and RLS against target database",
+    "Full A3 authenticated browser acceptance on public origin",
+    "390px viewport on this run",
+    "Formal real-data release and human course verification",
+    "Full production/business acceptance; A4-A8 completeness"
+  ],
+  "delivery_note": "Initial static version did not apply _headers. Final version 2 uses a dependency-free read-only Worker ESM adapter; actual final headers verified. GitHub PR merge does not publish Sites automatically."
+}
