@@ -43,3 +43,9 @@ supabase/.temp/
 /scripts/check_mvp07_evidence.py
 /scripts/browser_*.py
 !/scripts/browser_i18n_check.py
+
+# Private local handoff and working materials
+/UTSC双人项目笔记.md
+/processed1/
+/processed2/
+/data/d7-candidate-20261029-tmg/

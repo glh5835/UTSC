@@ -91,8 +91,39 @@ ID。经历编辑会清理该经历来源的旧确认，删除经历或撤回课
 A3 迁移：`supabase/migrations/20261028000000_a3_skill_sources.sql`。它增加
 经历文本长度、来源引用与清理触发器，不新增或改名合同 enum。应用到现有
 本地隔离栈使用 `npx supabase migration up --local`，**不要为此重置数据库**。
-真实 A1+A3 验收命令：`npm run test:rls-acceptance`；报告写入
-`artifacts/kimi-a3-20261028/`。
+真实 A1+A3 验收命令：`npm run test:rls-acceptance`；每次默认创建独立的
+`artifacts/rls-acceptance-<UTC时间>-<随机后缀>/rls-acceptance.json`。
+需要指定本轮证据位置时，在仓库根运行：
+
+```powershell
+npm run test:rls-acceptance -- --out artifacts/my-new-review/rls-acceptance.json
+```
+
+`--out` 是文件路径（相对当前命令工作目录，也可用绝对路径），只能指定
+一次。已存在的报告在请求服务前即拒绝，成功和失败均不能覆盖；缺少参数
+或重复 `--out` 非零退出。缺凭据退出 2，栈预检不可达／凭据被拒／迁移缺失
+退出 3，矩阵断言失败退出 1。缺凭据的 vitest 跳过项不能替代该命令。
+凭据和状态命令的原始输出不应重定向到 QA 证据；必须先脱敏再落盘。
+
+候选隔离副本的统计正确性由有断言的
+`tests/website-stats-correctness.test.ts` 检查，不会导出文件。需要另行导出
+供 Python 对照时，在该副本目录运行以下工具；输出路径必须是新的文件，
+既有文件会被拒绝，导出成功不计入验收通过数量：
+
+```powershell
+node scripts/export-website-stats.mjs --out "E:/AI Analyzer2.0/artifacts/my-new-review/website-stats.json"
+```
+
+旧无断言导出脚本的原文、来源和 SHA-256 保留在
+`artifacts/d7-review-fixes-20261029/f3-original-scripts/`；历史报告保持原有
+来源，不以本轮重新运行结果替代。
+
+需要保存本地栈状态时，在仓库根使用先脱敏后写入的捕获工具；输出日志
+及其 `.redaction.json` 元数据均不得已存在：
+
+```powershell
+python -X utf8 scripts/capture_supabase_status.py --output artifacts/my-new-review/supabase-status-env.log
+```
 
 账户页（A1）使用真实 Supabase Auth：邮箱密码注册、登录、退出、刷新恢复
 会话，并保存/读取本人 profiles 行。需要本地 Supabase 栈（仓库根
@@ -153,5 +184,8 @@ A3 迁移：`supabase/migrations/20261028000000_a3_skill_sources.sql`。它增�
 A0–A2 的骨架、合同校验、账户／RLS、市场与比较页已完成本地验收。A3 已
 完成课程完成自述、私有经历增删改、本地英文候选抽取、显式技能确认与来源
 一致性，A1+A3 真实权限矩阵 49/49、浏览器流程 33 项通过；这不代表人工
-课程核实、推荐或正式数据发布，详见 `plans/阶段记录/A3.md`。正式 1.1
-合同升级与公开数据包仍待双方决定；A4–A8 未执行。
+课程核实、推荐或正式数据发布，详见 `plans/阶段记录/A3.md`。2026-10-29
+的 D7 准备在忽略目录完成候选 1.1.0 隔离联调，并修复统计并集与 A3 归属
+保守判断；默认构建仍使用 SYNTHETIC 演示，正式 1.1 合同升级、真实公开
+数据包和部署仍待双方决定，详见 `plans/阶段记录/D7接入准备与私有联调.md`。
+A4–A8 未执行。

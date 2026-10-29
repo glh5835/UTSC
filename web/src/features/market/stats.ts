@@ -85,11 +85,11 @@ function skillStats(
   const stats: SkillStat[] = skills
     .filter((skill) => skill.category === category)
     .map((skill) => {
-      // A job counts at most once per skill: the arrays inside one job are
-      // unique (contract uniqueItems), so a plain `some` is exact.
+      // The two extraction arrays are evidence sources, not display categories.
+      // Union first so a skill counts once even when it appears in both arrays.
       const n = dJobs.filter((job) => {
-        const ids = category === 'technical' ? job.technical_skill_ids : job.soft_skill_ids
-        return ids.includes(skill.skill_id)
+        const ids = new Set([...job.technical_skill_ids, ...job.soft_skill_ids])
+        return ids.has(skill.skill_id)
       }).length
       return { skillId: skill.skill_id, n, rate: d === 0 ? null : n / d }
     })

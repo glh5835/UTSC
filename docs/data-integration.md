@@ -49,3 +49,19 @@ A3 继续使用已批准的 1.0.0 合同与同一上游提交 `b828553f`，没�
 `user-record.schema.json` 和 `private_user_record.json` 仍未进入 public。
 课程映射和经历抽取只产生候选，用户明确确认后才写入 `user_skills`；课程、
 经历、手动三种来源及其清理关系由网站迁移维护，不改变共享合同枚举。
+
+## D7 接入准备（2026-10-29，仅本地联调）
+
+2026-10-29 只读复核时，上游 D7 PR #8 仍开放，head 已从 A2 记录的
+`60bcba3` 变为 `aa13bbbab82bc0b58b3f1cf205953cf38407a2e1`；新增提交只记录，
+不自动吸收。正式合同仍以 `b828553f` 的 1.0.0 为准，`web/public/contracts/`
+未改字节。候选 1.1.0 只在被忽略的本地副本验证：独立 Ajv registry 加载
+organizer 引用闭包，`run_status=partial` 的本地包可联调，但空白发布确认、
+组织核实缺失和可信来源绑定仍是正式发布阻塞。
+
+网站新增受版本控制的 `demo / integration / published` 数据模式配置。默认
+构建仍是 SYNTHETIC 演示；候选构建只在忽略目录中把同一完整 bundle 提供给
+市场、比较、课程和技能目录，不读取旁路 provenance 或确认文件。候选页面
+标明内部联调、partial、历史样本与人工复核限制。技能统计先合并技术/软技能
+数组并按 canonical ID 去重，再按目录分类展示。公开演示站仍是历史 Sites
+版本，账户服务未连接；真实数据未公开发布。

@@ -182,6 +182,34 @@ describe('cross-record checks beyond JSON Schema', () => {
     ;(bundle.skills[0] as unknown as Record<string, unknown>).user_id = 'u-123'
     expect(validate(bundle)).toBe(false)
   })
+
+  it('enforces organizer uniqueness and references when a 1.1 bundle supplies organizers', () => {
+    const organizer = {
+      organizer_id: 'example_club',
+      name: 'Example Club',
+      username: 'example.club',
+      profile_url: 'https://www.instagram.com/example.club/',
+      enabled: true,
+      priority: 1,
+      last_verified_at: null,
+    }
+    const withOrganizers = structuredClone(validBundle) as UtscBundle
+    withOrganizers.organizers = [organizer]
+    expect(checkCrossRecords(withOrganizers)).toEqual([])
+
+    const duplicate = structuredClone(withOrganizers)
+    duplicate.organizers?.push({ ...organizer })
+    expect(checkCrossRecords(duplicate).some((issue) => issue.code === 'duplicate_id' && issue.path === '/organizers')).toBe(true)
+
+    const missing = structuredClone(withOrganizers)
+    missing.opportunities[0].organizer_id = 'not_present'
+    const issues = checkCrossRecords(missing)
+    expect(issues.some((issue) => issue.code === 'missing_organizer_ref' && issue.message.includes('"not_present"'))).toBe(true)
+  })
+
+  it('continues to accept the 1.0 fixture without an organizers collection', () => {
+    expect(checkCrossRecords(validBundle)).toEqual([])
+  })
 })
 
 describe('snapshot staleness', () => {

@@ -92,6 +92,38 @@ locally, requires explicit confirmation, and never writes candidates directly
 to confirmed skills. The test schema references the existing public
 `common.schema.json` `$id` registry and is not served to browsers.
 
+## A4 recommendation rule sync (2026-10-29)
+
+A4 adds only the shared recommendation rule. It is a byte-for-byte copy from
+the same reviewed commit `b828553f91cf6cd6ae5b0766e7fbf4c6b1822535`, fetched
+read-only through the GitHub contents API at that ref; the returned bytes were
+verified by recomputing the Git blob SHA-1 (`blob <size>\0` + bytes) against
+the upstream tree entry before the file was written. No private schema or
+private fixture was synced in this round.
+
+| Website path | Upstream path | SHA-256 | Visibility |
+| --- | --- | --- | --- |
+| `rules/recommendation.json` | `contracts/rules/recommendation.json` | `2ca67cddcc605689749bb38221d357fc005efaf6c44be82254fc69779a260d54` | public rule |
+
+The rule file is 805 bytes, `rule_set_version: 1.0.0`, upstream Git blob SHA-1
+`0eefbd4831dacf7fbaf8a948bc6d831e98fc03ee`. The website mirrors its frozen
+content in `src/lib/recommend.ts` (required input `user_selected_target_skill_ids`,
+match field `skill_ids`, unconfirmed-skills-are-not-assumed-absent, sort
+`target_skill_coverage_count_desc → beginner_fit_desc → verified_at_desc`,
+beginner-fit order `beginner_friendly → unknown → prerequisites_required`, no
+employment probability, no guaranteed course eligibility) and asserts the
+synced file's SHA-256 in `tests/recommend.test.ts`, so a drifted copy fails the
+build instead of silently changing recommendations.
+
+The upstream rule defines the beginner-fit ORDER only, not a field mapping.
+The website-side mapping is conservative and documented in
+`src/lib/recommend.ts`: an explicit structured `level: "beginner"` maps to
+`beginner_friendly`; `intermediate` / `advanced` / `unknown` map to `unknown`
+and are never interpreted as formal prerequisites; `prerequisites_required` is
+never derived under the 1.0.0 resource schema because it has no structured
+prerequisite field. The derived value is display-only and never written back
+into any contract data.
+
 If upstream changes the contract, re-sync from the new reviewed commit, update
 this file with the new commit and hashes, and review the impact on
 `src/data/` before shipping. Contract changes still require coordination on

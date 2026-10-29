@@ -8,7 +8,9 @@ const en = {
   'app.title': 'UTSC Career & Practice Navigator',
   'app.tagline': 'Compare data career directions, confirm your skills, find courses and club opportunities.',
   'app.syntheticBanner':
-    'Development preview (A0–A3): public market and course samples are SYNTHETIC; private experiences and explicitly confirmed skills belong to your real account. No live market or official course availability is claimed.',
+    'Development preview (A0–A4): public market, course and pathway samples are SYNTHETIC; private experiences, confirmed skills and saved learning paths belong to your real account. No live market or official course availability is claimed.',
+  'app.integrationBanner':
+    'INTERNAL D7 integration preview: one partial historical candidate package is used across market, comparison and course views. It is not human-verified, not published, and account samples remain unchanged.',
   'app.skipToContent': 'Skip to main content',
   'app.languageSwitch': 'Switch language',
   'app.primaryNav': 'Primary navigation',
@@ -21,10 +23,11 @@ const en = {
   'nav.courses': 'Courses & skills',
   'nav.opportunities': 'Opportunities',
   'nav.profile': 'Profile',
+  'nav.pathways': 'Pathways',
 
   'home.title': 'Home',
   'home.intro':
-    'This site is being built for UTSC students. A0–A3 deliver the foundation, shared contract validation, real Supabase accounts (A1), public market pages (A2), and private experiences with deterministic candidate extraction and explicit skill confirmation (A3).',
+    'This site is being built for UTSC students. A0–A3 deliver the foundation, shared contract validation, real Supabase accounts (A1), public market pages (A2), and private experiences with deterministic candidate extraction and explicit skill confirmation (A3). A4 adds resource recommendations and personal learning paths.',
   'home.workingTitle': 'Working now',
   'home.workingItem1':
     'Basic navigation with a global English/Chinese switch that keeps canonical IDs, filters and the current page unchanged.',
@@ -32,18 +35,20 @@ const en = {
     'Read-only sample data viewer loading the agreed contract fixtures through a runtime validation layer.',
   'home.workingItem3':
     'Loading, error, empty and stale-data states; broken packages are rejected and never silently replaced.',
+  'home.workingItem4':
+    'Resource recommendations from explicitly selected target skills (shared 1.0.0 rule, no probability or eligibility promises) and personal learning paths with self-reported progress.',
   'home.sampleCta': 'Open the sample data viewer',
-  'home.pendingTitle': 'Stage status (A1–A3 implemented; later stages planned)',
-  'home.pendingA1': 'A1 — database, permissions and the minimal account page are implemented (see Account); full profile/favorites/pathway management stays in A4/A6.',
+  'home.pendingTitle': 'Stage status (A1–A4 implemented; later stages planned)',
+  'home.pendingA1': 'A1 — database, permissions and the minimal account page are implemented (see Account); full profile/favorites management stays in A6.',
   'home.pendingA2': 'A2 — public market overview and role comparison are implemented and locally accepted (see Market/Compare); D4 fixed cases match in an isolated unmerged-candidate check, while formal 1.1 contract/package release still needs a joint decision.',
-  'home.pendingA3': 'A3 — course completion self-report, private experience CRUD, deterministic local English candidate extraction and explicit skill confirmation are implemented (see Courses/Profile); recommendations remain A4.',
-  'home.pendingA4': 'A4 — Recommendations and learning paths.',
+  'home.pendingA3': 'A3 — course completion self-report, private experience CRUD, deterministic local English candidate extraction and explicit skill confirmation are implemented (see Courses/Profile).',
+  'home.pendingA4': 'A4 — resource recommendations and personal learning paths are implemented locally (see Pathways); this is not a formal data release or production acceptance.',
   'home.pendingA5': 'A5 — Opportunity browsing, classification filters and calendar export.',
   'home.pendingA6': 'A6 — Personal profile, favorites and saved progress (requires A1 accounts).',
   'home.pendingA7': 'A7 — Publishing adapter and ICS calendar export.',
   'home.pendingA8': 'A8 — Deployment and end-to-end acceptance.',
   'home.honestyNote':
-    'A3 extraction runs locally and never confirms a skill automatically; course samples remain synthetic and do not establish current availability. Favorites, submissions, recommendations, paths and publishing are not implemented and none are simulated.',
+    'A3 extraction runs locally and never confirms a skill automatically; A4 recommendations match only the target skills you explicitly select and never produce employment probabilities or eligibility guarantees; course and pathway samples remain synthetic and do not establish current availability. Favorites, club submissions and publishing are not implemented and none are simulated.',
 
   'sample.title': 'Sample data (read-only)',
   'sample.intro':
@@ -165,6 +170,12 @@ const en = {
   'market.dataset.demo.note':
     'Website-constructed SYNTHETIC sample for development and manual-expected-value tests. Contract-valid, but NOT upstream data and NOT a real market snapshot.',
   'market.dataset.websiteSide': 'website-side',
+  'market.dataset.integration.label': 'D7 integration package',
+  'market.dataset.integration.note':
+    'Fixed internal candidate (schema 1.1.0), partial historical run. Not human-verified and not cleared for publication.',
+  'market.dataset.integrationBadge': 'INTERNAL',
+  'market.dataset.published.label': 'Published data package',
+  'market.dataset.published.note': 'Owner-approved published snapshot for this deployment.',
   'market.loading': 'Loading and validating data…',
   'market.errorMessage': 'The data package could not be fetched. Check that the local server is running, then retry.',
   'market.datasetHeading': 'Dataset',
@@ -293,6 +304,10 @@ const en = {
     'Browse the approved 1.0.0 course/skill sample, mark courses you personally completed, and explicitly confirm any course-mapped candidate skill. A course mapping is never proof that you already have the skill.',
   'a3.course.synthetic':
     'SYNTHETIC contract fixture — not a current UTSC course offering, timetable entry or eligibility decision.',
+  'a3.course.integration':
+    'INTERNAL candidate package — partial historical data. Courses and skills are not human-verified and this package is not published.',
+  'a3.course.published':
+    'Published package — course evidence is source-verified data but not a current timetable or eligibility decision.',
   'a3.course.historical':
     'Calendar year and verification time are historical source data. Always check the official link for current availability and prerequisites.',
   'a3.course.empty': 'This package contains no courses.',
@@ -401,9 +416,119 @@ const en = {
   'a3.profile.skillRevoked': 'Skill confirmation removed.',
   'a3.profile.experienceSourceExcerpt': 'Experience text',
 
+  'a4.pathways.intro':
+    'Pick one canonical role, review how the market mentions each skill, choose the skills you want to learn, and see matching learning resources with their reasons and sources. Saving a personal learning path requires signing in.',
+  'a4.pathways.ruleNote':
+    'Recommendations follow the shared rule set {version}, synced verbatim from upstream {path}. Matching uses only your explicitly selected target skills; resources match through their own structured skill ids.',
+  'a4.pathways.demoNote':
+    'SYNTHETIC website-side demo package for pathways (contract 1.0.0). Not upstream data, not a real market snapshot, not a current course catalogue.',
+  'a4.pathways.integrationNote':
+    'INTERNAL D7 integration preview: pathway recommendations come from the same partial historical candidate package. Not human-verified and not published.',
+  'a4.pathways.publishedNote':
+    'Published package — recommendations come from the owner-approved snapshot of this deployment.',
+  'a4.pathways.integrationBadge': 'INTERNAL',
+  'a4.pathways.publishedBadge': 'PUBLISHED',
+
+  'a4.pathways.roleHeading': 'Step 1 — Choose a canonical role',
+  'a4.pathways.roleNote':
+    'One of the eight shared role ids. Market statistics below use the same formal-scope rule as the market pages; role mention counts are market evidence, never a hard job requirement.',
+  'a4.pathways.noRole': 'No role selected yet — the skill table appears after you choose one role.',
+
+  'a4.pathways.skillsHeading': 'Step 2 — Role skills in the current package',
+  'a4.pathways.skillsNote':
+    'N/D under the frozen A2 statistics: F formal-scope jobs for this role, D with analyzable description, N jobs mentioning the skill (counted once per job). Mention rate is not a hiring requirement.',
+  'a4.pathways.statSample': 'F — formal-scope jobs for this role',
+  'a4.pathways.statAnalyzable': 'D — with analyzable description',
+  'a4.pathways.colSkill': 'Skill (canonical id)',
+  'a4.pathways.colMentioning': 'Jobs mentioning (N/D)',
+  'a4.pathways.colConfirmState': 'Your confirmation state',
+  'a4.pathways.colTarget': 'Learn next (your choice)',
+  'a4.pathways.confirmedChip': 'Confirmed ({source})',
+  'a4.pathways.unconfirmedChip': 'Not confirmed — to explore, not a gap',
+  'a4.pathways.confirmNote':
+    'Confirmation state comes only from your own explicit confirmations. An unconfirmed skill never means you lack it, and confirming or learning here never confirms a skill automatically.',
+  'a4.pathways.targetToggle': 'Select {skill} as a learning target',
+  'a4.pathways.targetOn': 'Selected as target',
+  'a4.pathways.targetOff': 'Select as target',
+  'a4.pathways.noTargets':
+    'No target skills selected. Recommendations appear only after you tick at least one skill above — nothing is preselected on your behalf.',
+  'a4.pathways.targetsSelected': '{count} target skill(s) selected: {skills}',
+
+  'a4.pathways.recommendationsHeading': 'Step 3 — Matching resources',
+  'a4.pathways.recommendationsNote':
+    'Sorted by: target-skill coverage (descending, canonical ids deduplicated), then beginner fit, then source verification time; exact ties keep a stable order by resource id. The same input always produces the same order.',
+  'a4.pathways.reasonMatches': 'Matches {count} of your target skill(s): {skills}',
+  'a4.pathways.fit.beginner_friendly': 'Beginner friendly (explicit beginner marker)',
+  'a4.pathways.fit.unknown': 'Beginner fit unknown (no explicit marker)',
+  'a4.pathways.fit.prerequisites_required': 'Prerequisites required (explicit evidence only)',
+  'a4.pathways.fitBasisNote':
+    'Beginner fit is mapped conservatively: only an explicit structured beginner marker maps to “beginner friendly”; intermediate/advanced/unknown levels stay “unknown” and are never read as formal prerequisites. Derived for display only — nothing is written back into the data package.',
+  'a4.pathways.eligibilityKnown': 'Stated eligibility note (not a personal guarantee): {note}',
+  'a4.pathways.eligibilityUnknown':
+    'Eligibility is not stated for this resource. Verify it yourself before relying on it — this site cannot confirm your eligibility.',
+  'a4.pathways.verifiedAt': 'Source verified at',
+  'a4.pathways.noMatches':
+    'No resource in the current package matches the selected target skills. Nothing is invented — choose different skills, another role, or another data version.',
+  'a4.pathways.unmatchedTargets': 'Currently no matching resource for: {skills}',
+  'a4.pathways.unknownTargets':
+    'These selected ids are not in the current skill catalogue, so they cannot match anything (kept visible, never silently dropped): {ids}',
+  'a4.pathways.noProbabilityNote':
+    'No employment probability, no admission promise, no automatic skill confirmation: this list is evidence with sources, not an outcome guarantee.',
+
+  'a4.pathways.checkResource': 'Save {title} with the path',
+  'a4.pathways.checkResourceLabel': 'Save this resource with the path',
+  'a4.pathways.addItemSelect': 'Add to saved path',
+  'a4.pathways.addItemButton': 'Add to this path',
+  'a4.pathways.addItemSuccess': 'Added ({count}). Existing items kept their status.',
+  'a4.pathways.alreadyPresent': 'Already on this path — nothing duplicated, status unchanged.',
+
+  'a4.pathways.pathsHeading': 'My learning paths',
+  'a4.pathways.pathsNote':
+    'Saved to your own account rows (learning_paths + path_items). Browsing and choosing targets works without an account; saving and changes require signing in.',
+  'a4.pathways.signedOut': 'Sign in to save and manage learning paths.',
+  'a4.pathways.signIn': 'Go to account sign-in',
+  'a4.pathways.unconfigured':
+    'Supabase is not configured, so learning paths cannot be saved or loaded. Public recommendations above still work.',
+  'a4.pathways.loading': 'Loading your learning paths…',
+  'a4.pathways.loadError': 'Your learning paths could not be loaded:',
+  'a4.pathways.retry': 'Retry',
+  'a4.pathways.noPaths': 'No saved learning paths yet.',
+  'a4.pathways.saveSelection': 'Save as learning path',
+  'a4.pathways.saving': 'Saving…',
+  'a4.pathways.saveHint':
+    'Creates one {role} path with one item per selected target skill plus every resource you ticked. Nothing is written until you press the button.',
+  'a4.pathways.nothingToSave':
+    'Select at least one target skill or tick at least one resource before saving.',
+  'a4.pathways.savedFull': 'Learning path saved with {count} item(s).',
+  'a4.pathways.savedPartial':
+    'Partially saved: {saved} of {total} item(s). The path exists with exactly the items shown; retrying completes the rest without duplicating or resetting anything.',
+  'a4.pathways.retryItems': 'Retry saving the missing items',
+  'a4.pathways.saveError': 'The path was not saved:',
+  'a4.pathways.refreshWarning': 'Saved, but the latest view could not be reloaded. Reload the page before retrying.',
+  'a4.pathways.itemActionError': 'The change was not saved:',
+  'a4.pathways.pathCreated': 'Created',
+  'a4.pathways.itemCount': '{count} item(s)',
+  'a4.pathways.noItems': 'This path has no items (for example after a partially failed save).',
+  'a4.pathways.itemUpdated': 'Item updated at',
+  'a4.pathways.itemStatus': 'Status',
+  'a4.pathways.status.not_started': 'Not started',
+  'a4.pathways.status.in_progress': 'In progress',
+  'a4.pathways.status.completed': 'Completed',
+  'a4.pathways.statusSaved': 'Status saved: {status}.',
+  'a4.pathways.removeItem': 'Remove from path',
+  'a4.pathways.itemRemoved': 'Item removed from the path.',
+  'a4.pathways.deletePath': 'Delete this path',
+  'a4.pathways.deletePathConfirm': 'Delete this path and all its items from your account? This cannot be undone.',
+  'a4.pathways.confirmDelete': 'Delete path',
+  'a4.pathways.pathDeleted': 'Learning path deleted.',
+  'a4.pathways.progressNote':
+    'Status is your own progress record only. It never means you mastered a skill, finished an official course, or gained any eligibility.',
+  'a4.pathways.sourceUnavailable':
+    'Source is no longer in the current public package — your item and its progress are kept.',
+
   'ph.courses.desc': 'Will map UTSC courses and learning resources to skills, with candidate skill confirmation (task A3).',
   'ph.opportunities.desc': 'Will browse approved club activities and ongoing opportunities with filters (task A5).',
-  'ph.profile.desc': 'Accounts exist already (see Account). Profile details, favorites and pathways arrive with tasks A4/A6.',
+  'ph.profile.desc': 'Accounts exist already (see Account). Experiences and confirmed skills are on this page; favorites arrive with task A6; learning paths live on the Pathways page (A4).',
 
   'notfound.title': 'Page not found',
   'notfound.message': 'The address does not match any page of this site.',
@@ -413,7 +538,7 @@ const en = {
   'errorBoundary.message': 'An unexpected error occurred. The data shown before the error is untouched; you can go back or reload.',
   'errorBoundary.reload': 'Reload page',
 
-  'footer.preview': 'Development preview (A0–A3). Not a deployed product.',
+  'footer.preview': 'Development preview (A0–A4). Not a deployed product.',
   'footer.contract': 'Contract synced verbatim from upstream commit {commit}.',
   'footer.dataRepo': 'Data repository (Seraphina)',
   'footer.websiteRepo': 'Website repository',

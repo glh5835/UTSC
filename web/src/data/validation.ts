@@ -30,6 +30,7 @@ export type IssueCode =
   | 'duplicate_id'
   | 'duplicate_source_job_id'
   | 'missing_skill_ref'
+  | 'missing_organizer_ref'
   | 'sample_count'
   | 'time_order'
   | 'boundary'
@@ -65,10 +66,17 @@ const SCHEMA_FILES = [
   'opportunity.schema.json',
 ] as const
 
-/** Fetch all contract schemas from the given base path and index them by $id. */
-export async function loadSchemaSet(basePath = '/contracts/schemas'): Promise<SchemaSet> {
+const CANDIDATE_SCHEMA_FILES = [...SCHEMA_FILES, 'organizer.schema.json'] as const
+
+/** Fetch one version's complete closure. Separate calls always create separate
+ * Ajv registries, even though contract versions reuse the same $id values. */
+export async function loadSchemaSet(
+  basePath = '/contracts/schemas',
+  schemaVersion: '1.0.0' | '1.1.0' = '1.0.0',
+): Promise<SchemaSet> {
+  const files = schemaVersion === '1.1.0' ? CANDIDATE_SCHEMA_FILES : SCHEMA_FILES
   const entries = await Promise.all(
-    SCHEMA_FILES.map(async (file) => {
+    files.map(async (file) => {
       const response = await fetch(`${basePath}/${file}`)
       if (!response.ok) {
         throw new BundleFetchError(`Failed to load schema ${file}: HTTP ${response.status}`)
@@ -176,11 +184,12 @@ function isFirstBeforeOrEqual(first: string, second: string): boolean {
  */
 export function checkCrossRecords(bundle: UtscBundle): ValidationIssue[] {
   const issues: ValidationIssue[] = []
-  const { manifest, market_jobs: jobs, skills, courses, resources, opportunities } = bundle
+  const { manifest, market_jobs: jobs, skills, organizers, courses, resources, opportunities } = bundle
 
   for (const [group, idField, items] of [
     ['market_jobs', 'job_key', jobs.map((j) => j.job_key)],
     ['skills', 'skill_id', skills.map((s) => s.skill_id)],
+    ...(organizers ? [['organizers', 'organizer_id', organizers.map((o) => o.organizer_id)] as const] : []),
     ['courses', 'course_id', courses.map((c) => c.course_id)],
     ['resources', 'resource_id', resources.map((r) => r.resource_id)],
     ['opportunities', 'opportunity_id', opportunities.map((o) => o.opportunity_id)],
@@ -236,6 +245,21 @@ export function checkCrossRecords(bundle: UtscBundle): ValidationIssue[] {
         })
       }
     }
+  }
+
+  // Organizer collections exist only in 1.1 bundles. Once present, every
+  // opportunity organizer must resolve; an empty organizers array cannot pass.
+  if (organizers) {
+    const organizerIds = new Set(organizers.map((organizer) => organizer.organizer_id))
+    opportunities.forEach((opportunity, index) => {
+      if (!organizerIds.has(opportunity.organizer_id)) {
+        issues.push({
+          code: 'missing_organizer_ref',
+          path: `/opportunities/${index}/organizer_id`,
+          message: `organizer id "${opportunity.organizer_id}" is referenced but missing from /organizers`,
+        })
+      }
+    })
   }
 
   if (manifest.sample_count !== jobs.length) {

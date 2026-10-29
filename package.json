@@ -1,7 +1,7 @@
 {
   "name": "utsc-repo-tools",
   "private": true,
-  "description": "Repository-level tooling for the UTSC A0–A3 website: pinned Supabase CLI for local database migrations and RLS tests. The website itself lives in web/.",
+  "description": "Repository-level tooling for the UTSC A0–A4 website: pinned Supabase CLI for local database migrations and RLS tests. The website itself lives in web/.",
   "version": "0.1.0",
   "scripts": {
     "supabase:start": "supabase start",
@@ -9,7 +9,7 @@
     "supabase:reset": "supabase db reset",
     "supabase:status": "supabase status",
     "test:rls": "npm --prefix web run test -- rls-isolation.local",
-    "test:rls-acceptance": "node web/tests/rls-acceptance.mjs --out artifacts/kimi-a3-20261028/rls-acceptance.json"
+    "test:rls-acceptance": "node web/tests/rls-acceptance.mjs"
   },
   "devDependencies": {
     "supabase": "2.122.0"
