@@ -1,4 +1,10 @@
-node_modules
-dist
+node_modules/
+dist/
+static-dist/
+.vite/
+artifacts/
+.env
+.env.*
+!.env.example
 *.tsbuildinfo
 *.local

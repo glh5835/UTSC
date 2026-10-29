@@ -3,7 +3,8 @@
 当前仓库有两个可运行部分：根目录 Streamlit 中英文模拟 Demo（已在
 Windows 与 Python 3.12.14 验证），以及 `web/` 下的 React＋TypeScript＋Vite
 网站（A0–A3 基础、真实 Supabase Auth 账户页、市场概览与方向比较、课程／
-经历与显式技能确认，已在 Windows 与 Node v24.19 验证）。生产部署尚未进行。
+经历与显式技能确认，已在 Windows 与 Node v24.19 验证）。完整生产验收尚未完成；
+公开演示部署配置与数据库接入边界见 [公开演示部署](preview-deployment.md)。
 
 ## 新 checkout
 
@@ -59,8 +60,8 @@ npm run dev     # 开发服务器，默认 http://localhost:5173
 ```powershell
 npm run typecheck   # TypeScript 严格检查
 npm run test        # vitest：校验层、标签覆盖、旧数据判断、账户隔离回归（本地栈 RLS 矩阵需凭据，缺失时跳过）
-npm run build       # tsc --noEmit + vite build（生产构建验证）
-npm run preview     # 预览 dist/ 构建产物
+npm run build       # 默认断开账户服务：Vite 构建 + 文件校验 + Sites 安全头适配层
+npm run preview     # 预览 static-dist/ 前端构建产物
 ```
 
 样例数据页可加载三组合同 fixtures：有效包展示全部内容；空包展示各分区

@@ -8,8 +8,10 @@ const en = {
   'app.title': 'UTSC Career & Practice Navigator',
   'app.tagline': 'Compare data career directions, confirm your skills, find courses and club opportunities.',
   'app.syntheticBanner':
-    'Development preview (A0–A3): public market and course samples are SYNTHETIC; private experiences and explicitly confirmed skills belong to your real account. No live market or official course availability is claimed.',
+    'Demonstration preview (A0–A3): public market and course samples are SYNTHETIC. No live market, official affiliation or current course availability is claimed.',
   'app.skipToContent': 'Skip to main content',
+  'app.publicDemo': 'PUBLIC DEMO · Account services are unavailable in this version. No personal profiles, experiences or skills can be submitted or saved here. Do not enter private information.',
+  'app.connectedPreview': 'DEMO · Account services are connected. Personal features require verified database access policies; public samples remain SYNTHETIC. Use test information during preview.',
   'app.languageSwitch': 'Switch language',
   'app.primaryNav': 'Primary navigation',
 
@@ -266,7 +268,7 @@ const en = {
   'account.switchToSignUp': 'Need an account? Sign up',
   'account.switchToSignIn': 'Already registered? Sign in',
   'account.confirmationRequired':
-    'Registration accepted. This project requires email confirmation: check your inbox (local test mail tool: Mailpit at http://127.0.0.1:55424) and confirm before signing in. You are NOT signed in yet.',
+    'Registration accepted. This project requires email confirmation: check your inbox and confirm before signing in. You are NOT signed in yet.',
   'account.errorGeneric': 'That did not work. Please try again.',
   'account.signedInAs': 'Signed in as',
   'account.loadingProfile': 'Loading your profile…',
@@ -413,7 +415,7 @@ const en = {
   'errorBoundary.message': 'An unexpected error occurred. The data shown before the error is untouched; you can go back or reload.',
   'errorBoundary.reload': 'Reload page',
 
-  'footer.preview': 'Development preview (A0–A3). Not a deployed product.',
+  'footer.preview': 'Demonstration preview (A0–A3). Full production acceptance is pending; A4–A8 features are incomplete.',
   'footer.contract': 'Contract synced verbatim from upstream commit {commit}.',
   'footer.dataRepo': 'Data repository (Seraphina)',
   'footer.websiteRepo': 'Website repository',

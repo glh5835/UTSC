@@ -6,7 +6,7 @@ A0 交付基础导航、共同合同 fixtures 的只读样例展示、运行时�
 完成属于用户自述，英文经历在本地确定性抽取候选技能，只有用户明确确认后
 才写入个人技能；主语、否定与计划按局部子句关联，第三人称技能不能借用
 本人证据。公开市场／课程样例仍带 SYNTHETIC 标记；私有经历与已确认技能是
-真实账户数据。A4–A8 未实现，也不模拟收藏、提交或发布。
+真实账户数据。A4–A8 尚未全部完成，也不模拟收藏或提交；演示部署与完整生产验收分别记录。
 
 ## 启动
 
@@ -109,3 +109,15 @@ A3 合同同步：抽取规则 `public/contracts/rules/experience-skill-extracti
 与测试目录中的 extraction schema／四类样例均来自上游
 `b828553f91cf6cd6ae5b0766e7fbf4c6b1822535`，只读来源、路径、SHA-256 见
 `public/contracts/PROVENANCE.md`。私有用户记录 schema 与样例未进入 public。
+
+## 公开演示部署
+
+预览构建：`npm ci --ignore-scripts` → `npm run typecheck` → `npm test` →
+`npm run build` → `npm run test:deployment`。两项 Supabase 变量均留空；账户服务明确不可用。
+Sites 只发布 `dist/` 中生成的只读 Worker，HTTP 安全头由该适配层执行。
+`build:demo` 仅生成 `static-dist/`，可供支持 `_headers` 的静态主机使用；
+`npm run preview` 预览该静态输出。不发布项目目录或任何 env／数据库／测试文件。
+托管配置在 `.openai/hosting.json`；该站点源镜像来自本目录。
+连接真实账户服务须先核对目标库并增量应用 A1/A3、独立完成 RLS 和公网验收，
+详见 [部署说明](../docs/preview-deployment.md)。静态前端变量在构建时嵌入，
+更改后必须重建和重新发布。

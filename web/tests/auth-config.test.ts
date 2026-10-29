@@ -40,7 +40,7 @@ describe('supabase client configuration', () => {
 
   it('creates a client (without any network call) when both vars are set', async () => {
     vi.stubEnv('VITE_SUPABASE_URL', 'http://127.0.0.1:54321')
-    vi.stubEnv('VITE_SUPABASE_PUBLISHABLE_KEY', 'public-publishable-key-placeholder')
+    vi.stubEnv('VITE_SUPABASE_PUBLISHABLE_KEY', 'sb_publishable_unit_test_placeholder')
     const mod = await importSupabaseModule()
     expect(mod.SUPABASE_CONFIGURED).toBe(true)
     const client = mod.getSupabase()
