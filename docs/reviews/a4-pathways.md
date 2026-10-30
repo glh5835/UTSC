@@ -19,3 +19,8 @@ skipped) and a production build. A further source review reproduced continued
 queued writes after an account/generation change. The next, separate repair
 commit adds four red/green regressions and stops the remaining batch before
 issuing another request. This review does not claim a fresh real-stack matrix.
+
+The repair checks the operation generation before and after every item request.
+Already issued requests can finish; no remaining item request or follow-up
+reload starts for the stale generation. The four regressions cover late success
+and rejection during A→B and A→B→A. RLS remains the database enforcement layer.

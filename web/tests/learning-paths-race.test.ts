@@ -9,6 +9,42 @@ import {
   type PathsSnapshot,
 } from '../src/features/pathways/learningPaths'
 
+describe('queued path writes after an identity change', () => {
+  it.each([
+    { returnToA: false, firstFails: false },
+    { returnToA: false, firstFails: true },
+    { returnToA: true, firstFails: false },
+    { returnToA: true, firstFails: true },
+  ])('stops the remaining batch: %j', async ({ returnToA, firstFails }) => {
+    const first = deferred<void>()
+    const writes: string[] = []
+    const gateway: LearningPathsGateway = {
+      ...autoGateway({ paths: [] }).gateway,
+      load: async () => ({ paths: [] }),
+      async addPathItem(_pathId, input) {
+        writes.push(input.resourceId ?? input.skillId ?? '')
+        if (writes.length === 1) await first.promise
+      },
+    }
+    const controller = createLearningPathsController(() => gateway)
+    controller.setIdentity('A')
+    await tick()
+    const save = controller.addItemsToPath('path-A', [
+      { resourceId: 'resource-one', skillId: null },
+      { resourceId: 'resource-two', skillId: null },
+    ])
+    expect(writes).toEqual(['resource-one'])
+    controller.setIdentity('B')
+    if (returnToA) controller.setIdentity('A')
+    await tick()
+    if (firstFails) first.reject(new Error('late first write failure'))
+    else first.resolve()
+    const result = await save
+    expect(result.staleOwner).toBe(true)
+    expect(writes).toEqual(['resource-one'])
+  })
+})
+
 interface Deferred<T> {
   promise: Promise<T>
   resolve: (value: T) => void

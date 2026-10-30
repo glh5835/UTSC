@@ -337,13 +337,24 @@ export function createLearningPathsController(getGateway: () => LearningPathsGat
       pending.push(item)
     }
     let firstFailure: string | null = null
+    const staleBatch = (): PathActionResult => ({
+      ok: savedCount > 0,
+      pathId,
+      savedCount,
+      failedCount: pending.length - savedCount,
+      staleOwner: true,
+    })
     for (const item of pending) {
+      // A response may arrive after A→B or A→B→A. Drop the old batch before
+      // obtaining another gateway/session or issuing another queued request.
+      if (effectiveGen !== generation) return staleBatch()
       try {
         await getGateway().addPathItem(pathId, item)
         savedCount += 1
       } catch (reason) {
         if (firstFailure === null) firstFailure = messageOf(reason)
       }
+      if (effectiveGen !== generation) return staleBatch()
     }
     if (effectiveGen !== generation) {
       return { ok: savedCount > 0, pathId, savedCount, failedCount: pending.length - savedCount, staleOwner: true }
