@@ -7,9 +7,9 @@ import type { Dictionary } from './en'
 
 const zh: Dictionary = {
   'app.title': 'UTSC 职业与实践导航',
-  'app.tagline': '比较数据职业方向、确认自己的技能，找到课程与社团实践机会。',
+  'app.tagline': '探索数据职业方向，比较技能，找到学习资源。',
   'app.syntheticBanner':
-    '开发预览（A0–A4）：公开市场、课程与路径样例为 SYNTHETIC；私有经历、确认技能和已保存的学习路径属于你的真实账户数据。本站不声称实时市场或官方当前开课状态。',
+    '公开体验版——市场、课程和资源均为 SYNTHETIC 模拟样例，不代表当前真实就业市场或当前开课情况。本版暂不开放账户和个人保存功能。',
   'app.integrationBanner':
     '内部 D7 联调预览：市场、方向比较与课程页共用同一个 partial 历史候选数据包。数据未经人工核实、未公开发布，账户样例保持不变。',
   'app.skipToContent': '跳到主内容',
@@ -21,10 +21,26 @@ const zh: Dictionary = {
   'nav.account': '账户',
   'nav.market': '市场概览',
   'nav.compare': '方向比较',
-  'nav.courses': '课程与技能',
+  'nav.courses': '课程浏览',
   'nav.opportunities': '实践机会',
   'nav.profile': '个人画像',
-  'nav.pathways': '推荐与路径',
+  'nav.pathways': '资源推荐',
+
+  'public.preview': 'SYNTHETIC 模拟 · 公开体验版',
+  'public.loading': '正在加载页面……',
+  'public.home.title': '探索职业方向，找到想学的技能。',
+  'public.home.intro': '从数据职业方向比较出发，浏览课程和学习资源。无需登录，自主选择你想了解的技能，体验完整的公开浏览流程。',
+  'public.home.market': '按角色、地区、阶段和日期筛选模拟岗位，查看每项技能统计背后的可分析描述数量。',
+  'public.home.compare': '使用各方向自己的样本数和可分析描述数，比较不同数据职业方向。',
+  'public.home.courses': '浏览示例课程信息、来源链接，以及候选技能的映射证据。',
+  'public.home.resources': '选择职业方向和想了解的目标技能，查看匹配的示例资源及推荐原因。',
+  'public.home.scopeTitle': '关于这个体验版',
+  'public.home.scope': '展示的岗位、课程和资源均为体验网站功能的模拟样例。课程覆盖有限；来源链接和样例核实日期不代表当前可用、符合报名资格或保证就业结果。',
+  'public.home.accounts': '本版仅开放公开浏览。账户、个人画像、保存、收藏和机会日历暂未开放，不要求填写个人经历或账户资料。',
+  'public.home.localPreferences': '语言偏好保留在当前浏览器；资源推荐的选择只在当前页面访问期间保留，不会保存为个人学习记录。',
+  'public.courses.intro': '浏览示例课程信息和候选技能。本体验版不记录课程完成情况，也不确认你的个人技能。',
+  'public.resources.intro': '选择职业方向，主动勾选想了解的技能，查看匹配的示例学习资源。',
+  'public.resources.targetNote': '勾选目标仅代表你想了解它，不表示已掌握或缺少这项技能；选择不会保存到账户。',
 
   'home.title': '首页',
   'home.intro':
@@ -532,7 +548,7 @@ const zh: Dictionary = {
   'errorBoundary.message': '发生了意外错误。出错前展示的数据未受影响，可以返回或重新加载。',
   'errorBoundary.reload': '重新加载页面',
 
-  'footer.preview': '开发预览（A0–A4），不是已部署产品。',
+  'footer.preview': '公开体验版 · SYNTHETIC 模拟数据 · 仅开放公开浏览。',
   'footer.contract': '合同按字节原样同步自上游提交 {commit}。',
   'footer.dataRepo': '数据仓库（Seraphina）',
   'footer.websiteRepo': '网站仓库',

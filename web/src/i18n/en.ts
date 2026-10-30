@@ -6,9 +6,9 @@
 
 const en = {
   'app.title': 'UTSC Career & Practice Navigator',
-  'app.tagline': 'Compare data career directions, confirm your skills, find courses and club opportunities.',
+  'app.tagline': 'Explore data career directions, compare skills and discover learning resources.',
   'app.syntheticBanner':
-    'Development preview (A0–A4): public market, course and pathway samples are SYNTHETIC; private experiences, confirmed skills and saved learning paths belong to your real account. No live market or official course availability is claimed.',
+    'Public experience preview — all market, course and resource data are SYNTHETIC examples. They do not describe the current job market or current course availability. Accounts and personal saving are not available in this version.',
   'app.integrationBanner':
     'INTERNAL D7 integration preview: one partial historical candidate package is used across market, comparison and course views. It is not human-verified, not published, and account samples remain unchanged.',
   'app.skipToContent': 'Skip to main content',
@@ -20,10 +20,26 @@ const en = {
   'nav.account': 'Account',
   'nav.market': 'Market overview',
   'nav.compare': 'Role comparison',
-  'nav.courses': 'Courses & skills',
+  'nav.courses': 'Courses',
   'nav.opportunities': 'Opportunities',
   'nav.profile': 'Profile',
-  'nav.pathways': 'Pathways',
+  'nav.pathways': 'Resources',
+
+  'public.preview': 'SYNTHETIC · Public experience preview',
+  'public.loading': 'Loading page…',
+  'public.home.title': 'Explore a direction. Find a skill to learn.',
+  'public.home.intro': 'Try a simple journey from data career comparisons to courses and learning resources. Browse freely and choose the skills you want to explore.',
+  'public.home.market': 'Filter the synthetic job sample by role, location, stage and date. See how many descriptions support each skill statistic.',
+  'public.home.compare': 'Compare career directions using each role’s own sample and analyzable-description counts.',
+  'public.home.courses': 'Browse example course information, source links and the evidence behind candidate skills.',
+  'public.home.resources': 'Select a role and your own target skills. Explore matching example resources and see why they are recommended.',
+  'public.home.scopeTitle': 'About this preview',
+  'public.home.scope': 'All displayed jobs, courses and resources are synthetic examples for trying the website. Course coverage is limited; links and sample verification dates do not establish current availability, eligibility or employment outcomes.',
+  'public.home.accounts': 'This version offers public browsing only. Accounts, personal profiles, saving, favorites and opportunity calendars are not open yet. No personal experiences or account details are requested.',
+  'public.home.localPreferences': 'Your language preference stays in this browser. Recommendation selections last for the current page visit; they are not saved as a personal learning record.',
+  'public.courses.intro': 'Explore example course information and candidate skills. This preview does not record course completion or confirm your skills.',
+  'public.resources.intro': 'Choose a role, select the skills you want to explore, and see matching example learning resources.',
+  'public.resources.targetNote': 'Selecting a target means you want to explore it. It does not confirm a skill or imply that you lack it. Selections are not saved to an account.',
 
   'home.title': 'Home',
   'home.intro':
@@ -538,7 +554,7 @@ const en = {
   'errorBoundary.message': 'An unexpected error occurred. The data shown before the error is untouched; you can go back or reload.',
   'errorBoundary.reload': 'Reload page',
 
-  'footer.preview': 'Development preview (A0–A4). Not a deployed product.',
+  'footer.preview': 'Public experience preview · SYNTHETIC data · public browsing only.',
   'footer.contract': 'Contract synced verbatim from upstream commit {commit}.',
   'footer.dataRepo': 'Data repository (Seraphina)',
   'footer.websiteRepo': 'Website repository',

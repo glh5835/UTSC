@@ -2,11 +2,14 @@
   "name": "utsc-web",
   "private": true,
   "version": "0.1.0",
-  "description": "UTSC Career & Practice Navigator website (React + TypeScript + Vite). A0–A4: foundation, accounts, market pages, experiences, explicit skill confirmation, recommendations and learning paths.",
+  "description": "UTSC public experience preview: synthetic market comparisons, course browsing and resource recommendations. No account services or personal saving.",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit --pretty false && vite build",
+    "build": "npm run build:demo && node scripts/build-sites-worker.mjs",
+    "build:demo": "tsc --noEmit --pretty false && vite build --mode demo && node scripts/check-dist.mjs",
+    "check:dist": "node scripts/check-dist.mjs",
+    "test:deployment": "node --test scripts/check-dist.test.mjs scripts/worker.test.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit --pretty false",
     "test": "vitest run"
