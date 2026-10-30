@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { usePageTitle } from '../../usePageTitle'
-import { UPSTREAM_CONTRACT_COMMIT } from '../../data/sources'
+import { useDataVersion } from '../../data/DataVersionContext'
 import { isFilterEmpty, type MarketFilter } from './criteria'
 import { computeMarketOverview } from './stats'
 import { parseFilter, serializeFilter } from './filterParams'
@@ -26,6 +26,7 @@ import { DatasetStatePanels, useMarketBundle } from './useMarketBundle'
  */
 export function MarketPage() {
   const { t } = useLanguage()
+  const { config } = useDataVersion()
   usePageTitle(t('nav.market'))
   const [searchParams, setSearchParams] = useSearchParams()
   const [selectedId, setSelectedId] = useState(MARKET_DATASETS[0].id)
@@ -50,7 +51,7 @@ export function MarketPage() {
       <h1>{t('nav.market')}</h1>
       <p className="lead">{t('market.intro')}</p>
       <p className="note provenance">
-        {t('market.upstreamNote', { commit: UPSTREAM_CONTRACT_COMMIT.slice(0, 7) })}
+        {t('market.upstreamNote', { commit: config.contractCommit.slice(0, 7) })}
       </p>
 
       <DatasetPicker selected={selectedId} onSelect={setSelectedId} />

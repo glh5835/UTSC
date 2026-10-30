@@ -2,21 +2,18 @@ import { useEffect, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import {
   BundleFetchError,
-  createBundleValidator,
   loadAndValidateBundle,
-  loadSchemaSet,
   type ValidationIssue,
 } from '../../data/validation'
 import { stalenessInfo } from '../../data/staleness'
 import type { UtscBundle } from '../../data/types'
+import { useDataVersion } from '../../data/DataVersionContext'
 
 export type LoadPhase =
   | { phase: 'loading' }
   | { phase: 'error' }
   | { phase: 'rejected'; issues: ValidationIssue[] }
   | { phase: 'ok'; bundle: UtscBundle }
-
-const validatorPromise: Promise<ReturnType<typeof createBundleValidator>> = loadSchemaSet().then(createBundleValidator)
 
 export interface DatasetResult {
   phase: LoadPhase
@@ -26,7 +23,9 @@ export interface DatasetResult {
 
 /** Loads and validates one bundle URL; shared by the market pages with the
  * same whole-bundle rejection semantics as the sample viewer. */
-export function useMarketBundle(url: string): DatasetResult {
+export function useMarketBundle(url?: string): DatasetResult {
+  const { config, validator } = useDataVersion()
+  const targetUrl = url ?? config.marketBundlePath
   const [phase, setPhase] = useState<LoadPhase>({ phase: 'loading' })
   const [stale, setStale] = useState<DatasetResult['stale']>(null)
   const [retryNonce, setRetryNonce] = useState(0)
@@ -39,8 +38,8 @@ export function useMarketBundle(url: string): DatasetResult {
     let cancelled = false
     async function run() {
       try {
-        const validator = await validatorPromise
-        const result = await loadAndValidateBundle(url, validator)
+        const validate = await validator()
+        const result = await loadAndValidateBundle(targetUrl, validate)
         if (cancelled || request !== requestRef.current) return
         if (result.status === 'ok') {
           setStale(stalenessInfo(result.bundle.manifest.generated_at, new Date()))
@@ -60,7 +59,7 @@ export function useMarketBundle(url: string): DatasetResult {
     return () => {
       cancelled = true
     }
-  }, [url, retryNonce])
+  }, [targetUrl, retryNonce, validator])
 
   return { phase, stale, reload: () => setRetryNonce((n) => n + 1) }
 }

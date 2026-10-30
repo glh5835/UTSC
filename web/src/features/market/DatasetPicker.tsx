@@ -1,13 +1,7 @@
 import { useLanguage } from '../../i18n/LanguageContext'
 import type { TxKey } from '../../i18n/en'
+import { DATA_CONFIG, type DataMode } from '../../data/sources'
 
-/**
- * Dataset picker for the market pages. The three entries are the upstream
- * contract fixtures (verbatim copies, SYNTHETIC by agreement) plus one
- * website-constructed demo package used while the data side's D4 export is
- * not delivered yet. The demo package is clearly labelled as website-side:
- * it is contract-valid, but it is NOT real market data and NOT upstream.
- */
 export interface MarketDatasetOption {
   id: string
   path: string
@@ -15,9 +9,10 @@ export interface MarketDatasetOption {
   noteKey: TxKey
   synthetic: boolean
   websiteSide: boolean
+  mode: DataMode
 }
 
-export const MARKET_DATASETS: MarketDatasetOption[] = [
+const DEMO_DATASETS: MarketDatasetOption[] = [
   {
     id: 'demo',
     path: '/demo/a2-market-demo.json',
@@ -25,6 +20,7 @@ export const MARKET_DATASETS: MarketDatasetOption[] = [
     noteKey: 'market.dataset.demo.note',
     synthetic: true,
     websiteSide: true,
+    mode: 'demo',
   },
   {
     id: 'valid',
@@ -33,6 +29,7 @@ export const MARKET_DATASETS: MarketDatasetOption[] = [
     noteKey: 'fixture.valid.description',
     synthetic: true,
     websiteSide: false,
+    mode: 'demo',
   },
   {
     id: 'empty',
@@ -41,8 +38,25 @@ export const MARKET_DATASETS: MarketDatasetOption[] = [
     noteKey: 'fixture.empty.description',
     synthetic: true,
     websiteSide: false,
+    mode: 'demo',
   },
 ]
+
+export const MARKET_DATASETS: MarketDatasetOption[] = DATA_CONFIG.mode === 'demo'
+  ? DEMO_DATASETS
+  : [{
+      id: DATA_CONFIG.mode,
+      path: DATA_CONFIG.marketBundlePath,
+      labelKey: DATA_CONFIG.mode === 'integration'
+        ? 'market.dataset.integration.label'
+        : 'market.dataset.published.label',
+      noteKey: DATA_CONFIG.mode === 'integration'
+        ? 'market.dataset.integration.note'
+        : 'market.dataset.published.note',
+      synthetic: false,
+      websiteSide: false,
+      mode: DATA_CONFIG.mode,
+    }]
 
 export function DatasetPicker({ selected, onSelect }: { selected: string; onSelect: (id: string) => void }) {
   const { t } = useLanguage()
@@ -54,7 +68,8 @@ export function DatasetPicker({ selected, onSelect }: { selected: string; onSele
           <input type="radio" name="market-dataset" value={dataset.id} checked={selected === dataset.id} onChange={() => onSelect(dataset.id)} />
           <span>
             <strong>{t(dataset.labelKey)}</strong>{' '}
-            <span className="chip chip-synthetic">SYNTHETIC</span>
+            {dataset.synthetic ? <span className="chip chip-synthetic">SYNTHETIC</span> : null}
+            {dataset.mode === 'integration' ? <span className="chip chip-warning">{t('market.dataset.integrationBadge')}</span> : null}
             {dataset.websiteSide ? <span className="chip chip-warning">{t('market.dataset.websiteSide')}</span> : null}
             <br />
             <span className="muted">{t(dataset.noteKey)}</span>

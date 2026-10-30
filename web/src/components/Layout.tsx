@@ -1,7 +1,8 @@
 import { type ReactNode } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
-import { UPSTREAM_CONTRACT_COMMIT, UPSTREAM_DATA_REPO_URL } from '../data/sources'
+import { UPSTREAM_DATA_REPO_URL } from '../data/sources'
+import { useDataVersion } from '../data/DataVersionContext'
 import type { TxKey } from '../i18n/en'
 import { LanguageToggle } from './LanguageToggle'
 import { ErrorBoundary } from './ErrorBoundary'
@@ -25,6 +26,7 @@ const NAV_ITEMS: NavItem[] = [
 
 export function Layout({ children }: { children: ReactNode }) {
   const { t } = useLanguage()
+  const { config } = useDataVersion()
   return (
     <div className="site">
       <a className="skip-link" href="#main-content">
@@ -50,7 +52,7 @@ export function Layout({ children }: { children: ReactNode }) {
           </ul>
         </nav>
         <p className="synthetic-banner" role="note">
-          {t('app.syntheticBanner')}
+          {t(config.mode === 'integration' ? 'app.integrationBanner' : 'app.syntheticBanner')}
         </p>
       </header>
       <main id="main-content" className="site-main">
@@ -58,7 +60,7 @@ export function Layout({ children }: { children: ReactNode }) {
       </main>
       <footer className="site-footer">
         <p>{t('footer.preview')}</p>
-        <p>{t('footer.contract', { commit: UPSTREAM_CONTRACT_COMMIT })}</p>
+        <p>{t('footer.contract', { commit: config.contractCommit })}</p>
         <p>
           <a href={UPSTREAM_DATA_REPO_URL} target="_blank" rel="noreferrer">
             {t('footer.dataRepo')}
