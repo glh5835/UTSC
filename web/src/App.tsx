@@ -9,6 +9,7 @@ import { MarketPage } from './features/market/MarketPage'
 import { ComparePage } from './features/market/ComparePage'
 import { CoursesPage } from './features/profile/CoursesPage'
 import { ProfileSkillsPage } from './features/profile/ProfileSkillsPage'
+import { PathwaysPage } from './features/pathways/PathwaysPage'
 import { PlaceholderPage, type PlaceholderSpec } from './pages/Placeholder'
 import { NotFoundPage } from './pages/NotFound'
 
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/profile" element={<ProfileSkillsPage />} />
+        <Route path="/pathways" element={<PathwaysPage />} />
         {Object.entries(PLACEHOLDERS).map(([path, spec]) => (
           <Route key={path} path={`/${path}`} element={<TitledPlaceholder spec={spec} />} />
         ))}

@@ -28,6 +28,10 @@ export interface DataVersionConfig {
   schemaBasePath: string
   marketBundlePath: string
   courseBundlePath: string
+  /** Bundle consumed by the A4 pathways page (skills, per-role market
+   * statistics and resources). Each version context points it at its own
+   * single bundle so recommendations stay inside the approved data version. */
+  pathwaysBundlePath: string
   contractCommit: string
 }
 
@@ -37,6 +41,7 @@ export const DATA_CONFIG: DataVersionConfig = {
   schemaBasePath: '/contracts/schemas',
   marketBundlePath: '/demo/a2-market-demo.json',
   courseBundlePath: '/contracts/fixtures/valid_bundle.json',
+  pathwaysBundlePath: '/demo/a4-pathways-demo.json',
   contractCommit: UPSTREAM_CONTRACT_COMMIT,
 }
 

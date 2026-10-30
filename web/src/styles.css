@@ -669,3 +669,38 @@ select {
   min-height: 2.2rem;
   margin-right: 0.5rem;
 }
+
+/* ── A4 pathways and learning paths ── */
+.a4-recommendation {
+  margin-bottom: 1.1rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid #e5eaf1;
+  overflow-wrap: anywhere;
+}
+.a4-recommendation:last-child {
+  border-bottom: 0;
+}
+.a4-resource p {
+  margin: 0.3rem 0;
+}
+.a4-path {
+  margin-top: 1rem;
+}
+.a4-item-list {
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+.a4-item {
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 8px;
+  padding: 0.75rem;
+  overflow-wrap: anywhere;
+}
+.a4-save-row,
+.a4-add-row {
+  margin: 0.75rem 0;
+}
+.a4-add-row .field {
+  max-width: 26rem;
+}

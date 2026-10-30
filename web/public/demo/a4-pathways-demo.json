@@ -1,0 +1,928 @@
+{
+  "manifest": {
+    "schema_version": "1.0.0",
+    "dataset_version": "0.9.1",
+    "generated_at": "2026-10-29T00:00:00Z",
+    "collected_from": "2026-09-24T00:00:00Z",
+    "collected_to": "2026-10-27T00:00:00Z",
+    "posting_from": "2026-08-01",
+    "posting_to": "2026-10-31",
+    "query_config_version": "demo-website-side",
+    "run_status": "complete",
+    "sample_count": 25
+  },
+  "market_jobs": [
+    {
+      "job_key": "demo-da-01",
+      "source": "demo_synthetic",
+      "source_job_id": "da1",
+      "job_title": "Data Analyst Intern",
+      "employer_name": "Example Analytics",
+      "source_url": "https://jobs.example-demo.invalid/demo-da-01",
+      "role_id": "data_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "internship",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-10-01T14:00:00Z",
+      "posted_date": "2026-10-01",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python",
+        "sql"
+      ],
+      "soft_skill_ids": [
+        "communication"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-da-02",
+      "source": "demo_synthetic",
+      "source_job_id": "da2",
+      "job_title": "Junior Data Analyst",
+      "employer_name": "Example Retail",
+      "source_url": "https://jobs.example-demo.invalid/demo-da-02",
+      "role_id": "data_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "new_grad",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": null,
+      "posted_date": "2026-10-05",
+      "posted_precision": "date",
+      "source_timezone": null,
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python",
+        "excel"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-da-03",
+      "source": "demo_synthetic",
+      "source_job_id": "da3",
+      "job_title": "Data Analyst",
+      "employer_name": "Example Health",
+      "source_url": "https://jobs.example-demo.invalid/demo-da-03",
+      "role_id": "data_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "montreal_metro",
+      "posted_at": "2026-09-28T09:30:00Z",
+      "posted_date": "2026-09-28",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Montreal",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "sql",
+        "power_bi"
+      ],
+      "soft_skill_ids": [
+        "teamwork"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-da-04",
+      "source": "demo_synthetic",
+      "source_job_id": "da4",
+      "job_title": "Data Analyst (fr)",
+      "employer_name": "Example Retail",
+      "source_url": "https://jobs.example-demo.invalid/demo-da-04",
+      "role_id": "data_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "new_grad",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": null,
+      "posted_date": "2026-10-15",
+      "posted_precision": "date",
+      "source_timezone": null,
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "missing",
+      "description_analyzable": false
+    },
+    {
+      "job_key": "demo-da-05",
+      "source": "demo_synthetic",
+      "source_job_id": "da5",
+      "job_title": "Co-op Data Analyst",
+      "employer_name": "Example Energy",
+      "source_url": "https://jobs.example-demo.invalid/demo-da-05",
+      "role_id": "data_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "internship",
+      "career_level_status": "classified",
+      "market_area": "other_canada",
+      "posted_at": "2026-09-20T16:00:00Z",
+      "posted_date": "2026-09-20",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Edmonton",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python",
+        "sql",
+        "excel"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-ba-01",
+      "source": "demo_synthetic",
+      "source_job_id": "ba1",
+      "job_title": "Business Analyst",
+      "employer_name": "Example Bank",
+      "source_url": "https://jobs.example-demo.invalid/demo-ba-01",
+      "role_id": "business_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-10-10T11:00:00Z",
+      "posted_date": "2026-10-10",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "sql",
+        "excel"
+      ],
+      "soft_skill_ids": [
+        "communication"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-ba-02",
+      "source": "demo_synthetic",
+      "source_job_id": "ba2",
+      "job_title": "Business Systems Analyst",
+      "employer_name": "Example Logistics",
+      "source_url": "https://jobs.example-demo.invalid/demo-ba-02",
+      "role_id": "business_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "new_grad",
+      "career_level_status": "classified",
+      "market_area": "montreal_metro",
+      "posted_at": null,
+      "posted_date": "2026-10-12",
+      "posted_precision": "date",
+      "source_timezone": null,
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "excel"
+      ],
+      "soft_skill_ids": [
+        "communication",
+        "teamwork"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-ba-03",
+      "source": "demo_synthetic",
+      "source_job_id": "ba3",
+      "job_title": "Business Analyst Intern",
+      "employer_name": "Example Media",
+      "source_url": "https://jobs.example-demo.invalid/demo-ba-03",
+      "role_id": "business_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "internship",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-10-20T10:00:00Z",
+      "posted_date": "2026-10-20",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [],
+      "soft_skill_ids": [
+        "communication"
+      ],
+      "description_status": "unavailable",
+      "description_analyzable": false
+    },
+    {
+      "job_key": "demo-bi-01",
+      "source": "demo_synthetic",
+      "source_job_id": "bi1",
+      "job_title": "BI Analyst",
+      "employer_name": "Example Telco",
+      "source_url": "https://jobs.example-demo.invalid/demo-bi-01",
+      "role_id": "bi_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "new_grad",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-09-30T13:00:00Z",
+      "posted_date": "2026-09-30",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "sql",
+        "power_bi"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-bi-02",
+      "source": "demo_synthetic",
+      "source_job_id": "bi2",
+      "job_title": "Reporting Analyst",
+      "employer_name": "Example Nonprofit",
+      "source_url": "https://jobs.example-demo.invalid/demo-bi-02",
+      "role_id": "bi_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "other_canada",
+      "posted_at": null,
+      "posted_date": "2026-10-08",
+      "posted_precision": "date",
+      "source_timezone": null,
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "power_bi",
+        "tableau"
+      ],
+      "soft_skill_ids": [
+        "communication"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-ds-01",
+      "source": "demo_synthetic",
+      "source_job_id": "ds1",
+      "job_title": "Associate Data Scientist",
+      "employer_name": "Example AI",
+      "source_url": "https://jobs.example-demo.invalid/demo-ds-01",
+      "role_id": "data_scientist",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "new_grad",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-10-18T15:00:00Z",
+      "posted_date": "2026-10-18",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python"
+      ],
+      "soft_skill_ids": [
+        "teamwork"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-ds-02",
+      "source": "demo_synthetic",
+      "source_job_id": "ds2",
+      "job_title": "Data Scientist (no desc)",
+      "employer_name": "Example AI",
+      "source_url": "https://jobs.example-demo.invalid/demo-ds-02",
+      "role_id": "data_scientist",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-10-22T09:00:00Z",
+      "posted_date": "2026-10-22",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python",
+        "sql"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "missing",
+      "description_analyzable": false
+    },
+    {
+      "job_key": "demo-de-01",
+      "source": "demo_synthetic",
+      "source_job_id": "de1",
+      "job_title": "Data Engineer",
+      "employer_name": "Example Utility",
+      "source_url": "https://jobs.example-demo.invalid/demo-de-01",
+      "role_id": "data_engineer",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "montreal_metro",
+      "posted_at": "2026-10-03T08:00:00Z",
+      "posted_date": "2026-10-03",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Montreal",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python",
+        "sql"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-pa-01",
+      "source": "demo_synthetic",
+      "source_job_id": "pa1",
+      "job_title": "Product Analyst",
+      "employer_name": "Example SaaS",
+      "source_url": "https://jobs.example-demo.invalid/demo-pa-01",
+      "role_id": "product_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "new_grad",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": null,
+      "posted_date": "2026-10-25",
+      "posted_precision": "date",
+      "source_timezone": null,
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "sql"
+      ],
+      "soft_skill_ids": [
+        "communication"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-pa-02",
+      "source": "demo_synthetic",
+      "source_job_id": "pa2",
+      "job_title": "Product Ops Analyst",
+      "employer_name": "Example Marketplace",
+      "source_url": "https://jobs.example-demo.invalid/demo-pa-02",
+      "role_id": "product_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "internship",
+      "career_level_status": "classified",
+      "market_area": "montreal_metro",
+      "posted_at": "2026-10-26T12:00:00Z",
+      "posted_date": "2026-10-26",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Montreal",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "excel",
+        "tableau"
+      ],
+      "soft_skill_ids": [
+        "teamwork"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-oa-01",
+      "source": "demo_synthetic",
+      "source_job_id": "oa1",
+      "job_title": "Operations Analyst",
+      "employer_name": "Example Airline",
+      "source_url": "https://jobs.example-demo.invalid/demo-oa-01",
+      "role_id": "operations_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "other_canada",
+      "posted_at": "2026-10-02T17:00:00Z",
+      "posted_date": "2026-10-02",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Halifax",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "excel"
+      ],
+      "soft_skill_ids": [
+        "communication"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-fra-01",
+      "source": "demo_synthetic",
+      "source_job_id": "fra1",
+      "job_title": "Financial Analysis Associate",
+      "employer_name": "Example Insurance",
+      "source_url": "https://jobs.example-demo.invalid/demo-fra-01",
+      "role_id": "financial_risk_analyst",
+      "role_subtype": "financial_analysis",
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-10-14T10:00:00Z",
+      "posted_date": "2026-10-14",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "excel",
+        "sql"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-fra-02",
+      "source": "demo_synthetic",
+      "source_job_id": "fra2",
+      "job_title": "Risk Analyst (fr)",
+      "employer_name": "Example Credit Union",
+      "source_url": "https://jobs.example-demo.invalid/demo-fra-02",
+      "role_id": "financial_risk_analyst",
+      "role_subtype": "risk_analysis",
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "new_grad",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": null,
+      "posted_date": "2026-10-19",
+      "posted_precision": "date",
+      "source_timezone": null,
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python"
+      ],
+      "soft_skill_ids": [
+        "attention_to_detail"
+      ],
+      "description_status": "missing",
+      "description_analyzable": false
+    },
+    {
+      "job_key": "demo-x-01",
+      "source": "demo_synthetic",
+      "source_job_id": "x1",
+      "job_title": "Analyst (auto-tag pending)",
+      "employer_name": "Example Staffing",
+      "source_url": "https://jobs.example-demo.invalid/demo-x-01",
+      "role_id": null,
+      "role_subtype": null,
+      "role_classification_status": "needs_review",
+      "role_classification_label": "other",
+      "classification_reasons": [
+        "keyword match inconclusive"
+      ],
+      "career_level": "internship",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-10-11T09:00:00Z",
+      "posted_date": "2026-10-11",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python"
+      ],
+      "soft_skill_ids": [
+        "communication"
+      ],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-x-02",
+      "source": "demo_synthetic",
+      "source_job_id": "x2",
+      "job_title": "Travel Consultant",
+      "employer_name": "Example Travel",
+      "source_url": "https://jobs.example-demo.invalid/demo-x-02",
+      "role_id": null,
+      "role_subtype": null,
+      "role_classification_status": "outside_scope",
+      "role_classification_label": "outside_scope",
+      "classification_reasons": [
+        "not a data role"
+      ],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-10-06T09:00:00Z",
+      "posted_date": "2026-10-06",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "excel"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-x-03",
+      "source": "demo_synthetic",
+      "source_job_id": "x3",
+      "job_title": "Senior Data Analyst?",
+      "employer_name": "Example Corp",
+      "source_url": "https://jobs.example-demo.invalid/demo-x-03",
+      "role_id": "data_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "potential_senior",
+      "career_level_status": "needs_review",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-10-09T09:00:00Z",
+      "posted_date": "2026-10-09",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "sql"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-x-05",
+      "source": "demo_synthetic",
+      "source_job_id": "x5",
+      "job_title": "Data Scientist (date unknown)",
+      "employer_name": "Example AI",
+      "source_url": "https://jobs.example-demo.invalid/demo-x-05",
+      "role_id": "data_scientist",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "montreal_metro",
+      "posted_at": null,
+      "posted_date": null,
+      "posted_precision": "unknown",
+      "source_timezone": null,
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "python"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-x-06",
+      "source": "demo_synthetic",
+      "source_job_id": "x6",
+      "job_title": "BI Analyst (posted early)",
+      "employer_name": "Example Logistics",
+      "source_url": "https://jobs.example-demo.invalid/demo-x-06",
+      "role_id": "bi_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "new_grad",
+      "career_level_status": "classified",
+      "market_area": "montreal_metro",
+      "posted_at": "2026-08-15T10:00:00Z",
+      "posted_date": "2026-08-15",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Montreal",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "sql"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-x-07",
+      "source": "demo_synthetic",
+      "source_job_id": "x7",
+      "job_title": "Data Analyst (range start)",
+      "employer_name": "Example Retail",
+      "source_url": "https://jobs.example-demo.invalid/demo-x-07",
+      "role_id": "data_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "toronto_gta",
+      "posted_at": "2026-09-01T00:00:00Z",
+      "posted_date": "2026-09-01",
+      "posted_precision": "datetime",
+      "source_timezone": "America/Toronto",
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "sql"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    },
+    {
+      "job_key": "demo-x-08",
+      "source": "demo_synthetic",
+      "source_job_id": "x8",
+      "job_title": "Data Analyst (range end)",
+      "employer_name": "Example Health",
+      "source_url": "https://jobs.example-demo.invalid/demo-x-08",
+      "role_id": "data_analyst",
+      "role_subtype": null,
+      "role_classification_status": "classified",
+      "role_classification_label": null,
+      "classification_reasons": [],
+      "career_level": "entry_level",
+      "career_level_status": "classified",
+      "market_area": "montreal_metro",
+      "posted_at": null,
+      "posted_date": "2026-10-31",
+      "posted_precision": "date",
+      "source_timezone": null,
+      "first_seen_at": "2026-09-25T00:00:00Z",
+      "last_seen_at": "2026-10-27T00:00:00Z",
+      "technical_skill_ids": [
+        "sql"
+      ],
+      "soft_skill_ids": [],
+      "description_status": "available",
+      "description_analyzable": true
+    }
+  ],
+  "skills": [
+    {
+      "skill_id": "python",
+      "label": "Python",
+      "category": "technical",
+      "aliases": [
+        "py"
+      ]
+    },
+    {
+      "skill_id": "sql",
+      "label": "SQL",
+      "category": "technical",
+      "aliases": []
+    },
+    {
+      "skill_id": "excel",
+      "label": "Excel",
+      "category": "technical",
+      "aliases": [
+        "microsoft excel"
+      ]
+    },
+    {
+      "skill_id": "power_bi",
+      "label": "Power BI",
+      "category": "technical",
+      "aliases": []
+    },
+    {
+      "skill_id": "tableau",
+      "label": "Tableau",
+      "category": "technical",
+      "aliases": []
+    },
+    {
+      "skill_id": "communication",
+      "label": "Communication",
+      "category": "soft",
+      "aliases": []
+    },
+    {
+      "skill_id": "teamwork",
+      "label": "Teamwork",
+      "category": "soft",
+      "aliases": [
+        "collaboration"
+      ]
+    },
+    {
+      "skill_id": "attention_to_detail",
+      "label": "Attention to detail",
+      "category": "soft",
+      "aliases": []
+    }
+  ],
+  "courses": [],
+  "resources": [
+    {
+      "resource_id": "a4_demo_sql_basics",
+      "title": "SQL Fundamentals Practice (Synthetic)",
+      "resource_type": "tutorial",
+      "skill_ids": [
+        "sql"
+      ],
+      "level": "beginner",
+      "eligibility_note": null,
+      "source_url": "https://example.com/a4-demo/sql-basics",
+      "verified_at": "2026-10-20T15:00:00Z"
+    },
+    {
+      "resource_id": "a4_demo_sql_basics_alt",
+      "title": "SQL Practice, Alternate Format (Synthetic)",
+      "resource_type": "documentation",
+      "skill_ids": [
+        "sql"
+      ],
+      "level": "beginner",
+      "eligibility_note": null,
+      "source_url": "https://example.com/a4-demo/sql-basics-alt",
+      "verified_at": "2026-10-20T15:00:00Z"
+    },
+    {
+      "resource_id": "a4_demo_python_intro",
+      "title": "Python for Data Analysis, Intro Track (Synthetic)",
+      "resource_type": "tutorial",
+      "skill_ids": [
+        "python"
+      ],
+      "level": "beginner",
+      "eligibility_note": null,
+      "source_url": "https://example.com/a4-demo/python-intro",
+      "verified_at": "2026-10-21T15:00:00Z"
+    },
+    {
+      "resource_id": "a4_demo_sql_python_project",
+      "title": "Guided SQL + Python Mini Project (Synthetic)",
+      "resource_type": "project",
+      "skill_ids": [
+        "sql",
+        "python"
+      ],
+      "level": "beginner",
+      "eligibility_note": null,
+      "source_url": "https://example.com/a4-demo/sql-python-project",
+      "verified_at": "2026-10-22T15:00:00Z"
+    },
+    {
+      "resource_id": "a4_demo_bi_dashboards",
+      "title": "BI Dashboard Building Workshop (Synthetic)",
+      "resource_type": "course",
+      "skill_ids": [
+        "power_bi",
+        "tableau"
+      ],
+      "level": "unknown",
+      "eligibility_note": null,
+      "source_url": "https://example.com/a4-demo/bi-dashboards",
+      "verified_at": "2026-10-23T15:00:00Z"
+    },
+    {
+      "resource_id": "a4_demo_excel_advanced",
+      "title": "Advanced Excel Financial Modeling (Synthetic)",
+      "resource_type": "course",
+      "skill_ids": [
+        "excel"
+      ],
+      "level": "advanced",
+      "eligibility_note": "Completion of an introductory statistics course is recommended before enrolling.",
+      "source_url": "https://example.com/a4-demo/excel-advanced",
+      "verified_at": "2026-10-24T15:00:00Z"
+    },
+    {
+      "resource_id": "a4_demo_case_competition",
+      "title": "Data Case Competition (Synthetic Example)",
+      "resource_type": "competition",
+      "skill_ids": [
+        "excel",
+        "communication",
+        "teamwork"
+      ],
+      "level": "intermediate",
+      "eligibility_note": null,
+      "source_url": "https://example.com/a4-demo/case-competition",
+      "verified_at": "2026-10-25T15:00:00Z"
+    },
+    {
+      "resource_id": "a4_demo_sql_ref_docs",
+      "title": "SQL Function Reference Notes (Synthetic)",
+      "resource_type": "documentation",
+      "skill_ids": [
+        "sql"
+      ],
+      "level": "beginner",
+      "eligibility_note": null,
+      "source_url": "https://example.com/a4-demo/sql-reference",
+      "verified_at": "2026-10-19T15:00:00Z"
+    },
+    {
+      "resource_id": "a4_demo_club_collab",
+      "title": "Student Data Club Collaboration Circle (Synthetic Example)",
+      "resource_type": "club",
+      "skill_ids": [
+        "teamwork",
+        "communication"
+      ],
+      "level": "unknown",
+      "eligibility_note": "Open to all current UTSC students.",
+      "source_url": "https://example.com/a4-demo/club-collab",
+      "verified_at": "2026-10-18T15:00:00Z"
+    }
+  ],
+  "opportunities": []
+}

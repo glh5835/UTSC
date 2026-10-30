@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
 import { runMatrix } from './rls-matrix.mjs'
 import { runA3Matrix } from './a3-rls-matrix.mjs'
+import { runA4Matrix } from './a4-rls-matrix.mjs'
 import { reserveReportOutput } from './report-output.mjs'
 
 /**
@@ -108,8 +109,12 @@ async function main() {
     { url, publicKey, secret, createClient },
     (line) => console.log('  [A3] ' + line),
   )
+  const a4 = await runA4Matrix(
+    { url, publicKey, secret, createClient },
+    (line) => console.log('  [A4] ' + line),
+  )
   const finished = new Date().toISOString()
-  const checks = [...a1.checks, ...a3.checks]
+  const checks = [...a1.checks, ...a3.checks, ...a4.checks]
   const passed = checks.filter((c) => c.passed).length
   const failed = checks.filter((c) => !c.passed)
   const summary = {
@@ -119,10 +124,11 @@ async function main() {
     total: checks.length,
     passed,
     failed: failed.length,
-    allPassed: a1.allPassed && a3.allPassed && failed.length === 0,
+    allPassed: a1.allPassed && a3.allPassed && a4.allPassed && failed.length === 0,
     groups: {
       a1: { total: a1.checks.length, passed: a1.checks.filter((c) => c.passed).length },
       a3: { total: a3.checks.length, passed: a3.checks.filter((c) => c.passed).length },
+      a4: { total: a4.checks.length, passed: a4.checks.filter((c) => c.passed).length },
     },
     failedChecks: failed,
     checks,
@@ -135,7 +141,7 @@ async function main() {
     process.exitCode = 1
     return
   }
-  console.log(`RLS ACCEPTANCE PASSED: ${passed}/${checks.length} checks across A1 and A3 (real signup + password login, two-account isolation, anonymous, metadata escalation, A3 course/experience/skill source integrity, cascade deletion).`)
+  console.log(`RLS ACCEPTANCE PASSED: ${passed}/${checks.length} checks across A1, A3 and A4 (real signup + password login, two-account isolation, anonymous, metadata escalation, A3 course/experience/skill source integrity, A4 learning-path ownership/idempotency, cascade deletion).`)
   console.log(`Report: ${outFile}`)
   } catch {
     fail('unexpected acceptance runner error; no passing result is claimed', 1)
