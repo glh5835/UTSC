@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
+import { validatePublicConnection } from './publicConfig'
 
 /**
  * Browser Supabase client. Configured purely from environment variables; when
@@ -22,6 +23,7 @@ export const SUPABASE_CONFIGURED = Boolean(
 let client: SupabaseClient | null = null
 
 if (SUPABASE_CONFIGURED) {
+  validatePublicConnection(supabaseUrl as string, publishableKey as string, import.meta.env.DEV)
   client = createClient(supabaseUrl as string, publishableKey as string)
 }
 

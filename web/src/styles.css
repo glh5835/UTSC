@@ -20,6 +20,21 @@
   --radius: 8px;
 }
 
+.public-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+
+.public-card-grid .public-card {
+  margin: 0;
+}
+
+.public-card h2 {
+  margin-top: 0;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -503,8 +518,7 @@ button:hover,
     flex-direction: column;
   }
   .site-nav ul {
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-wrap: wrap;
     padding-bottom: 4px;
   }
   .site-nav a {
