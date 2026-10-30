@@ -416,6 +416,25 @@ const zh: Dictionary = {
   'footer.websiteRepo': '网站仓库',
   'footer.provenance': '来源记录',
   'footer.langNote': '语言切换只影响界面文字；ID、筛选条件和当前页面保持不变。',
+  'app.integrationBanner':
+    '内部 D7 联调预览：市场、方向比较与课程页共用同一个 partial 历史候选数据包。数据未经人工核实、未公开发布，账户样例保持不变。',
+
+  'market.dataset.integration.label': 'D7 联调数据包',
+
+  'market.dataset.integration.note':
+    '固定版本内部候选包（schema 1.1.0），partial 历史运行。未经人工核实，不具备公开发布资格。',
+
+  'market.dataset.integrationBadge': '内部联调',
+
+  'market.dataset.published.label': '已发布数据包',
+
+  'market.dataset.published.note': '经所有者确认、用于本次部署的已发布快照。',
+
+  'a3.course.integration':
+    '内部候选数据包——partial 历史数据。课程与技能未经人工核实，该数据包未公开发布。',
+
+  'a3.course.published': '已发布数据包——课程依据为已核实来源数据，但不代表当前课表或选课资格。',
+
 }
 
 export default zh

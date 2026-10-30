@@ -97,6 +97,17 @@ export interface Resource {
   eligibility_note: string | null
   source_url: string
   verified_at: string
+  mapping_evidence?: string | null
+}
+
+export interface Organizer {
+  organizer_id: string
+  name: string
+  username: string
+  profile_url: string
+  enabled: boolean
+  priority: number
+  last_verified_at: string | null
 }
 
 export interface Opportunity {
@@ -108,6 +119,10 @@ export interface Opportunity {
   source_post_id: string | null
   source_post_ids: string[]
   description: string | null
+  responsibilities?: string | null
+  time_commitment?: string | null
+  compensation_status?: 'paid' | 'unpaid' | 'not_stated'
+  ccr_status?: 'yes' | 'no' | 'not_stated'
   activity_type_ids: string[]
   topic_ids: string[]
   skill_ids: string[]
@@ -142,6 +157,7 @@ export interface UtscBundle {
   manifest: Manifest
   market_jobs: MarketJob[]
   skills: Skill[]
+  organizers?: Organizer[]
   courses: Course[]
   resources: Resource[]
   opportunities: Opportunity[]

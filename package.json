@@ -9,7 +9,7 @@
     "supabase:reset": "supabase db reset",
     "supabase:status": "supabase status",
     "test:rls": "npm --prefix web run test -- rls-isolation.local",
-    "test:rls-acceptance": "node web/tests/rls-acceptance.mjs --out artifacts/kimi-a3-20261028/rls-acceptance.json"
+    "test:rls-acceptance": "node web/tests/rls-acceptance.mjs"
   },
   "devDependencies": {
     "supabase": "2.122.0"

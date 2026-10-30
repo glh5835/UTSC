@@ -344,6 +344,26 @@ describe('F, D, skill counts, coverage and rounding', () => {
   })
 })
 
+describe('skill counting unions both arrays before catalog classification', () => {
+  const b = bundleOf(
+    [
+      job({ key: 'u1', role: 'data_analyst', level: 'new_grad', soft: ['sql'] }),
+      job({ key: 'u2', role: 'data_analyst', level: 'new_grad', tech: ['teamwork'] }),
+      job({ key: 'u3', role: 'data_analyst', level: 'new_grad', tech: ['sql', 'teamwork'], soft: ['sql', 'teamwork'] }),
+      job({ key: 'u4', role: 'data_analyst', level: 'new_grad', tech: ['sql', 'teamwork'], soft: ['sql', 'teamwork'], analyzable: false }),
+    ],
+    [skill('sql', 'technical'), skill('teamwork', 'soft')],
+  )
+
+  it('counts either array, deduplicates within a job and excludes non-analyzable rows', () => {
+    const stats = computeMarketStats(b, EMPTY_FILTER)
+    expect(stats.f).toBe(4)
+    expect(stats.d).toBe(3)
+    expect(stats.technical.find((entry) => entry.skillId === 'sql')).toEqual({ skillId: 'sql', n: 2, rate: 2 / 3 })
+    expect(stats.soft.find((entry) => entry.skillId === 'teamwork')).toEqual({ skillId: 'teamwork', n: 2, rate: 2 / 3 })
+  })
+})
+
 /* ────────────────────────── 小样本阈值 ────────────────────────── */
 
 describe('small-sample product hint threshold', () => {

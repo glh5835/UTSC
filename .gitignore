@@ -43,3 +43,12 @@ supabase/.temp/
 /scripts/check_mvp07_evidence.py
 /scripts/browser_*.py
 !/scripts/browser_i18n_check.py
+
+# Local/private inputs and review artifacts are never publication sources.
+/UTSC双人项目笔记.md
+/processed1/
+/processed2/
+/data/d7-candidate-*/
+/UTSC_双方案网站发布测试与运维计划_2026-10-28.md
+/plans/阶段记录/D7接入准备与私有联调.md
+/web/static-dist/
