@@ -24,3 +24,8 @@ The repair checks the operation generation before and after every item request.
 Already issued requests can finish; no remaining item request or follow-up
 reload starts for the stale generation. The four regressions cover late success
 and rejection during A→B and A→B→A. RLS remains the database enforcement layer.
+
+Post-repair validation: 254 unit tests passed, 3 RLS wrappers skipped;
+typecheck and build passed. The development layout also receives the already
+reviewed public-preview skip-link repair: focus moves to main content without
+changing the HashRouter route. This is a separate accessibility commit.
