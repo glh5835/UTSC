@@ -14,6 +14,13 @@ const PENDING: TxKey[] = [
   'home.pendingA8',
 ]
 
+const WORKING: TxKey[] = [
+  'home.workingItem1',
+  'home.workingItem2',
+  'home.workingItem3',
+  'home.workingItem4',
+]
+
 export function HomePage() {
   const { t } = useLanguage()
   usePageTitle(t('home.title'))
@@ -25,13 +32,18 @@ export function HomePage() {
       <section aria-labelledby="working-heading">
         <h2 id="working-heading">{t('home.workingTitle')}</h2>
         <ul>
-          <li>{t('home.workingItem1')}</li>
-          <li>{t('home.workingItem2')}</li>
-          <li>{t('home.workingItem3')}</li>
+          {WORKING.map((key) => (
+            <li key={key}>{t(key)}</li>
+          ))}
         </ul>
         <p>
           <Link className="button" to="/sample">
             {t('home.sampleCta')}
+          </Link>
+        </p>
+        <p>
+          <Link className="button" to="/pathways">
+            {t('nav.pathways')}
           </Link>
         </p>
       </section>

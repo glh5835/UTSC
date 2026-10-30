@@ -1,4 +1,11 @@
-# UTSC web — React＋TypeScript＋Vite（A0–A3）
+# UTSC web — React＋TypeScript＋Vite（A0–A4）
+
+A4 增加资源推荐与个人学习路径，完整开发入口保留 A1/A3 的账户和画像功能。
+推荐只依据用户主动选择的目标技能，不自动确认技能。个人路径复用既有表，
+增量迁移为 `supabase/migrations/20261029000000_a4_path_items_idempotency.sql`，
+不修改 RLS；已有重复数据会让唯一索引创建失败，不自动清理。独立权限命令
+从仓库根运行 `npm run test:rls-acceptance`，缺凭据跳过不能替代真实验收。
+本轮源代码同步未执行数据库迁移；审查结果见 [A4 记录](../docs/reviews/a4-pathways.md)。
 
 A0 交付基础导航、共同合同 fixtures 的只读样例展示、运行时数据校验层和
 全局中英文切换；A1 接入真实 Supabase Auth、六张个人表迁移与 RLS、账户页

@@ -18,6 +18,7 @@ function fixture() {
   }
   fs.writeFileSync(path.join(tests, 'rls-matrix.mjs'), `export async function runMatrix() { return { allPassed: process.env.STUB_FAILURE !== '1', checks: [{ name: 'stub assertion', passed: process.env.STUB_FAILURE !== '1' }] } }`)
   fs.writeFileSync(path.join(tests, 'a3-rls-matrix.mjs'), `export async function runA3Matrix() { return { allPassed: true, checks: [{ name: 'stub A3 assertion', passed: true }] } }`)
+  fs.writeFileSync(path.join(tests, 'a4-rls-matrix.mjs'), `export async function runA4Matrix() { return { allPassed: true, checks: [{ name: 'stub A4 assertion', passed: true }] } }`)
   fs.writeFileSync(path.join(root, 'web', 'package.json'), '{}')
   const sdk = path.join(root, 'web', 'node_modules', '@supabase', 'supabase-js')
   fs.mkdirSync(sdk, { recursive: true })
@@ -55,7 +56,7 @@ describe('RLS CLI output and strict exits (stub services)', () => {
     const file = path.join(local.root, 'chosen.json')
     expect(local.run(['--out', file], credentials).status).toBe(0)
     const original = fs.readFileSync(file, 'utf8')
-    expect(JSON.parse(original)).toMatchObject({ total: 2, passed: 2, failed: 0, allPassed: true })
+    expect(JSON.parse(original)).toMatchObject({ total: 3, passed: 3, failed: 0, allPassed: true })
     const repeated = local.run(['--out', file], { ...credentials, STUB_FAILURE: '1' })
     expect(repeated.status).toBe(2)
     expect(repeated.stderr).toContain('Refusing to overwrite')
@@ -71,7 +72,7 @@ describe('RLS CLI output and strict exits (stub services)', () => {
   it('returns 1 when a matrix assertion fails', () => {
     const local = fixture()
     expect(local.run(['--out=failed.json'], { ...credentials, STUB_FAILURE: '1' }).status).toBe(1)
-    expect(JSON.parse(fs.readFileSync(path.join(local.root, 'failed.json'), 'utf8'))).toMatchObject({ passed: 1, failed: 1, allPassed: false })
+    expect(JSON.parse(fs.readFileSync(path.join(local.root, 'failed.json'), 'utf8'))).toMatchObject({ passed: 2, failed: 1, allPassed: false })
   })
 
   it('rejects missing and duplicate output paths before creating artifacts', () => {

@@ -22,6 +22,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/courses', key: 'nav.courses' },
   { to: '/opportunities', key: 'nav.opportunities' },
   { to: '/profile', key: 'nav.profile' },
+  { to: '/pathways', key: 'nav.pathways' },
 ]
 
 export function Layout({ children }: { children: ReactNode }) {
