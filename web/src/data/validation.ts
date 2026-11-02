@@ -29,6 +29,7 @@ export type IssueCode =
   | 'parse'
   | 'duplicate_id'
   | 'duplicate_source_job_id'
+  | 'duplicate_source_post_id'
   | 'missing_skill_ref'
   | 'missing_organizer_ref'
   | 'sample_count'
@@ -173,9 +174,20 @@ function findDuplicates(ids: readonly string[]): string[] {
 }
 
 function isFirstBeforeOrEqual(first: string, second: string): boolean {
-  // All contract instants are UTC ISO 8601 ending in Z and dates are
-  // YYYY-MM-DD, so lexicographic order equals chronological order.
-  return first <= second
+  if (first.length === 10 && second.length === 10) return first <= second
+  // UTC instants may have different fractional precision. A bare `...00Z`
+  // sorts AFTER `...00.001Z` as text. Compare whole seconds first, then the
+  // fractions, retaining precision beyond JavaScript Date's milliseconds.
+  const parts = (value: string) => ({
+    seconds: Date.parse(value.replace(/\.\d+Z$/, 'Z')),
+    fraction: /\.(\d+)Z$/.exec(value)?.[1] ?? '',
+  })
+  const a = parts(first)
+  const b = parts(second)
+  if (!Number.isFinite(a.seconds) || !Number.isFinite(b.seconds)) return false
+  if (a.seconds !== b.seconds) return a.seconds < b.seconds
+  const precision = Math.max(a.fraction.length, b.fraction.length)
+  return a.fraction.padEnd(precision, '0') <= b.fraction.padEnd(precision, '0')
 }
 
 /**
@@ -216,6 +228,32 @@ export function checkCrossRecords(bundle: UtscBundle): ValidationIssue[] {
       })
     } else {
       seenSourceJobs.set(key, index)
+    }
+  })
+
+  const seenSourcePosts = new Set<string>()
+  opportunities.forEach((opportunity, index) => {
+    for (const [start, end] of [
+      [opportunity.start_date, opportunity.end_date],
+      [opportunity.start_at, opportunity.end_at],
+    ]) {
+      if (start && end && !isFirstBeforeOrEqual(start, end)) {
+        issues.push({
+          code: 'time_order',
+          path: `/opportunities/${index}`,
+          message: `end is before start for ${opportunity.opportunity_id}`,
+        })
+      }
+    }
+    for (const postId of opportunity.source_post_ids) {
+      if (seenSourcePosts.has(postId)) {
+        issues.push({
+          code: 'duplicate_source_post_id',
+          path: `/opportunities/${index}/source_post_ids`,
+          message: `source post "${postId}" is assigned to multiple opportunities`,
+        })
+      }
+      seenSourcePosts.add(postId)
     }
   })
 
@@ -285,6 +323,13 @@ export function checkCrossRecords(bundle: UtscBundle): ValidationIssue[] {
     })
   }
   jobs.forEach((job, index) => {
+    if (job.posted_at && job.posted_date && job.posted_at.slice(0, 10) !== job.posted_date) {
+      issues.push({
+        code: 'time_order',
+        path: `/market_jobs/${index}`,
+        message: `posted_at does not match posted_date for ${job.job_key}`,
+      })
+    }
     if (!isFirstBeforeOrEqual(job.first_seen_at, job.last_seen_at)) {
       issues.push({
         code: 'time_order',

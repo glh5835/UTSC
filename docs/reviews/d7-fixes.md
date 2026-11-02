@@ -20,3 +20,9 @@ Current isolated-copy validation: typecheck passed; 204 unit tests passed,
 Vitest's skipped RLS wrappers are not real-database acceptance. The source
 review does not upgrade the formal contract, publish real data or connect a
 production account service. Historical QA artifacts and internal notes remain local.
+
+2026-11-03 follow-up: 18 pinned candidate-contract/boundary tests and consumer
+time/reference checks bring the website suite to 222 passed, 3 RLS wrappers
+skipped. The cross-repository review requests changes on D7 package integrity;
+see [the full review](d7-cross-repo-20261103.md). The formal 1.0 demo default
+remains in place; website preparation acceptance does not approve D7 publication.
