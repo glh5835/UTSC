@@ -6,6 +6,7 @@ import { useProfile } from '../../auth/useProfile'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { usePageTitle } from '../../usePageTitle'
 import type { Course, Skill } from '../../data/types'
+import { DATA_CONFIG } from '../../data/sources'
 import { useCourseCatalog } from './useCourseCatalog'
 import { usePersonalSkills } from './usePersonalSkills'
 
@@ -138,7 +139,13 @@ function CoursesPageContent({
     <>
       <h1>{t('nav.courses')}</h1>
       <p className="lead">{t('a3.course.intro')}</p>
-      <p className="banner banner-warn" role="note">{t('a3.course.synthetic')}</p>
+      <p className="banner banner-warn" role="note">
+        {t(DATA_CONFIG.mode === 'demo'
+          ? 'a3.course.synthetic'
+          : DATA_CONFIG.mode === 'integration'
+            ? 'a3.course.integration'
+            : 'a3.course.published')}
+      </p>
       <p className="note">{t('a3.course.historical')}</p>
 
       {authNotice ? (
@@ -248,7 +255,10 @@ function CourseCard({
   return (
     <article className="panel a3-course" aria-labelledby={`course-${course.course_id}`}>
       <h2 id={`course-${course.course_id}`}>{course.title}</h2>
-      <p><span className="chip chip-synthetic">SYNTHETIC</span></p>
+      <p>
+        {DATA_CONFIG.mode === 'demo' ? <span className="chip chip-synthetic">SYNTHETIC</span> : null}
+        {DATA_CONFIG.mode === 'integration' ? <span className="chip chip-warning">INTERNAL</span> : null}
+      </p>
       <dl className="def-list">
         <div className="def-row"><dt>{t('a3.course.courseId')}</dt><dd><code>{course.course_id}</code></dd></div>
         <div className="def-row"><dt>{t('a3.course.calendar')}</dt><dd>{course.calendar_year}</dd></div>

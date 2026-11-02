@@ -143,6 +143,20 @@ describe('local attribution inside mixed clauses', () => {
     expect(result.python.slice(0, 2)).toEqual(['ambiguous', 'experience.third_person'])
   })
 
+  it('keeps nested third-person actions ambiguous even when I is the outer subject', () => {
+    for (const input of [
+      'I watched my teammate use Python.',
+      'I asked my teammate to use Python.',
+      'I observed my teammate using Python while I used Excel.',
+    ]) {
+      const result = interpretations(input)
+      expect(result.python.slice(0, 2), input).toEqual(['ambiguous', 'experience.third_person'])
+    }
+    const mixed = interpretations('I observed my teammate using Python while I used Excel.')
+    expect(mixed.excel.slice(0, 2)).toEqual(['affirmed', 'experience.first_person_use'])
+    expect(interpretations('I used Python with my teammate.').python[0]).toBe('affirmed')
+  })
+
   it('keeps an affirmed skill before an elliptical negation', () => {
     const result = interpretations('I used Python but not SQL.')
     expect(result.python.slice(0, 2)).toEqual(['affirmed', 'experience.first_person_use'])
@@ -186,6 +200,241 @@ describe('local attribution inside mixed clauses', () => {
     const candidates = extractExperienceSkills('I used Python but not Python.', skills).candidates
     expect(candidates.filter((candidate) => candidate.skill_id === 'python').map((candidate) => candidate.interpretation))
       .toEqual(['affirmed', 'negated'])
+  })
+})
+
+describe('third-party executor attribution (F1 follow-up)', () => {
+  function bySkill(input: string) {
+    return Object.fromEntries(
+      extractExperienceSkills(input, skills).candidates.map((candidate) => [
+        candidate.skill_id,
+        [candidate.interpretation, candidate.rule_id] as const,
+      ]),
+    )
+  }
+
+  it('passes the four required reviewer cases', () => {
+    expect(bySkill('I watched my teammate use Python.').python).toEqual(['ambiguous', 'experience.third_person'])
+    expect(bySkill('I asked my teammate to use Python.').python).toEqual(['ambiguous', 'experience.third_person'])
+    const mixed = bySkill('I observed my teammate using Python while I used Excel.')
+    expect(mixed.python).toEqual(['ambiguous', 'experience.third_person'])
+    expect(mixed.excel).toEqual(['affirmed', 'experience.first_person_use'])
+    expect(bySkill('I saw Alex use Python.').python).toEqual(['ambiguous', 'experience.third_person'])
+  })
+
+  it('keeps the full original sentence as evidence text', () => {
+    for (const input of [
+      'I watched my teammate use Python.',
+      'I saw Alex use Python.',
+      'I observed my teammate using Python while I used Excel.',
+    ]) {
+      for (const candidate of extractExperienceSkills(input, skills).candidates) {
+        expect(candidate.evidence_text, input).toBe(input)
+      }
+    }
+  })
+
+  it('still affirms direct first-person use when others only appear nearby', () => {
+    expect(bySkill('I used Python with my teammate.').python).toEqual(['affirmed', 'experience.first_person_use'])
+    expect(bySkill('With my teammate I used Python.').python).toEqual(['affirmed', 'experience.first_person_use'])
+    expect(bySkill('During my internship I used Python extensively.').python).toEqual([
+      'affirmed',
+      'experience.first_person_use',
+    ])
+    const we = bySkill('We used Excel and SQL.')
+    expect(we.excel[0]).toBe('affirmed')
+    expect(we.sql[0]).toBe('affirmed')
+  })
+
+  it('covers perception, request and report variants conservatively', () => {
+    const ambiguousCases = [
+      ['I heard my colleague use SQL.', 'sql'],
+      ['I noticed my teammate using Excel.', 'excel'],
+      ['I saw Maria use Power BI.', 'power_bi'],
+      ['He watched me use Python.', 'python'],
+      ['My manager asked me to use Python.', 'python'],
+      ['I watched my teammate use Python, SQL and Excel.', 'sql'],
+      ['I watched my teammate use Python, SQL and Excel.', 'excel'],
+    ] as const
+    for (const [input, skill] of ambiguousCases) {
+      expect(bySkill(input)[skill]?.[0], input).toBe('ambiguous')
+    }
+    const paired = bySkill('I used Python and watched my teammate use SQL.')
+    expect(paired.python).toEqual(['affirmed', 'experience.first_person_use'])
+    expect(paired.sql).toEqual(['ambiguous', 'experience.third_person'])
+  })
+
+  it('keeps named third-party executors ambiguous without first-person co-occurrence', () => {
+    expect(bySkill('Alex used Python at work.').python).toEqual(['ambiguous', 'experience.third_person'])
+    const whileMixed = bySkill('I used Python while Maria used Excel.')
+    expect(whileMixed.python).toEqual(['affirmed', 'experience.first_person_use'])
+    expect(whileMixed.excel).toEqual(['ambiguous', 'experience.third_person'])
+  })
+})
+
+describe('direct self-use evidence gate (D7 independent review)', () => {
+  const uncertainExecutors = [
+    'I watched students use Python.',
+    'I asked the intern to use Python.',
+    'I saw people use Python.',
+    'I watched developers use Python.',
+    // Different nouns and verb frames exercise the structure, not a noun list.
+    'I noticed researchers using Python.',
+    'We asked two volunteers to work with Python.',
+    'I reported that apprentices used Python.',
+    'I helped visitors use Python.',
+    'I learned that analysts use Python.',
+    'I have been asked to use Python.',
+    'I was told to use Python.',
+    'After analysts said I used Python.',
+    'With the manager saying I used Python.',
+    'I used Python to ask interns to use SQL.',
+    'I watched researchers using Python, SQL and Excel.',
+  ]
+
+  it.each(uncertainExecutors)('keeps an unsupported executor ambiguous: %s', (input) => {
+    const result = extractExperienceSkills(input, skills)
+    const subjectSkills = input === 'I used Python to ask interns to use SQL.'
+      ? ['sql']
+      : result.candidates.map((candidate) => candidate.skill_id)
+    expect(subjectSkills.length).toBeGreaterThan(0)
+    for (const skillId of subjectSkills) {
+      const candidate = result.candidates.find((item) => item.skill_id === skillId)
+      expect(candidate?.interpretation).toBe('ambiguous')
+      expect(candidate?.evidence_text).toBe(input)
+    }
+  })
+
+  it.each([
+    'I used Python with my teammate.',
+    'During my internship I used Python extensively.',
+    'I used Python with the interns.',
+    'I personally used Python alongside students.',
+    'I have frequently used Python.',
+    'I was using Python with developers.',
+    'I have been using Python.',
+  ])('retains explicit direct self-use: %s', (input) => {
+    expect(extractExperienceSkills(input, skills).candidates).toEqual([
+      {
+        skill_id: 'python',
+        interpretation: 'affirmed',
+        evidence_text: input,
+        rule_id: 'experience.first_person_use',
+      },
+    ])
+  })
+
+  it('does not affirm an unsupported passive or quoted use frame', () => {
+    for (const input of [
+      'I was used by developers to test Python.',
+      'I said "I used Python" during the interview.',
+      'I imagined I used Python.',
+    ]) {
+      expect(extractExperienceSkills(input, skills).candidates[0]?.interpretation, input).toBe('ambiguous')
+    }
+  })
+})
+
+describe('direct skill object evidence gate (D7 independent review)', () => {
+  it.each([
+    ['I used Python developers to complete the task.', 'python'],
+    ['I used Python experts for the project.', 'python'],
+    ['I have experience with Python developers.', 'python'],
+    ['I worked with SQL consultants for the audit.', 'sql'],
+    ['I used Microsoft Excel instructors for the workshop.', 'excel'],
+    ['I worked with PowerBI trainers.', 'power_bi'],
+    ['I used students who like Python.', 'python'],
+    ['I used a tutor who teaches Python.', 'python'],
+    ['I used advice about Python.', 'python'],
+    ['I worked with consultants experienced in SQL.', 'sql'],
+    ['I applied advice from Microsoft Excel experts.', 'excel'],
+    ['I used documentation about Power BI.', 'power_bi'],
+  ])('keeps an unsupported skill object relation ambiguous: %s', (input, skillId) => {
+    const candidates = extractExperienceSkills(input, skills).candidates
+    expect(candidates).toHaveLength(1)
+    expect(candidates[0]).toMatchObject({
+      skill_id: skillId,
+      interpretation: 'ambiguous',
+      evidence_text: input,
+    })
+  })
+
+  it.each([
+    ['I worked with Python.', 'python'],
+    ['I developed in Python.', 'python'],
+    ['I used Python 3.', 'python'],
+    ['I used Python extensively for analysis.', 'python'],
+    ['I worked with PowerBI.', 'power_bi'],
+    ['I used structured query language.', 'sql'],
+  ])('retains a supported direct skill object relation: %s', (input, skillId) => {
+    expect(extractExperienceSkills(input, skills).candidates).toEqual([
+      {
+        skill_id: skillId,
+        interpretation: 'affirmed',
+        evidence_text: input,
+        rule_id: 'experience.first_person_use',
+      },
+    ])
+  })
+})
+
+describe('coordinated skill object head (D7 independent review)', () => {
+  it.each([
+    'I used Python and SQL experts to do all coding for me.',
+    'I used Python and SQL developers.',
+    'I used Python, SQL and Excel consultants for the project.',
+    'I worked with Microsoft Excel and PowerBI trainers.',
+  ])('keeps the whole uncertain coordinated noun object ambiguous: %s', (input) => {
+    const candidates = extractExperienceSkills(input, skills).candidates
+    expect(candidates.length).toBeGreaterThan(1)
+    expect(candidates.every((candidate) => candidate.interpretation === 'ambiguous')).toBe(true)
+    expect(candidates.every((candidate) => candidate.evidence_text === input)).toBe(true)
+  })
+
+  it('retains direct skill lists and an independent skill predicate', () => {
+    expect(extractExperienceSkills('I used Python, SQL and Excel.', skills).candidates
+      .map(({ skill_id, interpretation }) => [skill_id, interpretation]))
+      .toEqual([['python', 'affirmed'], ['sql', 'affirmed'], ['excel', 'affirmed']])
+    for (const input of ['I used Python, but SQL is useful.', 'I used Python and SQL is useful.']) {
+      expect(extractExperienceSkills(input, skills).candidates
+        .map(({ skill_id, interpretation }) => [skill_id, interpretation]))
+        .toEqual([['python', 'affirmed'], ['sql', 'ambiguous']])
+    }
+    expect(extractExperienceSkills('I used Python and I used SQL.', skills).candidates
+      .map(({ skill_id, interpretation }) => [skill_id, interpretation]))
+      .toEqual([['python', 'affirmed'], ['sql', 'affirmed']])
+  })
+})
+
+describe('comma context attribution (D7 independent review)', () => {
+  it.each([
+    ['My mentor said, I used Python.', 'python'],
+    ['Students wrote, I used Python.', 'python'],
+    ['My supervisor explained, I worked with SQL.', 'sql'],
+    ['A witness recalled, I used Microsoft Excel.', 'excel'],
+    ['I heard a story, I used PowerBI.', 'power_bi'],
+    ['During the briefing, a witness said, I used Python.', 'python'],
+  ])('does not discard unsupported preceding comma context: %s', (input, skillId) => {
+    expect(extractExperienceSkills(input, skills).candidates).toEqual([
+      {
+        skill_id: skillId,
+        interpretation: 'ambiguous',
+        evidence_text: input,
+        rule_id: 'experience.ambiguous',
+      },
+    ])
+  })
+
+  it.each([
+    ['During my internship, I used Python extensively.', [['python', 'affirmed']]],
+    ['I used Python, I used SQL.', [['python', 'affirmed'], ['sql', 'affirmed']]],
+    ['My teammate used Python, I used Excel.', [['python', 'ambiguous'], ['excel', 'affirmed']]],
+    ['My teammate used Python and I used Excel.', [['python', 'ambiguous'], ['excel', 'affirmed']]],
+    ['I have not used Python, I used Excel.', [['python', 'negated'], ['excel', 'affirmed']]],
+    ['I plan to learn Python, but I used SQL.', [['python', 'planned'], ['sql', 'affirmed']]],
+  ] as const)('retains supported contexts and explicit predicates: %s', (input, expected) => {
+    expect(extractExperienceSkills(input, skills).candidates
+      .map(({ skill_id, interpretation }) => [skill_id, interpretation])).toEqual(expected)
   })
 })
 

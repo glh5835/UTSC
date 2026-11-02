@@ -419,6 +419,26 @@ const en = {
   'footer.websiteRepo': 'Website repository',
   'footer.provenance': 'Provenance record',
   'footer.langNote': 'Language switch affects interface text only; IDs, filters and current page are unchanged.',
+  'app.integrationBanner':
+    'INTERNAL D7 integration preview: one partial historical candidate package is used across market, comparison and course views. It is not human-verified, not published, and account samples remain unchanged.',
+
+  'market.dataset.integration.label': 'D7 integration package',
+
+  'market.dataset.integration.note':
+    'Fixed internal candidate (schema 1.1.0), partial historical run. Not human-verified and not cleared for publication.',
+
+  'market.dataset.integrationBadge': 'INTERNAL',
+
+  'market.dataset.published.label': 'Published data package',
+
+  'market.dataset.published.note': 'Owner-approved published snapshot for this deployment.',
+
+  'a3.course.integration':
+    'INTERNAL candidate package — partial historical data. Courses and skills are not human-verified and this package is not published.',
+
+  'a3.course.published':
+    'Published package — course evidence is source-verified data but not a current timetable or eligibility decision.',
+
 } as const
 
 export type TxKey = keyof typeof en

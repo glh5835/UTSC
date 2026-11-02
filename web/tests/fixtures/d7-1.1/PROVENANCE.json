@@ -1,0 +1,47 @@
+{
+  "upstream": "wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market",
+  "commit": "aa13bbbab82bc0b58b3f1cf205953cf38407a2e1",
+  "purpose": "Synthetic test-only candidate contract. Does not approve 1.1 or publish data.",
+  "files": [
+    {
+      "path": "contracts/schemas/bundle.schema.json",
+      "sha256": "bdef81c1b7920969d87e49b12d0dd5c0eeb564153e56347bac5e0f6445e6e978"
+    },
+    {
+      "path": "contracts/schemas/common.schema.json",
+      "sha256": "06b1bf0e082e49ae8c1545fe3c49baade923fa0f5cc1182c8900fda52002a6b0"
+    },
+    {
+      "path": "contracts/schemas/manifest.schema.json",
+      "sha256": "7791cf9332149018daf2406d09c5df09db6558c9c1173fafb4c81b9ac8c7c190"
+    },
+    {
+      "path": "contracts/schemas/market-job.schema.json",
+      "sha256": "9ffb24ea936e56f96f7147c729471371ad056a744c63ae2d0226e36545602cc0"
+    },
+    {
+      "path": "contracts/schemas/skill.schema.json",
+      "sha256": "a989714bda3bef2730a4cfbc894534ce2a5db1bb218698364a6e7d4cc566a822"
+    },
+    {
+      "path": "contracts/schemas/course.schema.json",
+      "sha256": "6504b19da58604b66ba56457562761425da67c633608caa8f58590f170d5c5eb"
+    },
+    {
+      "path": "contracts/schemas/resource.schema.json",
+      "sha256": "6164c36a632a12cd138d772401f5738311364a99584a86debb1f68487fae948f"
+    },
+    {
+      "path": "contracts/schemas/opportunity.schema.json",
+      "sha256": "e5573c0459097c6406dfd5803bdf4434961f5d5bdb18f29e58944500a2dd9b77"
+    },
+    {
+      "path": "contracts/schemas/organizer.schema.json",
+      "sha256": "1e973056be7eb51663e03c40cbcf2d326a8f6d530b0f27e7889aa514799d55d3"
+    },
+    {
+      "path": "contracts/fixtures/valid_bundle.json",
+      "sha256": "ed2fbfce024437cc755647ad0cc2aad07ea95351f7afafe254ee8fdec2f2da34"
+    }
+  ]
+}
