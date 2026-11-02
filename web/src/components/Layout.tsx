@@ -22,6 +22,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/courses', key: 'nav.courses' },
   { to: '/opportunities', key: 'nav.opportunities' },
   { to: '/profile', key: 'nav.profile' },
+  { to: '/pathways', key: 'nav.pathways' },
 ]
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -29,7 +30,12 @@ export function Layout({ children }: { children: ReactNode }) {
   const { config } = useDataVersion()
   return (
     <div className="site">
-      <a className="skip-link" href="#main-content">
+      <a className="skip-link" href="#main-content" onClick={(event) => {
+        event.preventDefault()
+        const main = document.getElementById('main-content')
+        main?.focus()
+        main?.scrollIntoView({ block: 'start' })
+      }}>
         {t('app.skipToContent')}
       </a>
       <header className="site-header">
@@ -55,7 +61,7 @@ export function Layout({ children }: { children: ReactNode }) {
           {t(config.mode === 'integration' ? 'app.integrationBanner' : 'app.syntheticBanner')}
         </p>
       </header>
-      <main id="main-content" className="site-main">
+      <main id="main-content" className="site-main" tabIndex={-1}>
         <ErrorBoundary>{children}</ErrorBoundary>
       </main>
       <footer className="site-footer">

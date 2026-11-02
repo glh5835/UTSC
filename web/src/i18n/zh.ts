@@ -9,7 +9,9 @@ const zh: Dictionary = {
   'app.title': 'UTSC 职业与实践导航',
   'app.tagline': '比较数据职业方向、确认自己的技能，找到课程与社团实践机会。',
   'app.syntheticBanner':
-    '开发预览（A0–A3）：公开市场与课程样例为 SYNTHETIC；私有经历和明确确认的技能属于你的真实账户数据。本站不声称实时市场或官方当前开课状态。',
+    '开发预览（A0–A4）：公开市场、课程与路径样例为 SYNTHETIC；私有经历、确认技能和已保存的学习路径属于你的真实账户数据。本站不声称实时市场或官方当前开课状态。',
+  'app.integrationBanner':
+    '内部 D7 联调预览：市场、方向比较与课程页共用同一个 partial 历史候选数据包。数据未经人工核实、未公开发布，账户样例保持不变。',
   'app.skipToContent': '跳到主内容',
   'app.languageSwitch': '切换语言',
   'app.primaryNav': '主导航',
@@ -22,10 +24,11 @@ const zh: Dictionary = {
   'nav.courses': '课程与技能',
   'nav.opportunities': '实践机会',
   'nav.profile': '个人画像',
+  'nav.pathways': '推荐与路径',
 
   'home.title': '首页',
   'home.intro':
-    '本网站面向 UTSC 学生，正在开发中。A0–A3 已交付项目基础、共同合同校验、真实 Supabase 账户（A1）、公开市场页（A2），以及带本地候选抽取和明确技能确认的私有经历功能（A3）。',
+    '本网站面向 UTSC 学生，正在开发中。A0–A3 已交付项目基础、共同合同校验、真实 Supabase 账户（A1）、公开市场页（A2），以及带本地候选抽取和明确技能确认的私有经历功能（A3）。A4 新增资源推荐与个人学习路径。',
   'home.workingTitle': '当前已实现',
   'home.workingItem1':
     '基础导航与全局中英文切换；规范 ID、筛选条件和当前页面不随语言改变。',
@@ -33,18 +36,20 @@ const zh: Dictionary = {
     '只读样例数据展示：从共同合同 fixtures 经运行时校验层加载。',
   'home.workingItem3':
     '加载、错误、空数据和旧数据提示；损坏数据包整体拒收，不会被暗中替换。',
+  'home.workingItem4':
+    '基于主动选择的目标技能给出资源推荐（共同 1.0.0 规则；不含就业概率或资格保证），以及可自述进度的个人学习路径。',
   'home.sampleCta': '打开样例数据展示',
-  'home.pendingTitle': '阶段状态（A1–A3 已实现，后续阶段计划中）',
-  'home.pendingA1': 'A1 — 数据库、权限与最小账户页已实现（见"账户"）；完整的画像/收藏/路径管理仍在 A4/A6。',
+  'home.pendingTitle': '阶段状态（A1–A4 已实现，后续阶段计划中）',
+  'home.pendingA1': 'A1 — 数据库、权限与最小账户页已实现（见"账户"）；完整的画像/收藏管理仍在 A6。',
   'home.pendingA2': 'A2 —— 公开市场概览与方向比较已实现并完成本地验收（见“市场”“比较”页）；D4 固定案例已在未合并候选的隔离检查中一致，正式 1.1 合同／数据包发布仍待双方决定。',
-  'home.pendingA3': 'A3 —— 课程完成自述、私有经历增删改、本地确定性英文候选抽取与明确技能确认已实现（见“课程”“个人画像”）；推荐仍属 A4。',
-  'home.pendingA4': 'A4 — 推荐与学习路径。',
+  'home.pendingA3': 'A3 —— 课程完成自述、私有经历增删改、本地确定性英文候选抽取与明确技能确认已实现（见“课程”“个人画像”）。',
+  'home.pendingA4': 'A4 —— 资源推荐与个人学习路径已在本地实现（见“推荐与路径”页）；这不代表正式数据发布或生产验收。',
   'home.pendingA5': 'A5 — 机会浏览、分类筛选与日历导出。',
   'home.pendingA6': 'A6 — 个人画像、收藏与路径进度（依赖 A1 账户）。',
   'home.pendingA7': 'A7 — 发布适配器与 ICS 日历导出。',
   'home.pendingA8': 'A8 — 部署与端到端验收。',
   'home.honestyNote':
-    'A3 抽取在本地运行，绝不会自动确认技能；课程样例仍为 SYNTHETIC，也不代表当前开课。收藏、提交、推荐、路径与发布尚未实现，也没有模拟这些功能。',
+    'A3 抽取在本地运行，绝不会自动确认技能；A4 推荐只匹配你明确选择的目标技能，不产生就业概率或资格保证；课程与路径样例仍为 SYNTHETIC，不代表当前可用状态。收藏、社团提交与发布尚未实现，也没有模拟这些功能。',
 
   'sample.title': '样例数据（只读）',
   'sample.intro':
@@ -165,6 +170,12 @@ const zh: Dictionary = {
   'market.dataset.demo.note':
     '网站侧人工构造的 SYNTHETIC 样例，用于开发与人工预期值测试。符合合同，但不是上游数据，也不是真实市场快照。',
   'market.dataset.websiteSide': '网站侧构造',
+  'market.dataset.integration.label': 'D7 联调数据包',
+  'market.dataset.integration.note':
+    '固定版本内部候选包（schema 1.1.0），partial 历史运行。未经人工核实，不具备公开发布资格。',
+  'market.dataset.integrationBadge': '内部联调',
+  'market.dataset.published.label': '已发布数据包',
+  'market.dataset.published.note': '经所有者确认、用于本次部署的已发布快照。',
   'market.loading': '正在加载并校验数据…',
   'market.errorMessage': '数据包无法获取。请确认本地服务正在运行后重试。',
   'market.datasetHeading': '数据集',
@@ -290,6 +301,9 @@ const zh: Dictionary = {
   'a3.course.intro':
     '浏览已批准的 1.0.0 课程／技能样例，标记你本人完成的课程，并明确确认课程映射的候选技能。课程映射本身不代表你已经掌握该技能。',
   'a3.course.synthetic': 'SYNTHETIC 合同样例——不是当前 UTSC 开课、课表或选课资格信息。',
+  'a3.course.integration':
+    '内部候选数据包——partial 历史数据。课程与技能未经人工核实，该数据包未公开发布。',
+  'a3.course.published': '已发布数据包——课程依据为已核实来源数据，但不代表当前课表或选课资格。',
   'a3.course.historical':
     '学年与核实时间是历史来源数据。请始终通过官方链接核对当前开课情况与先修要求。',
   'a3.course.empty': '该数据包没有课程记录。',
@@ -398,9 +412,117 @@ const zh: Dictionary = {
   'a3.profile.skillRevoked': '技能确认已撤销。',
   'a3.profile.experienceSourceExcerpt': '经历原文',
 
+  'a4.pathways.intro':
+    '选择一个规范角色，查看市场对各技能的提及情况，主动选择想学习的目标技能，并浏览匹配的学习资源、推荐原因和来源。保存个人学习路径需要登录。',
+  'a4.pathways.ruleNote':
+    '推荐遵循共同规则集 {version}，按字节同步自上游 {path}。匹配只使用你明确选择的目标技能；资源通过自身结构化 skill_ids 参与匹配。',
+  'a4.pathways.demoNote':
+    '路径页使用的网站侧 SYNTHETIC 演示包（合同 1.0.0）。不是上游数据，不是真实市场快照，也不是当前课程目录。',
+  'a4.pathways.integrationNote':
+    '内部 D7 联调预览：路径推荐来自同一个 partial 历史候选数据包。未经人工核实、未公开发布。',
+  'a4.pathways.publishedNote':
+    '已发布数据包——推荐来自本次部署经所有者批准的快照。',
+  'a4.pathways.integrationBadge': 'INTERNAL',
+  'a4.pathways.publishedBadge': 'PUBLISHED',
+
+  'a4.pathways.roleHeading': '第 1 步 — 选择规范角色',
+  'a4.pathways.roleNote':
+    '八个共同角色 ID 之一。下方市场统计沿用市场页同一正式口径；市场提及量只是市场证据，不等于岗位硬性要求。',
+  'a4.pathways.noRole': '尚未选择角色——选择一个角色后才会显示技能表。',
+
+  'a4.pathways.skillsHeading': '第 2 步 — 当前数据包中该角色的技能',
+  'a4.pathways.skillsNote':
+    '按 A2 冻结口径显示 N/D：F 为该角色正式范围岗位数，D 为描述可分析数，N 为提及该技能的岗位数（每岗每技能最多计一次）。提及率不是录用要求。',
+  'a4.pathways.statSample': 'F — 该角色正式范围岗位',
+  'a4.pathways.statAnalyzable': 'D — 描述可分析',
+  'a4.pathways.colSkill': '技能（规范 ID）',
+  'a4.pathways.colMentioning': '提及岗位（N/D）',
+  'a4.pathways.colConfirmState': '你的确认状态',
+  'a4.pathways.colTarget': '想学习（由你选择）',
+  'a4.pathways.confirmedChip': '已确认（{source}）',
+  'a4.pathways.unconfirmedChip': '未确认——待了解，不代表不会',
+  'a4.pathways.confirmNote':
+    '确认状态只来自你本人的明确确认。未确认不等于不具备该技能；在此学习或保存路径也不会自动确认任何技能。',
+  'a4.pathways.targetToggle': '将 {skill} 选为学习目标',
+  'a4.pathways.targetOn': '已选为目标',
+  'a4.pathways.targetOff': '选为目标',
+  'a4.pathways.noTargets':
+    '尚未选择目标技能。只有你在上方勾选至少一项技能后才会出现推荐——没有任何默认代选。',
+  'a4.pathways.targetsSelected': '已选择 {count} 项目标技能：{skills}',
+
+  'a4.pathways.recommendationsHeading': '第 3 步 — 匹配资源',
+  'a4.pathways.recommendationsNote':
+    '排序规则：目标技能覆盖数（降序，按规范 ID 去重），其次初学适配程度，再次来源核实时间；完全相同则按 resource_id 稳定排序。同一输入永远得到同一顺序。',
+  'a4.pathways.reasonMatches': '匹配你的 {count} 项目标技能：{skills}',
+  'a4.pathways.fit.beginner_friendly': '适合新手（有明确 beginner 标记）',
+  'a4.pathways.fit.unknown': '初学适配未知（缺少明确标记）',
+  'a4.pathways.fit.prerequisites_required': '需要先修条件（仅限明确依据）',
+  'a4.pathways.fitBasisNote':
+    '初学适配采用保守映射：只有明确的 beginner 结构化标记映射为“适合新手”；intermediate/advanced/unknown 一律保持“未知”，不会被解释为存在正式先修课。该字段仅用于显示，不写回数据包。',
+  'a4.pathways.eligibilityKnown': '来源给出的资格说明（不是个人保证）：{note}',
+  'a4.pathways.eligibilityUnknown':
+    '该资源未说明资格要求。请自行核实后再依赖——本站无法确认你是否具备资格。',
+  'a4.pathways.verifiedAt': '来源核实时间',
+  'a4.pathways.noMatches':
+    '当前数据包中没有匹配所选目标技能的资源。不会编造内容——请更换技能、角色或数据版本。',
+  'a4.pathways.unmatchedTargets': '以下目标技能当前没有匹配资源：{skills}',
+  'a4.pathways.unknownTargets':
+    '以下所选 ID 不在当前技能目录中，无法参与匹配（保留显示，不会被静默丢弃）：{ids}',
+  'a4.pathways.noProbabilityNote':
+    '没有就业概率、没有录取或选课资格承诺、不会自动确认技能：这里是带来源的证据列表，不是结果保证。',
+
+  'a4.pathways.checkResource': '将 {title} 随路径保存',
+  'a4.pathways.checkResourceLabel': '随路径保存此资源',
+  'a4.pathways.addItemSelect': '加入已保存路径',
+  'a4.pathways.addItemButton': '加入该路径',
+  'a4.pathways.addItemSuccess': '已加入（{count} 项）。已有项目状态保持不变。',
+  'a4.pathways.alreadyPresent': '该项目已在此路径中——不产生重复，状态不变。',
+
+  'a4.pathways.pathsHeading': '我的学习路径',
+  'a4.pathways.pathsNote':
+    '保存到你自己账户的数据行（learning_paths + path_items）。未登录可浏览和选择目标技能；保存和修改需要登录。',
+  'a4.pathways.signedOut': '登录后才能保存和维护学习路径。',
+  'a4.pathways.signIn': '前往账户登录',
+  'a4.pathways.unconfigured':
+    '未配置 Supabase，学习路径无法保存或读取。上方的公开推荐仍然可用。',
+  'a4.pathways.loading': '正在读取你的学习路径…',
+  'a4.pathways.loadError': '学习路径读取失败：',
+  'a4.pathways.retry': '重试',
+  'a4.pathways.noPaths': '还没有已保存的学习路径。',
+  'a4.pathways.saveSelection': '保存为学习路径',
+  'a4.pathways.saving': '保存中…',
+  'a4.pathways.saveHint':
+    '将创建一个 {role} 路径：每个所选目标技能一个项目，外加你勾选的资源。未按下按钮前不会写入任何内容。',
+  'a4.pathways.nothingToSave': '请先选择至少一项目标技能，或勾选至少一项资源，再保存。',
+  'a4.pathways.savedFull': '学习路径已保存，共 {count} 项。',
+  'a4.pathways.savedPartial':
+    '部分保存：{saved}／{total} 项。路径已存在，其中只包含实际保存成功的内容；重试会补全其余项目，不会重复或重置任何已有项目。',
+  'a4.pathways.retryItems': '重试保存剩余项目',
+  'a4.pathways.saveError': '路径未保存：',
+  'a4.pathways.refreshWarning': '已保存，但最新视图刷新失败。请先刷新页面再重试。',
+  'a4.pathways.itemActionError': '修改未保存：',
+  'a4.pathways.pathCreated': '创建于',
+  'a4.pathways.itemCount': '{count} 个项目',
+  'a4.pathways.noItems': '该路径当前没有项目（例如批量保存中途失败后的状态）。',
+  'a4.pathways.itemUpdated': '项目更新于',
+  'a4.pathways.itemStatus': '状态',
+  'a4.pathways.status.not_started': '未开始',
+  'a4.pathways.status.in_progress': '进行中',
+  'a4.pathways.status.completed': '已完成',
+  'a4.pathways.statusSaved': '状态已保存：{status}。',
+  'a4.pathways.removeItem': '从路径移除',
+  'a4.pathways.itemRemoved': '项目已从路径移除。',
+  'a4.pathways.deletePath': '删除此路径',
+  'a4.pathways.deletePathConfirm': '从你的账户删除此路径及其全部项目？此操作不可撤销。',
+  'a4.pathways.confirmDelete': '删除路径',
+  'a4.pathways.pathDeleted': '学习路径已删除。',
+  'a4.pathways.progressNote':
+    '状态只是你本人的进度自述。它不代表你掌握了技能、完成了官方课程，也不构成任何资格。',
+  'a4.pathways.sourceUnavailable': '来源已不在当前公开数据包中——你的项目和进度被保留。',
+
   'ph.courses.desc': '将展示 UTSC 课程与学习资源到技能的映射，以及候选技能确认（任务 A3）。',
   'ph.opportunities.desc': '将浏览已批准的社团活动与持续机会，并支持筛选（任务 A5）。',
-  'ph.profile.desc': '账户功能已就绪（见“账户”页）；个人画像、收藏与路径将随任务 A4/A6 提供。',
+  'ph.profile.desc': '账户功能已就绪（见“账户”页）；经历与确认技能在本页，收藏随任务 A6 提供，学习路径在“推荐与路径”页（A4）。',
 
   'notfound.title': '页面不存在',
   'notfound.message': '该地址不匹配本站任何页面。',
@@ -410,31 +532,12 @@ const zh: Dictionary = {
   'errorBoundary.message': '发生了意外错误。出错前展示的数据未受影响，可以返回或重新加载。',
   'errorBoundary.reload': '重新加载页面',
 
-  'footer.preview': '开发预览（A0–A3），不是已部署产品。',
+  'footer.preview': '开发预览（A0–A4），不是已部署产品。',
   'footer.contract': '合同按字节原样同步自上游提交 {commit}。',
   'footer.dataRepo': '数据仓库（Seraphina）',
   'footer.websiteRepo': '网站仓库',
   'footer.provenance': '来源记录',
   'footer.langNote': '语言切换只影响界面文字；ID、筛选条件和当前页面保持不变。',
-  'app.integrationBanner':
-    '内部 D7 联调预览：市场、方向比较与课程页共用同一个 partial 历史候选数据包。数据未经人工核实、未公开发布，账户样例保持不变。',
-
-  'market.dataset.integration.label': 'D7 联调数据包',
-
-  'market.dataset.integration.note':
-    '固定版本内部候选包（schema 1.1.0），partial 历史运行。未经人工核实，不具备公开发布资格。',
-
-  'market.dataset.integrationBadge': '内部联调',
-
-  'market.dataset.published.label': '已发布数据包',
-
-  'market.dataset.published.note': '经所有者确认、用于本次部署的已发布快照。',
-
-  'a3.course.integration':
-    '内部候选数据包——partial 历史数据。课程与技能未经人工核实，该数据包未公开发布。',
-
-  'a3.course.published': '已发布数据包——课程依据为已核实来源数据，但不代表当前课表或选课资格。',
-
 }
 
 export default zh

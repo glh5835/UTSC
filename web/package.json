@@ -2,7 +2,7 @@
   "name": "utsc-web",
   "private": true,
   "version": "0.1.0",
-  "description": "UTSC Career & Practice Navigator website (React + TypeScript + Vite). A0–A3: foundation, accounts, market pages, experiences and explicit skill confirmation.",
+  "description": "UTSC Career & Practice Navigator website (React + TypeScript + Vite). A0–A4: foundation, accounts, market pages, experiences, explicit skill confirmation, recommendations and learning paths.",
   "type": "module",
   "scripts": {
     "dev": "vite",

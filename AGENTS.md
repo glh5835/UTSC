@@ -3,7 +3,7 @@
 This is the independent website repository requested by the project owner.
 The existing root Python application is the preserved Streamlit demo. The
 React + TypeScript + Vite website lives in `web/`; Supabase migrations live in
-`supabase/`. A0–A3 are implemented locally; A4–A8 remain out of scope until
+`supabase/`. A0–A4 are implemented locally; A5–A8 remain out of scope until
 explicitly authorized.
 
 ## Ownership and boundaries
