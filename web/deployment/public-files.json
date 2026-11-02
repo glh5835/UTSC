@@ -1,0 +1,17 @@
+[
+  "contracts/PROVENANCE.md",
+  "contracts/fixtures/empty_bundle.json",
+  "contracts/fixtures/invalid_bundle.json",
+  "contracts/fixtures/valid_bundle.json",
+  "contracts/rules/experience-skill-extraction.json",
+  "contracts/schemas/bundle.schema.json",
+  "contracts/schemas/common.schema.json",
+  "contracts/schemas/course.schema.json",
+  "contracts/schemas/manifest.schema.json",
+  "contracts/schemas/market-job.schema.json",
+  "contracts/schemas/opportunity.schema.json",
+  "contracts/schemas/resource.schema.json",
+  "contracts/schemas/skill.schema.json",
+  "contracts/upstream-contract-README.md",
+  "demo/a2-market-demo.json"
+]

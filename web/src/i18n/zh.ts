@@ -9,8 +9,10 @@ const zh: Dictionary = {
   'app.title': 'UTSC 职业与实践导航',
   'app.tagline': '比较数据职业方向、确认自己的技能，找到课程与社团实践机会。',
   'app.syntheticBanner':
-    '开发预览（A0–A3）：公开市场与课程样例为 SYNTHETIC；私有经历和明确确认的技能属于你的真实账户数据。本站不声称实时市场或官方当前开课状态。',
+    '演示预览（A0–A3）：公开市场与课程样例均为 SYNTHETIC（合成数据）。本站不声称实时市场、官方隶属关系或当前开课状态。',
   'app.skipToContent': '跳到主内容',
+  'app.publicDemo': '公开演示 · 本版本尚未连接账户服务，无法提交或保存个人资料、经历与技能。请勿输入私人信息。',
+  'app.connectedPreview': '演示版本 · 账户服务已连接，个人功能须先验收数据库访问策略；公开样例仍为 SYNTHETIC。预览期间请使用测试信息。',
   'app.languageSwitch': '切换语言',
   'app.primaryNav': '主导航',
 
@@ -264,7 +266,7 @@ const zh: Dictionary = {
   'account.switchToSignUp': '还没有账户？注册',
   'account.switchToSignIn': '已注册？登录',
   'account.confirmationRequired':
-    '注册已受理。本项目要求邮箱确认：请查收邮件（本地测试邮件工具 Mailpit：http://127.0.0.1:55424），确认后才能登录。当前并未登录。',
+    '注册已受理。本项目要求邮箱确认：请查收邮件，确认后才能登录。当前并未登录。',
   'account.errorGeneric': '操作未成功，请重试。',
   'account.signedInAs': '当前登录',
   'account.loadingProfile': '正在加载个人资料……',
@@ -410,7 +412,7 @@ const zh: Dictionary = {
   'errorBoundary.message': '发生了意外错误。出错前展示的数据未受影响，可以返回或重新加载。',
   'errorBoundary.reload': '重新加载页面',
 
-  'footer.preview': '开发预览（A0–A3），不是已部署产品。',
+  'footer.preview': '演示预览（A0–A3）。完整生产验收尚未完成，A4–A8 功能尚未全部完成。',
   'footer.contract': '合同按字节原样同步自上游提交 {commit}。',
   'footer.dataRepo': '数据仓库（Seraphina）',
   'footer.websiteRepo': '网站仓库',

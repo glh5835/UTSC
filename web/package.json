@@ -6,7 +6,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit --pretty false && vite build",
+    "build": "npm run build:demo && node scripts/build-sites-worker.mjs",
+    "build:connected": "tsc --noEmit --pretty false && vite build --mode connected && node scripts/check-dist.mjs && node scripts/build-sites-worker.mjs",
+    "build:demo": "tsc --noEmit --pretty false && vite build --mode demo && node scripts/check-dist.mjs",
+    "check:dist": "node scripts/check-dist.mjs",
+    "test:deployment": "node --test scripts/check-dist.test.mjs scripts/worker.test.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit --pretty false",
     "test": "vitest run"

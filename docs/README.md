@@ -5,6 +5,8 @@
 | 文档 | 用途与状态 |
 | --- | --- |
 | [启动与开发说明](app_setup.md) | 从本仓库准备环境、启动旧 Demo 与 web/（A0–A3）、运行测试和浏览器检查 |
+| [公开演示部署](preview-deployment.md) | 静态托管配置、安全构建、断开账户服务的演示边界、Supabase 增量接入步骤 |
+| [演示公网验收](verification/preview-20261029.json) | 实际发布版本、141 项单元测试、11 项产物安全测试、15 项匿名 HTTP 检查与验收边界 |
 | [数据协作边界](data-integration.md) | 独立仓库分工、1.0 正式合同基线、A2 候选固定 SHA 复验、A3 抽取规则来源与 1.1 兼容性待决项 |
 | [冻结双人计划书](references/UTSC_Two_Person_Code_Plan.docx) | 2026-10-26 v1，任务与接口的历史范围依据 |
 | [社团候选账号表](references/UTSC_Club_Instagram.xlsx) | 21 个公开账号的准备清单，不代表已核实活动 |

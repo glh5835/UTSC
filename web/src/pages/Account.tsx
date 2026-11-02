@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import type { User } from '@supabase/supabase-js'
 import { useAuth } from '../auth/AuthContext'
 import { useProfile } from '../auth/useProfile'
-import { SUPABASE_ENV_KEYS } from '../lib/supabase'
 import { usePageTitle } from '../usePageTitle'
 import { useLanguage } from '../i18n/LanguageContext'
 
@@ -105,10 +104,6 @@ export function AccountPage() {
         <section className="panel panel-placeholder" aria-live="polite">
           <h2>{t('account.notConfiguredTitle')}</h2>
           <p>{t('account.notConfiguredBody')}</p>
-          <p>
-            <code>{SUPABASE_ENV_KEYS.url}</code> · <code>{SUPABASE_ENV_KEYS.publishableKey}</code>
-          </p>
-          <p className="note">{t('account.notConfiguredNote')}</p>
         </section>
       ) : phase.kind === 'loading' ? (
         <p className="state state-loading" role="status" aria-live="polite">
