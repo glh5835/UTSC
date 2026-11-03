@@ -3,15 +3,13 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { usePageTitle } from '../usePageTitle'
 import type { TxKey } from '../i18n/en'
 
-const PENDING: TxKey[] = [
-  'home.pendingA1',
-  'home.pendingA2',
-  'home.pendingA3',
-  'home.pendingA4',
-  'home.pendingA5',
-  'home.pendingA6',
-  'home.pendingA7',
-  'home.pendingA8',
+const PENDING: TxKey[] = ['home.pendingA8']
+
+const WORKING: TxKey[] = [
+  'home.workingItem1',
+  'home.workingItem2',
+  'home.workingItem3',
+  'home.workingItem4',
 ]
 
 export function HomePage() {
@@ -25,15 +23,22 @@ export function HomePage() {
       <section aria-labelledby="working-heading">
         <h2 id="working-heading">{t('home.workingTitle')}</h2>
         <ul>
-          <li>{t('home.workingItem1')}</li>
-          <li>{t('home.workingItem2')}</li>
-          <li>{t('home.workingItem3')}</li>
+          {WORKING.map((key) => (
+            <li key={key}>{t(key)}</li>
+          ))}
         </ul>
         <p>
           <Link className="button" to="/sample">
             {t('home.sampleCta')}
           </Link>
         </p>
+        <p>
+          <Link className="button" to="/pathways">
+            {t('nav.pathways')}
+          </Link>
+        </p>
+        <p><Link className="button" to="/opportunities">{t('nav.opportunities')}</Link>{' '}
+          <Link className="button" to="/favorites">{t('nav.favorites')}</Link></p>
       </section>
 
       <section aria-labelledby="pending-heading">

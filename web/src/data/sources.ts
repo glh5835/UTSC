@@ -1,4 +1,5 @@
 import type { UtscBundle } from './types'
+import { SELECTED_RELEASE } from './releaseSelection'
 
 /**
  * Front-end source configuration for the A0–A2 sample data.
@@ -28,6 +29,11 @@ export interface DataVersionConfig {
   schemaBasePath: string
   marketBundlePath: string
   courseBundlePath: string
+  /** Bundle consumed by the A4 pathways page (skills, per-role market
+   * statistics and resources). Each version context points it at its own
+   * single bundle so recommendations stay inside the approved data version. */
+  opportunitiesBundlePath?: string
+  pathwaysBundlePath: string
   contractCommit: string
 }
 
@@ -37,7 +43,17 @@ export const DATA_CONFIG: DataVersionConfig = {
   schemaBasePath: '/contracts/schemas',
   marketBundlePath: '/demo/a2-market-demo.json',
   courseBundlePath: '/contracts/fixtures/valid_bundle.json',
+  pathwaysBundlePath: '/demo/a4-pathways-demo.json',
+  opportunitiesBundlePath: '/demo/a5-opportunities-demo.json',
   contractCommit: UPSTREAM_CONTRACT_COMMIT,
+  ...(SELECTED_RELEASE ? {
+    mode: SELECTED_RELEASE.mode,
+    marketBundlePath: SELECTED_RELEASE.bundlePath,
+    courseBundlePath: SELECTED_RELEASE.bundlePath,
+    pathwaysBundlePath: SELECTED_RELEASE.bundlePath,
+    opportunitiesBundlePath: SELECTED_RELEASE.bundlePath,
+    contractCommit: SELECTED_RELEASE.contractCommit,
+  } : {}),
 }
 
 export const COURSE_CATALOG_PATH = DATA_CONFIG.courseBundlePath

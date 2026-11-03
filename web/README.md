@@ -1,4 +1,13 @@
-# UTSC web — React＋TypeScript＋Vite（A0–A3）
+> 2026-11-02 更新：A5 活动筛选、A6 收藏、A7 日历与数据发布适配、A8 本机端到端已补齐。公开入口与完整开发入口分离；云端账户及真实数据发布仍未接通。最新运行与发布步骤见 ../docs/deployment.md。以下早期阶段记录保留当时边界。
+
+# UTSC web — React＋TypeScript＋Vite（A0–A8 开发）
+
+A4 增加资源推荐与个人学习路径，完整开发入口保留 A1/A3 的账户和画像功能。
+推荐只依据用户主动选择的目标技能，不自动确认技能。个人路径复用既有表，
+增量迁移为 `supabase/migrations/20261029000000_a4_path_items_idempotency.sql`，
+不修改 RLS；已有重复数据会让唯一索引创建失败，不自动清理。独立权限命令
+从仓库根运行 `npm run test:rls-acceptance`，缺凭据跳过不能替代真实验收。
+本轮源代码同步未执行数据库迁移；审查结果见 [A4 记录](../docs/reviews/a4-pathways.md)。
 
 A0 交付基础导航、共同合同 fixtures 的只读样例展示、运行时数据校验层和
 全局中英文切换；A1 接入真实 Supabase Auth、六张个人表迁移与 RLS、账户页
@@ -6,7 +15,7 @@ A0 交付基础导航、共同合同 fixtures 的只读样例展示、运行时�
 完成属于用户自述，英文经历在本地确定性抽取候选技能，只有用户明确确认后
 才写入个人技能；主语、否定与计划按局部子句关联，第三人称技能不能借用
 本人证据。公开市场／课程样例仍带 SYNTHETIC 标记；私有经历与已确认技能是
-真实账户数据。A4–A8 未实现，也不模拟收藏、提交或发布。
+真实账户数据。A4 推荐和学习路径、A5 活动、A6 收藏、A7 日历与发布适配、A8 本机端到端已实现；云端与人工验收仍待实际条件。
 
 ## 启动
 
@@ -24,8 +33,9 @@ npm run dev     # 开发服务器，默认 http://localhost:5173
 ```powershell
 npm run typecheck   # tsc --noEmit
 npm run test        # vitest run（校验层、标签、旧数据、账户隔离、A2 统计与筛选）
-npm run build       # tsc --noEmit + vite build，产物在 dist/
-npm run preview     # 本地预览构建产物
+npm run build       # 公开合成演示，Worker 产物在 dist/
+npm run build:development # 完整开发入口，产物在 development-dist/
+node scripts/serve-preview.mjs 5199 # 预览公开 Worker
 ```
 
 ## 结构

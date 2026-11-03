@@ -9,11 +9,13 @@ import { MarketPage } from './features/market/MarketPage'
 import { ComparePage } from './features/market/ComparePage'
 import { CoursesPage } from './features/profile/CoursesPage'
 import { ProfileSkillsPage } from './features/profile/ProfileSkillsPage'
+import { PathwaysPage } from './features/pathways/PathwaysPage'
 import { PlaceholderPage, type PlaceholderSpec } from './pages/Placeholder'
+import { OpportunitiesPage } from './features/opportunities/OpportunitiesPage'
+import { FavoritesPage } from './features/favorites/FavoritesPage'
 import { NotFoundPage } from './pages/NotFound'
 
 const PLACEHOLDERS: Record<string, PlaceholderSpec> = {
-  opportunities: { navKey: 'nav.opportunities', descKey: 'ph.opportunities.desc', planRef: 'A5' },
 }
 
 /** Placeholder wrapper that also sets the page title for its route. */
@@ -34,6 +36,9 @@ export default function App() {
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/profile" element={<ProfileSkillsPage />} />
+        <Route path="/pathways" element={<PathwaysPage />} />
+        <Route path="/opportunities" element={<OpportunitiesPage />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
         {Object.entries(PLACEHOLDERS).map(([path, spec]) => (
           <Route key={path} path={`/${path}`} element={<TitledPlaceholder spec={spec} />} />
         ))}
