@@ -11,3 +11,14 @@ Sites saved version 4 from source `9bbd0139a9f02185069335b849e18307c5f33e99` and
 This consolidated review branch contains the unmerged A4 and public-preview changes previously shown in draft PRs #6 and #7, plus A5–A8. It targets current main and leaves the older PRs unchanged for owner coordination. No main merge or data-repository write occurs. Cloud accounts, formal real-data publication and actual student trials still require their own evidence.
 
 The owner-authorized upload created draft PR #8: https://github.com/glh5835/UTSC/pull/8 . Its initial Git tree matched the complete reviewed local snapshot exactly. The PR remains open and draft; current main and the older draft PRs are unchanged. Native publication/upload receipts, hashes and the original blocked attempts remain in ignored local artifacts.
+
+## 2026-11-03 V5 closeout addendum
+
+The preceding text is the retained V4 delivery snapshot. PR #8 has now been merged,
+followed by the separate three-file checkbox repair in PR #9. The resulting code tree
+matches the previously reviewed V5 UI tree. The owner confirmed the checkbox UI with
+a screenshot; the earlier automatic production-browser 403 remains recorded as blocked.
+V5 stays deployed with V4 retained as its rollback point. No redeployment, access/domain
+change, D7 work or cloud-account work was performed during this closeout.
+See [the V5 closeout record](v5-closeout-20261103.md) for exact source, hashes, merge
+commits, CI receipts and acceptance limits.
