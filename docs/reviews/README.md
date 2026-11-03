@@ -1,5 +1,7 @@
 # Source review sequence
 
+- [V5 acceptance closeout and GitHub delivery alignment](v5-closeout-20261103.md) — current status; owner-confirmed UI scope, retained automatic-browser blocker and V4 rollback.
+
 - [D7 integration preparation and fixes](d7-fixes.md)
 - [A4 recommendations and learning paths](a4-pathways.md)
 

@@ -1,5 +1,11 @@
 # Website delivery and release
 
+Current delivery (2026-11-03): V5 remains deployed, with owner-confirmed checkbox UI
+acceptance and V4 retained for rollback. GitHub PRs #8 and #9 are merged; their merge
+does not publish a Sites version. Exact provenance and remaining acceptance limits
+are in [the V5 closeout record](reviews/v5-closeout-20261103.md). The procedures below
+describe separately authorized future operations; none were executed in this closeout.
+
 The public preview contains SYNTHETIC market, course, resource and opportunity
 examples. It deliberately has no account provider or private database gateway.
 The full development entry implements accounts, explicit skill confirmation,
