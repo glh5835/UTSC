@@ -52,3 +52,10 @@ supabase/.temp/
 /UTSC_双方案网站发布测试与运维计划_2026-10-28.md
 /plans/阶段记录/D7接入准备与私有联调.md
 /web/static-dist/
+# Completion builds and machine-local QA launchers
+/web/development-dist/
+/web/static-dist/
+/scripts/run_browser.py
+/scripts/run_local_qa.py
+/scripts/start_retained_stack.py
+/scripts/inspect_local_runtime.py

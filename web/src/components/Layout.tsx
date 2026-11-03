@@ -1,3 +1,4 @@
+import { FavoriteFeedback } from '../features/favorites/FavoritesContext'
 import { type ReactNode } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -22,6 +23,8 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/courses', key: 'nav.courses' },
   { to: '/opportunities', key: 'nav.opportunities' },
   { to: '/profile', key: 'nav.profile' },
+  { to: '/pathways', key: 'nav.pathways' },
+  { to: '/favorites', key: 'nav.favorites' },
 ]
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -29,7 +32,12 @@ export function Layout({ children }: { children: ReactNode }) {
   const { config } = useDataVersion()
   return (
     <div className="site">
-      <a className="skip-link" href="#main-content">
+      <a className="skip-link" href="#main-content" onClick={(event) => {
+        event.preventDefault()
+        const main = document.getElementById('main-content')
+        main?.focus()
+        main?.scrollIntoView({ block: 'start' })
+      }}>
         {t('app.skipToContent')}
       </a>
       <header className="site-header">
@@ -55,8 +63,8 @@ export function Layout({ children }: { children: ReactNode }) {
           {t(config.mode === 'integration' ? 'app.integrationBanner' : 'app.syntheticBanner')}
         </p>
       </header>
-      <main id="main-content" className="site-main">
-        <ErrorBoundary>{children}</ErrorBoundary>
+      <main id="main-content" className="site-main" tabIndex={-1}>
+        <FavoriteFeedback /><ErrorBoundary>{children}</ErrorBoundary>
       </main>
       <footer className="site-footer">
         <p>{t('footer.preview')}</p>

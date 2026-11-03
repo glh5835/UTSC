@@ -1,0 +1,13 @@
+# A5–A8 completion review, 2026-11-03
+
+The public preview adds reviewed opportunity browsing, multi-dimensional filters, current/history separation and exact-time calendar export. The full development entry also supports resource/opportunity favorites with duplicate protection and account-generation guards. The repository retains A4 paths and incorporates main `fd1cca1005b0a9106bff89d8dda5527e6b380ece`, including the newer D7 consumer validation and isolated compatibility fixtures. Formal consumer schemas remain 1.0.0; no real candidate data is published.
+
+Validation on this integrated source: TypeScript and both builds passed; 315 unit tests passed, 3 live-RLS wrappers skipped; 11 public-delivery tests and 4 publication-adapter groups passed; Edge public browser 45/45 including English/Chinese, all six pages, 390px layouts, keyboard, filter restoration and downloaded ICS; legacy Python 231/231. The standalone Sites Worker and the repository candidate Worker are byte-identical, SHA-256 `e020498ab4a3b1a8162be8137cda6bbd501b7563ee0cc56db139f34242142c30`. Both builds retain the existing bundle-size warning.
+
+The real local Auth/RLS refresh could not run: Docker Desktop exits while trying to rename a stale Secrets Engine IPC socket. No database reset, credential-store repair or cloud migration was performed. The retained 2026-11-02 reports show A1/A3/A4 RLS 61/61, favorites RLS 13/13 and private Edge 23/23; these are historical results, not this date's successful acceptance. Current failed startup/probe reports are preserved alongside successful public verification under ignored artifacts/completion-20261103/.
+
+Sites saved version 4 from source `9bbd0139a9f02185069335b849e18307c5f33e99` and archive SHA-256 `1432d13273365ced6af19d6ff7fb921cdb295eb55e31c39b7156c48b368bc54d`. Automatic approval review rejected the production deployment because it requires explicit user authorization for this concrete public version. V4 is saved only; the existing V3 remains live and is the rollback baseline.
+
+This consolidated review branch contains the unmerged A4 and public-preview changes previously shown in draft PRs #6 and #7, plus A5–A8. It targets current main and leaves the older PRs unchanged for owner coordination. No main merge or data-repository write occurs. Cloud accounts, formal real-data publication and actual student trials still require their own evidence.
+
+GitHub synchronization was also rejected by automatic approval review: uploading the concrete source payload to glh5835/UTSC requires explicit user authorization. No remote tree, branch, commit or draft PR was created by this completion task. The local branch, source archive and exact file manifest remain available for review and an authorized continuation.

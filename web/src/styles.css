@@ -669,3 +669,42 @@ select {
   min-height: 2.2rem;
   margin-right: 0.5rem;
 }
+
+/* ── A4 pathways and learning paths ── */
+.a4-recommendation {
+  margin-bottom: 1.1rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid #e5eaf1;
+  overflow-wrap: anywhere;
+}
+.a4-recommendation:last-child {
+  border-bottom: 0;
+}
+.a4-resource p {
+  margin: 0.3rem 0;
+}
+.a4-path {
+  margin-top: 1rem;
+}
+.a4-item-list {
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+.a4-item {
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 8px;
+  padding: 0.75rem;
+  overflow-wrap: anywhere;
+}
+.a4-save-row,
+.a4-add-row {
+  margin: 0.75rem 0;
+}
+.a4-add-row .field {
+  max-width: 26rem;
+}
+
+.op-filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0}.op-filter summary{cursor:pointer;padding:10px 0;font-weight:600}.op-filter fieldset{max-height:240px;overflow:auto;min-width:0}.op-filter fieldset label{display:flex;align-items:center;gap:8px}.op-dates,.op-actions{display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin:14px 0}.op-list{display:grid;gap:16px}.opportunity-card{overflow-wrap:anywhere}.op-dates input{max-width:100%}.opportunity-card h2{font-size:1.25rem}.panel input[type=search]{width:100%;min-width:0}@media(max-width:480px){.op-filter-grid{grid-template-columns:1fr}.op-dates{align-items:stretch;flex-direction:column}.op-actions{align-items:start;flex-direction:column}}
+
+.public-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:16px}.public-card h2{font-size:1.2rem}

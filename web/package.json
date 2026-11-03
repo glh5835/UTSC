@@ -2,14 +2,19 @@
   "name": "utsc-web",
   "private": true,
   "version": "0.1.0",
-  "description": "UTSC Career & Practice Navigator website (React + TypeScript + Vite). A0–A3: foundation, accounts, market pages, experiences and explicit skill confirmation.",
+  "description": "UTSC Career & Practice Navigator website (React + TypeScript + Vite). A0–A4: foundation, accounts, market pages, experiences, explicit skill confirmation, recommendations and learning paths.",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit --pretty false && vite build",
+    "build": "npm run build:demo && node scripts/build-sites-worker.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit --pretty false",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build:demo": "tsc --noEmit --pretty false && vite build --mode demo && node scripts/check-dist.mjs",
+    "build:development": "tsc --noEmit --pretty false && vite build --mode development",
+    "test:deployment": "node --test scripts/check-dist.test.mjs scripts/worker.test.mjs",
+    "test:publication": "node --test ../scripts/publish_bundle.test.mjs",
+    "check:dist": "node scripts/check-dist.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",

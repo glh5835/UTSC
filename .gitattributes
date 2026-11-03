@@ -15,3 +15,10 @@ data/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 web/public/contracts/** -text
 # A3 contract test samples are byte-frozen copies too.
 web/tests/fixtures/** -text
+
+# Public demo assets also retain their reviewed bytes.
+web/public/demo/** -text
+# These HTML/robots inputs reproduce the frozen v3 delivery bytes on checkout.
+web/index.html -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+web/public/robots.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+web/worker/serve-public.mjs -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

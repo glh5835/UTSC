@@ -1,13 +1,27 @@
+# 2026-11-02 网站开发与公开演示交付
+
+现已具备 A0–A7 网站功能，以及 A8 的本机端到端与公开演示交付流程。
+公开入口只展示 SYNTHETIC 示例：市场、方向比较、课程、资源推荐和活动。
+完整开发入口另含真实 Supabase 账户、技能确认、路径与资源/活动收藏。
+按所有者选择，当前不开放云端登录与保存，不公开真实 D7 候选数据。
+
+本机真实权限矩阵 61/61；新增收藏权限 13/13；完整真实账户浏览器 23/23；
+公开 Worker 浏览器 45/45。单元测试、投递与发布保护测试另行记录，不把重复
+检查累加成额外独立验收。详情见 docs/deployment.md 和 plans/阶段记录/A5–A8。
+
+正式真实数据、云端账户及实际学生试用仍需相应真实条件与人的确认。
+GitHub 合并与 Sites 发布以各自回执为准；V3 回退基线保留。
+
 # UTSC Career & Opportunity Navigator
 
 面向 UTSC 学生的职业与实践导航项目。此仓库独立管理网站开发、项目文档和现有中英文 Demo。
 
 **当前有两个可运行部分**：根目录 Streamlit 中英文模拟 Demo（启动方式见下），
-以及 `web/` 下 A0–A3 交付的 React＋TypeScript＋Vite 网站（基础导航、共同
+以及 `web/` 下 A0–A8 开发的 React＋TypeScript＋Vite 网站（基础导航、共同
 合同样例、运行时校验、中英文切换、真实 Supabase Auth 账户、市场概览／
 方向比较，以及课程完成自述、私有经历、本地候选技能抽取和显式确认，见
 [web/README.md](web/README.md)）。
-生产部署尚未进行；GitHub 仓库上传不代表网站已部署。
+公开合成演示与完整开发入口分离；云端账户及真实数据生产发布尚未进行。
 
 ![中文 Demo 界面](docs/images/demo-zh.png)
 
@@ -25,7 +39,7 @@
 
 岗位原文、官方课程名称和来源证据保持原文，机器可读 CSV 保留稳定字段。
 旧 Demo 的个人资料只保存在当前会话；`web/` 的 A1 已提供真实 Supabase
-账户与本人资料读写，但收藏仍未实现。
+账户与本人资料读写；A6 已实现资源和活动收藏。
 
 ## 快速启动
 
@@ -58,7 +72,7 @@ py -3.12 -m venv .venv
 | `data/synthetic/` | 旧 Demo 的人工固定输入及分析样例 |
 | `data/resources/` | 旧课程与实践资源摘要、来源与练习 |
 | `tests/`、`scripts/` | 本 Demo 的检查与显式准备工具 |
-| `web/` | A0–A3 React＋TypeScript＋Vite 网站：导航、合同样例、运行时校验、账户、市场与比较、课程／经历与显式技能确认（`cd web && npm ci && npm run dev`） |
+| `web/` | A0–A8 React＋TypeScript＋Vite 网站：导航、合同样例、运行时校验、账户、市场与比较、课程／经历与显式技能确认（`cd web && npm ci && npm run dev`） |
 | `supabase/` | A1／A3 数据库迁移与本地隔离栈配置（`npx supabase start`，需要 Docker） |
 | `docs/`、`plans/` | 当前开发说明、冻结计划书和历史阶段记录 |
 
