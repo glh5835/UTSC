@@ -172,15 +172,16 @@ export function ComparePage() {
         ) : (
           <>
             <DatasetPanel bundle={phase.bundle} stale={stale} />
-            <section className="panel" aria-labelledby="compare-roles-heading">
+            <section className="panel market-choice-panel" aria-labelledby="compare-roles-heading">
               <h2 id="compare-roles-heading">{t('compare.pickHeading')}</h2>
               <p className="note">{t('compare.pickNote')}</p>
               <div className="market-option-row">
                 {CANONICAL_ROLE_IDS.map((roleId) => (
                   <label key={roleId} className="market-option">
                     <input type="checkbox" checked={selected.includes(roleId)} onChange={() => toggleRole(roleId)} />
-                    <span>
-                      {labelFor(ROLE_LABELS, roleId, lang)} <code className="chip-id">{roleId}</code>
+                    <span className="market-option-copy">
+                      <span className="market-option-name">{labelFor(ROLE_LABELS, roleId, lang)}</span>
+                      <code className="chip-id">{roleId}</code>
                     </span>
                   </label>
                 ))}
