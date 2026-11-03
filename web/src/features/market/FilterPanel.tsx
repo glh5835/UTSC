@@ -80,8 +80,9 @@ export function FilterPanel({
                 checked={props.selected.includes(id)}
                 onChange={() => props.onToggle?.(id)}
               />
-              <span>
-                {labelFor(props.labels, id, lang)} <code className="chip-id">{id}</code>
+              <span className="market-option-copy">
+                <span className="market-option-name">{labelFor(props.labels, id, lang)}</span>
+                <code className="chip-id">{id}</code>
               </span>
             </label>
           ))}
@@ -91,7 +92,7 @@ export function FilterPanel({
   }
 
   return (
-    <section className="panel market-filter" aria-labelledby="market-filter-heading">
+    <section className="panel market-filter market-choice-panel" aria-labelledby="market-filter-heading">
       <h2 id="market-filter-heading">{t('market.filterHeading')}</h2>
       <p className="note">{t('market.filterSemanticsNote')}</p>
       {/* On the compare page the role dimension belongs to the role picker,
