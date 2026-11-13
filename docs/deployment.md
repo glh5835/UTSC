@@ -74,6 +74,41 @@ the asset allowlist. Then rebuild, validate and publish the **whole Site**.
 Local pointer changes do not publish the website. An incomplete build or upload
 must not be deployed. Existing personal records are never rewritten by this flow.
 
+## Local D7 integration
+
+From the repository root, after installing `web/` dependencies, use the
+separate loopback preview. Keep the original candidate under ignored
+`artifacts/` with the data owner's fixed source commit, dataset version,
+source and review references, and the independently supplied SHA-256 of the
+exact `SHA256SUMS.txt` bytes.
+
+```powershell
+$fixture = 'web/tests/fixtures/d7-rehearsal'
+$pin = Get-Content -LiteralPath "$fixture/PIN.json" -Raw | ConvertFrom-Json
+node --test scripts/verify_d7_package.test.mjs
+node web/scripts/serve-d7-integration.mjs "$fixture/package" $pin.inventory_sha256 --synthetic --port 5198
+```
+
+For a second synthetic snapshot, generate a new ignored directory with
+`node scripts/build_d7_rehearsal_fixture.mjs artifacts/d7-partial-rehearsal --partial`.
+Use that directory's `package/` and `PIN.json` in the same command, with a free
+port for simultaneous comparison. For a real candidate, use the delivered
+package path and the data owner's independently confirmed digest, without
+`--synthetic`. The preview recognizes the built-in synthetic provenance.
+
+The server checks all members and hashes, the pinned 1.1 schema, sidecars,
+reference statistics and opportunity provenance before listening on
+`127.0.0.1`. One in-memory snapshot supplies market, comparison, courses,
+recommendations and opportunities. The header shows the package version and
+its actual run status. Opportunity cards identify automatic candidates and
+human approvals using provenance. A `partial` run can be rehearsed internally.
+Reconcile schema changes against the data owner's pinned source before use.
+
+Preview the exact public Worker separately with
+`node web/scripts/serve-preview.mjs 5199` after `npm --prefix web run build`.
+Its six public pages use the public demo inputs. The D7 routes under `/__d7/`
+belong to the separate integration origin.
+
 ## Calendar semantics
 
 Only approved events with current review, exact UTC start/end instants and a safe

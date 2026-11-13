@@ -1,0 +1,15 @@
+[
+  {
+    "course_id": "demo_course",
+    "title": "Example Data Analysis Course",
+    "official_url": "https://courses.example/data-analysis",
+    "calendar_year": "2026-2027",
+    "candidate_skill_ids": [
+      "python",
+      "sql"
+    ],
+    "evidence_text": "Example fixture only; replace with verified official calendar evidence.",
+    "verified_at": "2026-10-26T16:00:00Z",
+    "prerequisite_note": null
+  }
+]

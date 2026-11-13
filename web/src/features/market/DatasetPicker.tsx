@@ -1,6 +1,6 @@
 import { useLanguage } from '../../i18n/LanguageContext'
 import type { TxKey } from '../../i18n/en'
-import { DATA_CONFIG, type DataMode } from '../../data/sources'
+import type { DataMode, DataVersionConfig } from '../../data/sources'
 
 export interface MarketDatasetOption {
   id: string
@@ -12,16 +12,7 @@ export interface MarketDatasetOption {
   mode: DataMode
 }
 
-const DEMO_DATASETS: MarketDatasetOption[] = [
-  {
-    id: 'demo',
-    path: '/demo/a2-market-demo.json',
-    labelKey: 'market.dataset.demo.label',
-    noteKey: 'market.dataset.demo.note',
-    synthetic: true,
-    websiteSide: true,
-    mode: 'demo',
-  },
+const CONTRACT_DATASETS: MarketDatasetOption[] = [
   {
     id: 'valid',
     path: '/contracts/fixtures/valid_bundle.json',
@@ -42,28 +33,40 @@ const DEMO_DATASETS: MarketDatasetOption[] = [
   },
 ]
 
-export const MARKET_DATASETS: MarketDatasetOption[] = DATA_CONFIG.mode === 'demo'
-  ? DEMO_DATASETS
-  : [{
-      id: DATA_CONFIG.mode,
-      path: DATA_CONFIG.marketBundlePath,
-      labelKey: DATA_CONFIG.mode === 'integration'
-        ? 'market.dataset.integration.label'
-        : 'market.dataset.published.label',
-      noteKey: DATA_CONFIG.mode === 'integration'
-        ? 'market.dataset.integration.note'
-        : 'market.dataset.published.note',
-      synthetic: false,
-      websiteSide: false,
-      mode: DATA_CONFIG.mode,
-    }]
+export function marketDatasets(config: DataVersionConfig): MarketDatasetOption[] {
+  if (config.mode === 'demo') return [
+    {
+      id: 'demo',
+      path: config.marketBundlePath,
+      labelKey: 'market.dataset.demo.label',
+      noteKey: 'market.dataset.demo.note',
+      synthetic: true,
+      websiteSide: true,
+      mode: 'demo',
+    },
+    ...CONTRACT_DATASETS,
+  ]
+  return [{
+    id: config.mode,
+    path: config.marketBundlePath,
+    labelKey: config.mode === 'integration' ? 'market.dataset.integration.label' : 'market.dataset.published.label',
+    noteKey: config.mode === 'integration' ? 'market.dataset.integration.note' : 'market.dataset.published.note',
+    synthetic: config.synthetic === true,
+    websiteSide: false,
+    mode: config.mode,
+  }]
+}
 
-export function DatasetPicker({ selected, onSelect }: { selected: string; onSelect: (id: string) => void }) {
+export function DatasetPicker({ datasets, selected, onSelect }: {
+  datasets: MarketDatasetOption[]
+  selected: string
+  onSelect: (id: string) => void
+}) {
   const { t } = useLanguage()
   return (
     <fieldset className="fixture-picker">
       <legend>{t('market.datasetLegend')}</legend>
-      {MARKET_DATASETS.map((dataset) => (
+      {datasets.map((dataset) => (
         <label key={dataset.id} className="fixture-option">
           <input type="radio" name="market-dataset" value={dataset.id} checked={selected === dataset.id} onChange={() => onSelect(dataset.id)} />
           <span>

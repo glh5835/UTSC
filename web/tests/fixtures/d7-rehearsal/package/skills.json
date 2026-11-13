@@ -1,0 +1,42 @@
+[
+  {
+    "skill_id": "python",
+    "label": "Python",
+    "category": "technical",
+    "aliases": [
+      "Python 3"
+    ]
+  },
+  {
+    "skill_id": "sql",
+    "label": "SQL",
+    "category": "technical",
+    "aliases": [
+      "structured query language"
+    ]
+  },
+  {
+    "skill_id": "teamwork",
+    "label": "Teamwork",
+    "category": "soft",
+    "aliases": [
+      "collaboration"
+    ]
+  },
+  {
+    "skill_id": "excel",
+    "label": "Excel",
+    "category": "technical",
+    "aliases": [
+      "Microsoft Excel"
+    ]
+  },
+  {
+    "skill_id": "power_bi",
+    "label": "Power BI",
+    "category": "technical",
+    "aliases": [
+      "PowerBI"
+    ]
+  }
+]

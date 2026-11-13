@@ -6,21 +6,22 @@
 
 const en = {
   "public.preview": "SYNTHETIC · Public experience preview",
+  "public.tagline": "Compare data careers and find courses and practice opportunities.",
   "public.loading": "Loading page…",
   "public.home.title": "Explore a direction. Find a skill to learn.",
   "public.home.intro": "Try a simple journey from data career comparisons to courses and learning resources. Browse freely and choose the skills you want to explore.",
-  "public.home.market": "Filter the synthetic job sample by role, location, stage and date. See how many descriptions support each skill statistic.",
+  "public.home.market": "Filter jobs by role, location, career stage and date. See how many descriptions support each skill statistic.",
   "public.home.compare": "Compare career directions using each role’s own sample and analyzable-description counts.",
-  "public.home.courses": "Browse example course information, source links and the evidence behind candidate skills.",
-  "public.home.resources": "Select a role and your own target skills. Explore matching example resources and see why they are recommended.",
+  "public.home.courses": "Browse course information, source links and the evidence behind candidate skills.",
+  "public.home.resources": "Select a role and target skills to see matching resources and why they are recommended.",
   "public.home.scopeTitle": "About this preview",
-  "public.home.scope": "All displayed jobs, courses and resources are synthetic examples for trying the website. Course coverage is limited; links and sample verification dates do not establish current availability, eligibility or employment outcomes.",
-  "public.home.accounts": "This version offers public browsing only. Accounts, personal profiles, saving, favorites and opportunity calendars are not open yet. No personal experiences or account details are requested.",
+  "public.home.scope": "The jobs, courses, resources and opportunities are synthetic examples. Links and sample verification dates are included for reference. Check the original sources for availability and eligibility.",
+  "public.home.accounts": "Browse without signing in. Calendar downloads are available for eligible events.",
   "public.home.localPreferences": "Your language preference stays in this browser. Recommendation selections last for the current page visit; they are not saved as a personal learning record.",
-  "public.courses.intro": "Explore example course information and candidate skills. This preview does not record course completion or confirm your skills.",
-  "public.resources.intro": "Choose a role, select the skills you want to explore, and see matching example learning resources.",
+  "public.courses.intro": "Explore course information, source links and candidate skills.",
+  "public.resources.intro": "Choose a role and the skills you want to explore to see matching learning resources.",
   "public.resources.targetNote": "Selecting a target means you want to explore it. It does not confirm a skill or imply that you lack it. Selections are not saved to an account.",
-  "public.home.opportunities": "Filter synthetic events and ongoing opportunities, check dates and download example calendars.",
+  "public.home.opportunities": "Filter events and ongoing opportunities, check deadlines and download eligible calendars.",
 
   "nav.favorites": "Saved items",
   "fav.preview": "Cloud saving is unavailable in this preview.",
@@ -32,8 +33,7 @@ const en = {
   'app.tagline': 'Compare data career directions, confirm your skills, find courses and club opportunities.',
   'app.syntheticBanner':
     "Public samples are SYNTHETIC demonstrations, not real job postings, official course availability or real events. Cloud accounts and saving are not connected.",
-  'app.integrationBanner':
-    'INTERNAL D7 integration preview: one partial historical candidate package is used across market, comparison and course views. It is not human-verified, not published, and account samples remain unchanged.',
+  'app.integrationBanner': 'INTERNAL D7 integration preview',
   'app.skipToContent': 'Skip to main content',
   'app.languageSwitch': 'Switch language',
   'app.primaryNav': 'Primary navigation',
@@ -69,9 +69,9 @@ const en = {
   'home.pendingA5': 'A5 — Opportunity browsing, classification filters and calendar export.',
   'home.pendingA6': 'A6 — Personal profile, favorites and saved progress (requires A1 accounts).',
   'home.pendingA7': 'A7 — Publishing adapter and ICS calendar export.',
-  'home.pendingA8': 'A8 — Deployment and end-to-end acceptance.',
+  'home.pendingA8': 'Cloud accounts and publishing real data require separate acceptance.',
   'home.honestyNote':
-    'A3 extraction runs locally and never confirms a skill automatically; A4 recommendations match only the target skills you explicitly select and never produce employment probabilities or eligibility guarantees; course and pathway samples remain synthetic and do not establish current availability. Favorites, club submissions and publishing are not implemented and none are simulated.',
+    'Skill suggestions are generated locally and require your confirmation. Recommendations use the skills you select. With a local account, you can save learning paths and favorite resources or opportunities. Courses and resources are synthetic examples. Check original sources for current availability and eligibility.',
 
   'sample.title': 'Sample data (read-only)',
   'sample.intro':
@@ -188,6 +188,7 @@ const en = {
     'Formal market statistics over a versioned contract package: eight canonical roles, area/level/posted-date filters and skill mention rates. Public page — no sign-in needed.',
   'market.upstreamNote':
     'Contract schemas are verbatim copies of upstream commit {commit}. Package provenance is recorded under public/contracts/.',
+  'market.integrationSchemaNote': 'Candidate contract 1.1.0 uses the pinned schemas from upstream commit {commit}.',
   'market.datasetLegend': 'Choose a data package',
   'market.dataset.demo.label': 'A2 demo package',
   'market.dataset.demo.note':
@@ -195,7 +196,7 @@ const en = {
   'market.dataset.websiteSide': 'website-side',
   'market.dataset.integration.label': 'D7 integration package',
   'market.dataset.integration.note':
-    'Fixed internal candidate (schema 1.1.0), partial historical run. Not human-verified and not cleared for publication.',
+    'Market, comparison, courses, recommendations and opportunities share the same candidate snapshot.',
   'market.dataset.integrationBadge': 'INTERNAL',
   'market.dataset.published.label': 'Published data package',
   'market.dataset.published.note': 'Owner-approved published snapshot for this deployment.',

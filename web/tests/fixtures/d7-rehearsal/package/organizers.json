@@ -1,0 +1,11 @@
+[
+  {
+    "organizer_id": "example_club",
+    "name": "Example Club",
+    "username": "example_club",
+    "profile_url": "https://www.instagram.com/utsc_synthetic_rehearsal_fixture/",
+    "enabled": true,
+    "priority": 1,
+    "last_verified_at": null
+  }
+]
