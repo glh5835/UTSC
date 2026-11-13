@@ -29,6 +29,8 @@ export function OpportunitiesPage() {
   useEffect(() => { setFrom(filter.from); setTo(filter.to) }, [filter.from, filter.to])
   const bundle = catalog.phase.phase === 'ok' ? catalog.phase.bundle : null
   const items = bundle ? filterOpportunities(bundle.opportunities, filter, now) : []
+  const missingFromPartialPackage = config.mode === 'integration' &&
+    bundle?.manifest.run_status === 'partial' && bundle.opportunities.length === 0
   const update = (next: Partial<OpportunityFilter>) => {
     const value = { ...latestFilter.current, ...next }
     latestFilter.current = value
@@ -77,8 +79,17 @@ export function OpportunitiesPage() {
         <button type="button" onClick={() => { setError(''); setFrom(''); setTo(''); update(EMPTY_OPPORTUNITY_FILTER) }}>{text('Clear filters', '清空筛选')}</button>
       </section>
       {error && <p role="alert" className="banner banner-warn">{error}</p>}
-      <p role="status">{items.length} {text('matching opportunities', '条匹配机会')}</p>
-      {items.length === 0 && <p className="empty-state">{text('No matching opportunities. Try clearing the filters.', '暂无匹配机会，可以清空筛选重试。')}</p>}
+      {missingFromPartialPackage ? (
+        <p className="empty-state" role="status">{text(
+          'This partial D7 package contains no opportunity records. Check again after the opportunity data arrives.',
+          '此 D7 部分包未包含活动与实践机会记录。请在机会数据交接后查看。',
+        )}</p>
+      ) : (
+        <>
+          <p role="status">{items.length} {text('matching opportunities', '条匹配机会')}</p>
+          {items.length === 0 && <p className="empty-state">{text('No matching opportunities. Try clearing the filters.', '暂无匹配机会，可以清空筛选重试。')}</p>}
+        </>
+      )}
       <div className="op-list">{items.map(item => {
         const state = opportunityState(item, now), issue = calendarIssue(item, now)
         const review = config.opportunityReviews?.[item.opportunity_id]
