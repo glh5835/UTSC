@@ -1,0 +1,15 @@
+[
+  {
+    "resource_id": "demo_resource",
+    "title": "Example SQL Practice",
+    "resource_type": "tutorial",
+    "skill_ids": [
+      "sql"
+    ],
+    "level": "beginner",
+    "eligibility_note": null,
+    "source_url": "https://learn.example/sql",
+    "verified_at": "2026-10-26T16:00:00Z",
+    "mapping_evidence": "Synthetic fixture only; official evidence must be verified before use."
+  }
+]

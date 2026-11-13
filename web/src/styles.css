@@ -516,6 +516,10 @@ button:hover,
     overflow-x: auto;
     padding-bottom: 4px;
   }
+  .public-site .site-nav ul {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
   .site-nav a {
     white-space: nowrap;
   }

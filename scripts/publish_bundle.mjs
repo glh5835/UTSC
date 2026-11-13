@@ -11,16 +11,21 @@ const ts = require('typescript')
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex')
 export const MAX_BUNDLE_BYTES = 5 * 1024 * 1024
 let validatorModule
-async function validation() {
-  if (validatorModule) return validatorModule
-  const source = fs.readFileSync(path.join(root, 'web/src/data/validation.ts'), 'utf8')
+async function loadWebsiteModule(relativePath) {
+  const source = fs.readFileSync(path.join(root, relativePath), 'utf8')
   let code = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 } }).outputText
   code = code.replaceAll("'ajv/dist/2020'", JSON.stringify(pathToFileURL(require.resolve('ajv/dist/2020.js')).href))
     .replaceAll("'ajv-formats'", JSON.stringify(pathToFileURL(require.resolve('ajv-formats')).href))
-  validatorModule = await import('data:text/javascript;base64,' + Buffer.from(code).toString('base64'))
+  return import('data:text/javascript;base64,' + Buffer.from(code).toString('base64'))
+}
+export async function loadBundleValidation() {
+  validatorModule ??= await loadWebsiteModule('web/src/data/validation.ts')
   return validatorModule
 }
-function contentCheck(value) {
+export function loadMarketCriteria() {
+  return loadWebsiteModule('web/src/features/market/criteria.ts')
+}
+export function contentCheck(value) {
   if (Array.isArray(value)) { value.forEach(contentCheck); return }
   if (!value || typeof value !== 'object') return
   for (const [key, text] of Object.entries(value)) {
@@ -46,7 +51,7 @@ export async function validateDelivery({ bundleFile, expectedSha, mode, attestat
   const bundle = JSON.parse(bytes.toString('utf8'))
   if (bundle.manifest?.schema_version !== '1.0.0') throw new Error('Only the approved 1.0.0 contract may be published')
   if (bundle.manifest.run_status !== 'complete') throw new Error('Incomplete data cannot be activated')
-  const { createBundleValidator, checkCrossRecords } = await validation()
+  const { createBundleValidator, checkCrossRecords } = await loadBundleValidation()
   const schemas = new Map()
   for (const name of fs.readdirSync(path.join(root, 'web/public/contracts/schemas')).filter(x => x.endsWith('.json'))) {
     const schema = JSON.parse(fs.readFileSync(path.join(root, 'web/public/contracts/schemas', name), 'utf8'))

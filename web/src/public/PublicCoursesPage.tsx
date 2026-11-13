@@ -1,18 +1,21 @@
 import { useLanguage } from '../i18n/LanguageContext'
 import { usePageTitle } from '../usePageTitle'
 import { useCourseCatalog } from '../features/profile/useCourseCatalog'
+import { useDataVersion } from '../data/DataVersionContext'
 
 /** Public browsing does not load identity, course completion or confirmations. */
 export function PublicCoursesPage() {
   const { t } = useLanguage()
   usePageTitle(t('nav.courses'))
+  const { config } = useDataVersion()
+  const synthetic = config.mode === 'demo' || config.synthetic === true
   const catalog = useCourseCatalog()
   const bundle = catalog.phase.phase === 'ok' ? catalog.phase.bundle : null
   return (
     <>
       <h1>{t('nav.courses')}</h1>
       <p className="lead">{t('public.courses.intro')}</p>
-      <p className="banner banner-warn" role="note">{t('a3.course.synthetic')}</p>
+      {synthetic ? <p className="banner banner-warn" role="note">{t('a3.course.synthetic')}</p> : null}
       <p className="note">{t('a3.course.historical')}</p>
       {catalog.phase.phase === 'loading' ? <p role="status">{t('a3.course.loadingCatalog')}</p> : null}
       {catalog.phase.phase === 'error' || catalog.phase.phase === 'rejected' ? (
@@ -25,7 +28,7 @@ export function PublicCoursesPage() {
       {bundle?.courses.map(course => (
         <article className="panel a3-course" key={course.course_id} aria-labelledby={`course-${course.course_id}`}>
           <h2 id={`course-${course.course_id}`}>{course.title}</h2>
-          <p><span className="chip chip-synthetic">SYNTHETIC</span></p>
+          {synthetic ? <p><span className="chip chip-synthetic">SYNTHETIC</span></p> : null}
           <dl className="def-list">
             <div className="def-row"><dt>{t('a3.course.courseId')}</dt><dd><code>{course.course_id}</code></dd></div>
             <div className="def-row"><dt>{t('a3.course.calendar')}</dt><dd>{course.calendar_year}</dd></div>

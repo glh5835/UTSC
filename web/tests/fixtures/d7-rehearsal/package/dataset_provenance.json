@@ -1,0 +1,76 @@
+{
+  "generated_at": "2027-03-10T16:00:00Z",
+  "datasets": {
+    "market_jobs": {
+      "source": "synthetic",
+      "collected_from": "2026-10-19T08:00:00Z",
+      "collected_to": "2026-10-26T15:00:00Z"
+    },
+    "opportunities": {
+      "source": "synthetic",
+      "collected_from": "2027-03-09T16:00:00Z",
+      "collected_to": "2027-03-09T16:00:00Z",
+      "records": [
+        {
+          "opportunity_id": "synthetic_exact_event",
+          "source_post_ids": [
+            {
+              "source_post_id": "synthetic_exact_event",
+              "first_seen_at": "2027-03-09T16:00:00Z",
+              "last_seen_at": "2027-03-09T16:00:00Z",
+              "last_fetched_at": "2027-03-09T16:00:00Z"
+            }
+          ],
+          "eligibility": {
+            "decision": "human_approved",
+            "content_revision": 1,
+            "evaluated_at": "2027-03-10T16:00:00Z"
+          }
+        },
+        {
+          "opportunity_id": "synthetic_date_only_event",
+          "source_post_ids": [
+            {
+              "source_post_id": "synthetic_date_only_event",
+              "first_seen_at": "2027-03-09T16:00:00Z",
+              "last_seen_at": "2027-03-09T16:00:00Z",
+              "last_fetched_at": "2027-03-09T16:00:00Z"
+            }
+          ],
+          "eligibility": {
+            "decision": "auto_candidate",
+            "content_revision": 1,
+            "evaluated_at": "2027-03-10T16:00:00Z"
+          }
+        }
+      ]
+    },
+    "courses": {
+      "timestamp_field": "verified_at",
+      "records": [
+        {
+          "course_id": "demo_course",
+          "verified_at": "2026-10-26T16:00:00Z"
+        }
+      ]
+    },
+    "resources": {
+      "timestamp_field": "verified_at",
+      "records": [
+        {
+          "resource_id": "demo_resource",
+          "verified_at": "2026-10-26T16:00:00Z"
+        }
+      ]
+    },
+    "organizers": {
+      "timestamp_field": "last_verified_at",
+      "records": [
+        {
+          "organizer_id": "example_club",
+          "last_verified_at": null
+        }
+      ]
+    }
+  }
+}

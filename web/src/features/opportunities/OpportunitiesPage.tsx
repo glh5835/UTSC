@@ -51,7 +51,7 @@ export function OpportunitiesPage() {
   }
   return <>
     <h1>{text('Opportunities', '活动与实践机会')}</h1>
-    <p>{text('Browse reviewed events and ongoing opportunities. Multiple choices within a filter use OR; different filters use AND.', '浏览已批准的活动与持续机会。同一筛选内多选为“或”，不同筛选之间为“且”。')}</p>
+    <p>{text('Browse events and ongoing opportunities. Choices within a filter use OR. Different filters use AND.', '浏览活动与持续机会。同一筛选内多选为“或”，不同筛选之间为“且”。')}</p>
     <p className="note">{text('Calendar downloads are snapshots. Organizer changes will not update an imported calendar automatically. Date-only and unconfirmed times cannot be exported.', '日历下载是时间快照，主办方后续修改不会自动同步。仅日期或未确认的时间不能导出。')}</p>
     <DatasetStatePanels phase={catalog.phase} onRetry={catalog.reload} />
     {bundle?.manifest.run_status === 'failed' ? <p role="alert">{text('This dataset failed validation for use.', '该数据批次不可使用。')}</p> : bundle && <>
@@ -59,7 +59,8 @@ export function OpportunitiesPage() {
       <section className="panel" aria-label={text('Opportunity filters', '机会筛选')}>
         <label>{text('Search title, description or organizer', '搜索标题、说明或组织')}<input type="search" value={filter.q} onChange={e => update({ q: e.target.value })} /></label>
         <label>{text('Show', '显示范围')} <select aria-label={text('Show', '显示范围')} value={filter.view} onChange={e => update({ view: e.target.value as OpportunityFilter['view'] })}>
-          <option value="current">{text('Current', '当前机会')}</option><option value="history">{text('History', '历史活动')}</option><option value="all">{text('All approved', '全部已批准记录')}</option>
+          <option value="current">{text('Current', '当前机会')}</option><option value="history">{text('History', '历史活动')}</option>
+          <option value="all">{config.mode === 'integration' ? text('All packaged records', '包内全部记录') : text('All approved', '全部已批准记录')}</option>
         </select></label>
         <div className="op-filter-grid">
           {choices('kind', text('Kind', '类别'), OPPORTUNITY_KIND_LABELS)}
@@ -80,18 +81,24 @@ export function OpportunitiesPage() {
       {items.length === 0 && <p className="empty-state">{text('No matching opportunities. Try clearing the filters.', '暂无匹配机会，可以清空筛选重试。')}</p>}
       <div className="op-list">{items.map(item => {
         const state = opportunityState(item, now), issue = calendarIssue(item, now)
+        const review = config.opportunityReviews?.[item.opportunity_id]
+        const reviewLabel = review === 'auto_candidate' ? text('Automatic candidate', '自动候选')
+          : review === 'human_approved' ? text('Human approved', '人工批准')
+            : text('Unknown', '未知')
         const source = safeExternalUrl(item.source_url), registration = safeExternalUrl(item.registration_url)
         const date = (field: 'start' | 'end' | 'deadline') => item[`${field}_precision`] === 'datetime' ? item[`${field}_at`] : item[`${field}_precision`] === 'date' ? item[`${field}_date`] : text('Not stated', '未说明')
         return <article className="panel opportunity-card" key={item.opportunity_id}>
           <h2>{item.title}</h2><p><span className="chip">{labelFor(OPPORTUNITY_KIND_LABELS, item.kind, lang)}</span> <span className="chip">{statusLabels[state]}</span></p>
           <p>{item.description}</p><p>{text('Organizer', '组织')}: {item.organizer_id}</p>
-          <p>{text('Start / end', '开始／结束')}: {date('start')} / {date('end')} {item.timezone ?? text('(timezone not stated)', '（时区未说明）')}</p>
+          <p>{text('Start / end', '开始／结束')}: {date('start')} / {date('end')}</p>
           <p>{text('Registration deadline', '报名截止')}: {date('deadline')}</p>
+          <p>{text('Source time zone', '来源时区')}: {item.timezone ?? text('Not stated', '未说明')}</p>
           <p>{text('Location', '地点')}: {item.location ?? text('Not stated', '未说明')} · {labelFor(FORMAT_LABELS, item.format, lang)}</p>
           <p>{labelFor(BEGINNER_LEVEL_LABELS, item.beginner_level, lang)} · {item.eligibility_note ?? text('Eligibility not stated; confirm with the organizer.', '资格未说明，请向主办方确认。')}</p>
           <p>{item.activity_type_ids.map(id => labelFor(ACTIVITY_TYPE_LABELS, id, lang)).join(' · ')} / {item.topic_ids.map(id => labelFor(TOPIC_LABELS, id, lang)).join(' · ')}</p>
           <p>{text('Skill evidence', '技能依据')}: {item.classification_reasons.join(' · ') || text('Not stated', '未说明')}</p>
           <p className="note">{text('Last verified', '最后核实')}: {item.verified_at}</p>
+          {config.mode === 'integration' ? <p className="note">{text('Review source', '审核来源')}: {reviewLabel}</p> : null}
           <div className="op-actions">{source && <a href={source} target="_blank" rel="noreferrer">{text('Original source', '原帖来源')}</a>}
             {registration && state !== 'ended' && state !== 'registration_closed' && <a href={registration} target="_blank" rel="noreferrer">{text('Registration details', '报名详情')}</a>}
             <FavoriteButton type="opportunity" id={item.opportunity_id} />
