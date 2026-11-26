@@ -12,8 +12,9 @@
     "test": "vitest run",
     "build:demo": "tsc --noEmit --pretty false && vite build --mode demo && node scripts/check-dist.mjs",
     "build:development": "tsc --noEmit --pretty false && vite build --mode development",
+    "build:production": "tsc --noEmit --pretty false && node --experimental-strip-types scripts/build-production.mjs",
     "test:deployment": "node --test scripts/check-dist.test.mjs scripts/worker.test.mjs",
-    "test:publication": "node --test ../scripts/publish_bundle.test.mjs",
+    "test:publication": "node --test ../scripts/publish_bundle.test.mjs ../scripts/verify_d7_package.test.mjs ../scripts/verify_production_package.test.mjs",
     "check:dist": "node scripts/check-dist.mjs"
   },
   "dependencies": {

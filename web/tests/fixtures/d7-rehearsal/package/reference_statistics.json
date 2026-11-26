@@ -1,0 +1,26 @@
+{
+  "job_count": 3,
+  "analyzable_description_count": 2,
+  "skills": [
+    {
+      "skill_id": "excel",
+      "mention_count": 1,
+      "mention_rate": 0.5
+    },
+    {
+      "skill_id": "python",
+      "mention_count": 1,
+      "mention_rate": 0.5
+    },
+    {
+      "skill_id": "sql",
+      "mention_count": 1,
+      "mention_rate": 0.5
+    },
+    {
+      "skill_id": "teamwork",
+      "mention_count": 2,
+      "mention_rate": 1
+    }
+  ]
+}

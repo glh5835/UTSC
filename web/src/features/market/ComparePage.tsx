@@ -6,7 +6,8 @@ import { labelFor, ROLE_LABELS } from '../../data/labels'
 import { CANONICAL_ROLE_IDS, type CanonicalRoleId, type MarketFilter } from './criteria'
 import { compareRoles, formatPercent, SMALL_SAMPLE_THRESHOLD, type MarketStats, type RoleComparisonRow } from './stats'
 import { parseFilter, serializeComparisonParams } from './filterParams'
-import { DatasetPicker, MARKET_DATASETS } from './DatasetPicker'
+import { DatasetPicker, marketDatasets } from './DatasetPicker'
+import { useDataVersion } from '../../data/DataVersionContext'
 import { DatasetPanel } from './DatasetPanel'
 import { FilterPanel } from './FilterPanel'
 import { DatasetStatePanels, useMarketBundle } from './useMarketBundle'
@@ -121,8 +122,10 @@ export function ComparePage() {
   const { t, lang } = useLanguage()
   usePageTitle(t('nav.compare'))
   const [searchParams, setSearchParams] = useSearchParams()
-  const [selectedId, setSelectedId] = useState(MARKET_DATASETS[0].id)
-  const dataset = MARKET_DATASETS.find((entry) => entry.id === selectedId) ?? MARKET_DATASETS[0]
+  const { config } = useDataVersion()
+  const datasets = marketDatasets(config)
+  const [selectedId, setSelectedId] = useState(datasets[0].id)
+  const dataset = datasets.find((entry) => entry.id === selectedId) ?? datasets[0]
   const { phase, stale, reload } = useMarketBundle(dataset.path)
 
   const sharedFilter = useMemo<MarketFilter>(() => {
@@ -156,7 +159,7 @@ export function ComparePage() {
       <h1>{t('nav.compare')}</h1>
       <p className="lead">{t('compare.intro')}</p>
 
-      <DatasetPicker selected={selectedId} onSelect={setSelectedId} />
+      <DatasetPicker datasets={datasets} selected={selectedId} onSelect={setSelectedId} />
       <DatasetStatePanels phase={phase} onRetry={reload} />
 
       {phase.phase === 'ok' ? (

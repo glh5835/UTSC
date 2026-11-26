@@ -21,6 +21,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/market', key: 'nav.market' },
   { to: '/compare', key: 'nav.compare' },
   { to: '/courses', key: 'nav.courses' },
+  { to: '/resources', key: 'nav.resources' },
   { to: '/opportunities', key: 'nav.opportunities' },
   { to: '/profile', key: 'nav.profile' },
   { to: '/pathways', key: 'nav.pathways' },
@@ -50,7 +51,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <p className="site-tagline">{t('app.tagline')}</p>
         <nav aria-label={t('app.primaryNav')} className="site-nav">
           <ul>
-            {NAV_ITEMS.map((item) => (
+            {NAV_ITEMS.filter(item => config.mode !== 'published' || item.to !== '/sample').map((item) => (
               <li key={item.to}>
                 <NavLink to={item.to} end={item.end}>
                   {t(item.key)}
@@ -59,15 +60,16 @@ export function Layout({ children }: { children: ReactNode }) {
             ))}
           </ul>
         </nav>
-        <p className="synthetic-banner" role="note">
+        {config.mode !== 'published' ? <p className="synthetic-banner" role="note">
           {t(config.mode === 'integration' ? 'app.integrationBanner' : 'app.syntheticBanner')}
-        </p>
+        </p> : null}
       </header>
       <main id="main-content" className="site-main" tabIndex={-1}>
         <FavoriteFeedback /><ErrorBoundary>{children}</ErrorBoundary>
       </main>
       <footer className="site-footer">
-        <p>{t('footer.preview')}</p>
+        <p>{t(config.mode === 'published' ? 'footer.published' : 'footer.preview')}</p>
+        {config.datasetVersion ? <p>{t('manifest.datasetVersion')} <code>{config.datasetVersion}</code></p> : null}
         <p>{t('footer.contract', { commit: config.contractCommit })}</p>
         <p>
           <a href={UPSTREAM_DATA_REPO_URL} target="_blank" rel="noreferrer">
@@ -82,7 +84,7 @@ export function Layout({ children }: { children: ReactNode }) {
             {t('footer.websiteRepo')}
           </a>
           {' · '}
-          <a href="/contracts/PROVENANCE.md" target="_blank" rel="noreferrer">
+          <a href={config.deploymentPath ?? '/contracts/PROVENANCE.md'} target="_blank" rel="noreferrer">
             {t('footer.provenance')}
           </a>
         </p>

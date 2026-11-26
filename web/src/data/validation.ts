@@ -67,15 +67,15 @@ const SCHEMA_FILES = [
   'opportunity.schema.json',
 ] as const
 
-const CANDIDATE_SCHEMA_FILES = [...SCHEMA_FILES, 'organizer.schema.json'] as const
+const ORGANIZER_SCHEMA_FILES = [...SCHEMA_FILES, 'organizer.schema.json'] as const
 
 /** Fetch one version's complete closure. Separate calls always create separate
  * Ajv registries, even though contract versions reuse the same $id values. */
 export async function loadSchemaSet(
   basePath = '/contracts/schemas',
-  schemaVersion: '1.0.0' | '1.1.0' = '1.0.0',
+  schemaVersion: '1.0.0' | '1.1.0' | '2.0.0' = '1.0.0',
 ): Promise<SchemaSet> {
-  const files = schemaVersion === '1.1.0' ? CANDIDATE_SCHEMA_FILES : SCHEMA_FILES
+  const files = schemaVersion === '1.0.0' ? SCHEMA_FILES : ORGANIZER_SCHEMA_FILES
   const entries = await Promise.all(
     files.map(async (file) => {
       const response = await fetch(`${basePath}/${file}`)

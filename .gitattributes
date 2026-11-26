@@ -22,3 +22,4 @@ web/public/demo/** -text
 web/index.html -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 web/public/robots.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 web/worker/serve-public.mjs -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+web/deployment/production-release.json text eol=lf

@@ -6,21 +6,22 @@
 
 const en = {
   "public.preview": "SYNTHETIC · Public experience preview",
+  "public.tagline": "Compare data careers and find courses and practice opportunities.",
   "public.loading": "Loading page…",
   "public.home.title": "Explore a direction. Find a skill to learn.",
   "public.home.intro": "Try a simple journey from data career comparisons to courses and learning resources. Browse freely and choose the skills you want to explore.",
-  "public.home.market": "Filter the synthetic job sample by role, location, stage and date. See how many descriptions support each skill statistic.",
+  "public.home.market": "Filter jobs by role, location, career stage and date. See how many descriptions support each skill statistic.",
   "public.home.compare": "Compare career directions using each role’s own sample and analyzable-description counts.",
-  "public.home.courses": "Browse example course information, source links and the evidence behind candidate skills.",
-  "public.home.resources": "Select a role and your own target skills. Explore matching example resources and see why they are recommended.",
+  "public.home.courses": "Browse course information, source links and the evidence behind candidate skills.",
+  "public.home.resources": "Select a role and target skills to see matching resources and why they are recommended.",
   "public.home.scopeTitle": "About this preview",
-  "public.home.scope": "All displayed jobs, courses and resources are synthetic examples for trying the website. Course coverage is limited; links and sample verification dates do not establish current availability, eligibility or employment outcomes.",
-  "public.home.accounts": "This version offers public browsing only. Accounts, personal profiles, saving, favorites and opportunity calendars are not open yet. No personal experiences or account details are requested.",
+  "public.home.scope": "The jobs, courses, resources and opportunities are synthetic examples. Links and sample verification dates are included for reference. Check the original sources for availability and eligibility.",
+  "public.home.accounts": "Browse without signing in. Calendar downloads are available for eligible events.",
   "public.home.localPreferences": "Your language preference stays in this browser. Recommendation selections last for the current page visit; they are not saved as a personal learning record.",
-  "public.courses.intro": "Explore example course information and candidate skills. This preview does not record course completion or confirm your skills.",
-  "public.resources.intro": "Choose a role, select the skills you want to explore, and see matching example learning resources.",
+  "public.courses.intro": "Explore course information, source links and candidate skills.",
+  "public.resources.intro": "Choose a role and the skills you want to explore to see matching learning resources.",
   "public.resources.targetNote": "Selecting a target means you want to explore it. It does not confirm a skill or imply that you lack it. Selections are not saved to an account.",
-  "public.home.opportunities": "Filter synthetic events and ongoing opportunities, check dates and download example calendars.",
+  "public.home.opportunities": "Filter events and ongoing opportunities, check deadlines and download eligible calendars.",
 
   "nav.favorites": "Saved items",
   "fav.preview": "Cloud saving is unavailable in this preview.",
@@ -32,8 +33,7 @@ const en = {
   'app.tagline': 'Compare data career directions, confirm your skills, find courses and club opportunities.',
   'app.syntheticBanner':
     "Public samples are SYNTHETIC demonstrations, not real job postings, official course availability or real events. Cloud accounts and saving are not connected.",
-  'app.integrationBanner':
-    'INTERNAL D7 integration preview: one partial historical candidate package is used across market, comparison and course views. It is not human-verified, not published, and account samples remain unchanged.',
+  'app.integrationBanner': 'INTERNAL D7 integration preview',
   'app.skipToContent': 'Skip to main content',
   'app.languageSwitch': 'Switch language',
   'app.primaryNav': 'Primary navigation',
@@ -47,6 +47,8 @@ const en = {
   'nav.opportunities': 'Opportunities',
   'nav.profile': 'Profile',
   'nav.pathways': 'Pathways',
+  'nav.resources': 'Resources',
+  'resources.empty': 'This snapshot contains no verified learning resources.',
 
   'home.title': 'Home',
   'home.intro':
@@ -69,9 +71,9 @@ const en = {
   'home.pendingA5': 'A5 — Opportunity browsing, classification filters and calendar export.',
   'home.pendingA6': 'A6 — Personal profile, favorites and saved progress (requires A1 accounts).',
   'home.pendingA7': 'A7 — Publishing adapter and ICS calendar export.',
-  'home.pendingA8': 'A8 — Deployment and end-to-end acceptance.',
+  'home.pendingA8': 'Cloud accounts and publishing real data require separate acceptance.',
   'home.honestyNote':
-    'A3 extraction runs locally and never confirms a skill automatically; A4 recommendations match only the target skills you explicitly select and never produce employment probabilities or eligibility guarantees; course and pathway samples remain synthetic and do not establish current availability. Favorites, club submissions and publishing are not implemented and none are simulated.',
+    'Skill suggestions are generated locally and require your confirmation. Recommendations use the skills you select. With a local account, you can save learning paths and favorite resources or opportunities. Courses and resources are synthetic examples. Check original sources for current availability and eligibility.',
 
   'sample.title': 'Sample data (read-only)',
   'sample.intro':
@@ -188,6 +190,7 @@ const en = {
     'Formal market statistics over a versioned contract package: eight canonical roles, area/level/posted-date filters and skill mention rates. Public page — no sign-in needed.',
   'market.upstreamNote':
     'Contract schemas are verbatim copies of upstream commit {commit}. Package provenance is recorded under public/contracts/.',
+  'market.integrationSchemaNote': 'Candidate contract 1.1.0 uses the pinned schemas from upstream commit {commit}.',
   'market.datasetLegend': 'Choose a data package',
   'market.dataset.demo.label': 'A2 demo package',
   'market.dataset.demo.note':
@@ -195,7 +198,7 @@ const en = {
   'market.dataset.websiteSide': 'website-side',
   'market.dataset.integration.label': 'D7 integration package',
   'market.dataset.integration.note':
-    'Fixed internal candidate (schema 1.1.0), partial historical run. Not human-verified and not cleared for publication.',
+    'Market, comparison, courses, recommendations and opportunities share the same candidate snapshot.',
   'market.dataset.integrationBadge': 'INTERNAL',
   'market.dataset.published.label': 'Published data package',
   'market.dataset.published.note': 'Owner-approved published snapshot for this deployment.',
@@ -284,7 +287,7 @@ const en = {
   'compare.note': 'Each cell is N/D for that role’s own denominator; “—” means the denominator is zero for that role.',
 
   'account.intro':
-    'Sign in with a real Supabase account to read and save your own profile. Public sample pages stay available without an account; personal data is protected by database-level row security, not by hidden buttons.',
+    'Sign in to save your experiences, confirmed skills, learning progress and favorites. You can browse public pages without an account.',
   'account.notConfiguredTitle': 'Supabase is not configured',
   'account.notConfiguredBody':
     'No Supabase endpoint is set for this build, so account features are unavailable. The public sample pages remain usable. No fake users, tokens or simulated sign-ins are shown.',
@@ -298,9 +301,27 @@ const en = {
   'account.signUp': 'Sign up',
   'account.working': 'Working…',
   'account.switchToSignUp': 'Need an account? Sign up',
-  'account.switchToSignIn': 'Already registered? Sign in',
+  'account.switchToSignIn': 'Back to sign in',
   'account.confirmationRequired':
-    'Registration accepted. This project requires email confirmation: check your inbox (local test mail tool: Mailpit at http://127.0.0.1:55424) and confirm before signing in. You are NOT signed in yet.',
+    'Check your inbox and follow the confirmation link to finish registering.',
+  'account.verifyEmail': 'Confirm your email',
+  'account.continueEmailLink': 'Continue',
+  'account.emailConfirmed': 'Email confirmed.',
+  'account.invalidLink': 'This link is invalid or has expired. Request a fresh email from the account page.',
+  'account.forgotPassword': 'Forgot password?',
+  'account.resetTitle': 'Reset your password',
+  'account.sendReset': 'Send reset link',
+  'account.resetSent': 'If the address has an account, check its inbox for a reset link.',
+  'account.newPassword': 'Choose a new password',
+  'account.savePassword': 'Save new password',
+  'account.passwordUpdated': 'Password updated.',
+  'account.signOutFailed': 'Could not sign out. Try again.',
+  'account.deleteAccount': 'Delete account',
+  'account.deleteWarning': 'This permanently deletes your account, profile, experiences, confirmed skills, learning paths and favorites. Enter your current password to proceed.',
+  'account.currentPassword': 'Current password',
+  'account.confirmDelete': 'Permanently delete my account',
+  'account.deleteFailed': 'Could not delete your account. Check your current password and try again.',
+  'account.deleted': 'Your account and personal records were deleted.',
   'account.errorGeneric': 'That did not work. Please try again.',
   'account.signedInAs': 'Signed in as',
   'account.loadingProfile': 'Loading your profile…',
@@ -320,11 +341,11 @@ const en = {
   'account.manageCourses': 'Manage completed courses',
   'account.manageSkills': 'Manage experiences and confirmed skills',
   'account.scopeNote':
-    'A3 scope: account identity, display name, self-reported courses, private experiences, local English extraction and explicitly confirmed skills. Course mappings and extraction never confirm skills automatically.',
+    'Your course completions and experiences are self-reported. You choose which skills to confirm.',
 
   'a3.common.cancel': 'Cancel',
   'a3.course.intro':
-    'Browse the approved 1.0.0 course/skill sample, mark courses you personally completed, and explicitly confirm any course-mapped candidate skill. A course mapping is never proof that you already have the skill.',
+    'Browse courses, mark courses you personally completed and confirm the skills you gained.',
   'a3.course.synthetic':
     'SYNTHETIC contract fixture — not a current UTSC course offering, timetable entry or eligibility decision.',
   'a3.course.integration':
@@ -562,6 +583,7 @@ const en = {
   'errorBoundary.reload': 'Reload page',
 
   'footer.preview': 'Career exploration preview. Confirm details and eligibility with the original source.',
+  'footer.published': 'Confirm current details and eligibility with the original source.',
   'footer.contract': 'Contract synced verbatim from upstream commit {commit}.',
   'footer.dataRepo': 'Data repository (Seraphina)',
   'footer.websiteRepo': 'Website repository',

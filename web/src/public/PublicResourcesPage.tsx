@@ -36,7 +36,7 @@ export function PublicResourcesPage() {
     <>
       <h1>{t('nav.pathways')}</h1>
       <p className="lead">{t('public.resources.intro')}</p>
-      <p className="banner banner-warn" role="note">{t('a4.pathways.demoNote')}</p>
+      {config.mode === 'demo' ? <p className="banner banner-warn" role="note">{t('a4.pathways.demoNote')}</p> : null}
       <DatasetStatePanels phase={catalog.phase} onRetry={catalog.reload} />
       <section className="panel" aria-labelledby="public-role-heading">
         <h2 id="public-role-heading">{t('a4.pathways.roleHeading')}</h2>

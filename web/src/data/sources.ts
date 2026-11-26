@@ -1,4 +1,4 @@
-import type { UtscBundle } from './types'
+import type { Manifest, UtscBundle } from './types'
 import { SELECTED_RELEASE } from './releaseSelection'
 
 /**
@@ -22,10 +22,11 @@ export const UPSTREAM_DATA_REPO_URL =
   'https://github.com/wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market'
 
 export type DataMode = 'demo' | 'integration' | 'published'
+export type OpportunityReviewDecision = 'auto_candidate' | 'human_approved'
 
 export interface DataVersionConfig {
   mode: DataMode
-  schemaVersion: '1.0.0' | '1.1.0'
+  schemaVersion: '1.0.0' | '1.1.0' | '2.0.0'
   schemaBasePath: string
   marketBundlePath: string
   courseBundlePath: string
@@ -35,6 +36,11 @@ export interface DataVersionConfig {
   opportunitiesBundlePath?: string
   pathwaysBundlePath: string
   contractCommit: string
+  synthetic?: boolean
+  datasetVersion?: string
+  runStatus?: Exclude<Manifest['run_status'], 'failed'>
+  deploymentPath?: string
+  opportunityReviews?: Readonly<Record<string, OpportunityReviewDecision>>
 }
 
 export const DATA_CONFIG: DataVersionConfig = {

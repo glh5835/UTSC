@@ -2,6 +2,7 @@ import { type ReactNode } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import { UPSTREAM_DATA_REPO_URL } from '../data/sources'
+import { labelFor, RUN_STATUS_LABELS } from '../data/labels'
 import { useDataVersion } from '../data/DataVersionContext'
 import type { TxKey } from '../i18n/en'
 import { LanguageToggle } from './LanguageToggle'
@@ -23,10 +24,11 @@ const NAV_ITEMS: NavItem[] = [
 ]
 
 export function PublicLayout({ children }: { children: ReactNode }) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { config } = useDataVersion()
+  const integration = config.mode === 'integration'
   return (
-    <div className="site">
+    <div className="site public-site">
       <a className="skip-link" href="#main-content" onClick={(event) => {
         event.preventDefault()
         const main = document.getElementById('main-content')
@@ -42,7 +44,7 @@ export function PublicLayout({ children }: { children: ReactNode }) {
           </Link>
           <LanguageToggle />
         </div>
-        <p className="site-tagline">{t('app.tagline')}</p>
+        <p className="site-tagline">{t('public.tagline')}</p>
         <nav aria-label={t('app.primaryNav')} className="site-nav">
           <ul>
             {NAV_ITEMS.map((item) => (
@@ -55,7 +57,14 @@ export function PublicLayout({ children }: { children: ReactNode }) {
           </ul>
         </nav>
         <p className="synthetic-banner" role="note">
-          {t(config.mode === 'integration' ? 'app.integrationBanner' : 'app.syntheticBanner')}
+          {integration ? (
+            <>
+              {t('app.integrationBanner')}
+              {config.synthetic ? ' · SYNTHETIC' : null}
+              {config.datasetVersion ? <> · <code>{config.datasetVersion}</code></> : null}
+              {config.runStatus ? <> · {labelFor(RUN_STATUS_LABELS, config.runStatus, lang)}</> : null}
+            </>
+          ) : t(config.mode === 'published' ? 'market.dataset.published.note' : 'app.syntheticBanner')}
         </p>
       </header>
       <main id="main-content" className="site-main" tabIndex={-1}>
@@ -76,10 +85,11 @@ export function PublicLayout({ children }: { children: ReactNode }) {
           >
             {t('footer.websiteRepo')}
           </a>
-          {' · '}
-          <a href="/contracts/PROVENANCE.md" target="_blank" rel="noreferrer">
-            {t('footer.provenance')}
-          </a>
+          {!integration ? <>{' · '}
+            <a href="/contracts/PROVENANCE.md" target="_blank" rel="noreferrer">
+              {t('footer.provenance')}
+            </a>
+          </> : null}
         </p>
         <p className="footer-note">{t('footer.langNote')}</p>
       </footer>
