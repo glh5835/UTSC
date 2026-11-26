@@ -5,6 +5,7 @@
 | 文档 | 用途与状态 |
 | --- | --- |
 | [V5 验收收口与 GitHub 对齐](reviews/v5-closeout-20261103.md) | 所有者 UI 确认、V5 来源、V4 回退、PR #8/#9 合并及验证边界 |
+| [正式交付验收记录](reviews/production-delivery-20261126.md) | A0–A8 / D0–D7 证据、候选包摘要、云端状态及回退 |
 | [启动与开发说明](app_setup.md) | 准备环境、启动旧 Demo 与完整网站、运行测试和浏览器检查 |
 | [网站交付与发布](deployment.md) | A0–A8 开发、六页公开演示、发布/回退、真实数据与云端账户门槛 |
 | [Cloudflare 正式交付与 Supabase 验收](cloud-release.md) | 保护分支、隔离账号、批准数据校验和云端更新／回退步骤 |

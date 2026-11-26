@@ -4,7 +4,7 @@
 
 ## GitHub 与 Cloudflare
 
-1. 网站所有者在 `glh5835/UTSC` 为 `release/staging` 和 `release/production` 配置要求 PR、独立批准和必需检查的 Ruleset 或分支保护。Cloudflare Workers & Pages GitHub App 只需访问网站仓库。关闭 Preview Builds，避免未审查分支获得真实发布包及环境变量。记录 App 授权范围与保护规则。[GitHub 接入](https://developers.cloudflare.com/workers/ci-cd/builds/git-integration/github-integration/) · [构建分支](https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/)
+1. `glh5835/UTSC` 已为 `release/staging` 和 `release/production` 启用专用规则，要求 PR、独立批准和 `website` 检查。Cloudflare Workers & Pages GitHub App 只需访问网站仓库。关闭 Preview Builds，避免未审查分支获得真实发布包及环境变量。记录实际 App 授权范围与保护规则。[发布分支规则](https://github.com/glh5835/UTSC/rules/28157854) · [GitHub 接入](https://developers.cloudflare.com/workers/ci-cd/builds/git-integration/github-integration/) · [构建分支](https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/)
 2. 所有者用已授权的 Cloudflare 账户连接两个独立 Worker，预生产和正式各用自己的分支和域名。Root directory 取仓库根。实际 `workers.dev` 或自有域名由所有者确认，Auth 回跳应使用相应站点的完整 HTTPS 地址。[Workers Builds 设置](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)
 
 | | 预生产 | 正式 |
