@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { isIP } from 'node:net'
-import { contentCheck, loadMarketCriteria } from './publish_bundle.mjs'
+import { contentCheck, loadMarketCriteria, loadOpportunityCriteria } from './publish_bundle.mjs'
 import { productionBundleFiles, verifyD7Package } from './verify_d7_package.mjs'
 
 const require = createRequire(new URL('../web/package.json', import.meta.url))
@@ -39,6 +39,7 @@ function validateEvidenceSchema(schemas, evidence, attestation) {
 }
 
 const { CANONICAL_ROLE_IDS, FORMAL_CAREER_LEVELS } = await loadMarketCriteria()
+const { REVIEW_AFTER_DAYS } = await loadOpportunityCriteria()
 const expectedQueries = new Set(CANONICAL_ROLE_IDS.flatMap(role => FORMAL_CAREER_LEVELS.map(level => `${role}/${level}`)))
 const isComplete = status => ['verified_publishable', 'checked_no_valid_results'].includes(status)
 
@@ -136,8 +137,17 @@ export async function verifyProductionPackage(directory, pin) {
       Date.parse(attestation.confirmed_at) > Date.now()) {
     throw new Error('The signed release attestation does not bind these exact candidate bytes')
   }
-  if (bundle.opportunities.some(item => opportunityReviews[item.opportunity_id] !== 'human_approved' || item.change_pending ||
-      (item.source_updated_at && Date.parse(item.source_updated_at) > Date.parse(item.verified_at)))) {
+  const organizers = new Map(bundle.organizers.map(organizer => [organizer.organizer_id, organizer]))
+  const generated = Date.parse(bundle.manifest.generated_at)
+  const confirmed = Date.parse(attestation.confirmed_at)
+  if (bundle.opportunities.some(item => {
+    const verified = Date.parse(item.verified_at)
+    const organizer = organizers.get(item.organizer_id)
+    return opportunityReviews[item.opportunity_id] !== 'human_approved' || item.change_pending ||
+      !organizer?.enabled || !organizer.last_verified_at || verified > generated ||
+      (item.source_updated_at && Date.parse(item.source_updated_at) > verified) ||
+      (item.kind === 'ongoing_opportunity' && confirmed - verified > REVIEW_AFTER_DAYS * 86400000)
+  })) {
     throw new Error('Every production opportunity requires current human approval')
   }
   return { bundle, bundleBytes: result.bundleBytes, schemaBytes: result.schemaBytes, opportunityReviews }

@@ -25,6 +25,9 @@ export async function loadBundleValidation() {
 export function loadMarketCriteria() {
   return loadWebsiteModule('web/src/features/market/criteria.ts')
 }
+export function loadOpportunityCriteria() {
+  return loadWebsiteModule('web/src/features/opportunities/criteria.ts')
+}
 export function contentCheck(value) {
   if (Array.isArray(value)) { value.forEach(contentCheck); return }
   if (!value || typeof value !== 'object') return
