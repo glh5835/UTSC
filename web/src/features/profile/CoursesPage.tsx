@@ -6,7 +6,7 @@ import { useProfile } from '../../auth/useProfile'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { usePageTitle } from '../../usePageTitle'
 import type { Course, Skill } from '../../data/types'
-import { DATA_CONFIG } from '../../data/sources'
+import { useDataVersion } from '../../data/DataVersionContext'
 import { useCourseCatalog } from './useCourseCatalog'
 import { usePersonalSkills } from './usePersonalSkills'
 
@@ -53,6 +53,7 @@ function CoursesPageContent({
 }) {
   const { t } = useLanguage()
   const profile = useProfile(user)
+  const { config } = useDataVersion()
   const personal = usePersonalSkills(user?.id ?? null)
   const [selected, setSelected] = useState<Record<string, string[]>>({})
   const [pendingRemoval, setPendingRemoval] = useState<string | null>(null)
@@ -140,9 +141,9 @@ function CoursesPageContent({
       <h1>{t('nav.courses')}</h1>
       <p className="lead">{t('a3.course.intro')}</p>
       <p className="banner banner-warn" role="note">
-        {t(DATA_CONFIG.mode === 'demo'
+        {t(config.mode === 'demo'
           ? 'a3.course.synthetic'
-          : DATA_CONFIG.mode === 'integration'
+          : config.mode === 'integration'
             ? 'a3.course.integration'
             : 'a3.course.published')}
       </p>
@@ -249,16 +250,14 @@ function CourseCard({
   onConfirmCandidates: () => void
 }) {
   const { t } = useLanguage()
+  const { config } = useDataVersion()
   const sourcedCount = confirmedSkills.filter(
     (skill) => skill.source === 'course' && skill.source_id === course.course_id,
   ).length
   return (
     <article className="panel a3-course" aria-labelledby={`course-${course.course_id}`}>
       <h2 id={`course-${course.course_id}`}>{course.title}</h2>
-      <p>
-        {DATA_CONFIG.mode === 'demo' ? <span className="chip chip-synthetic">SYNTHETIC</span> : null}
-        {DATA_CONFIG.mode === 'integration' ? <span className="chip chip-warning">INTERNAL</span> : null}
-      </p>
+      {config.mode === 'demo' ? <p><span className="chip chip-synthetic">SYNTHETIC</span></p> : null}
       <dl className="def-list">
         <div className="def-row"><dt>{t('a3.course.courseId')}</dt><dd><code>{course.course_id}</code></dd></div>
         <div className="def-row"><dt>{t('a3.course.calendar')}</dt><dd>{course.calendar_year}</dd></div>

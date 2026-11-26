@@ -25,7 +25,9 @@ export function PublicHomePage() {
       <div className="public-card-grid">
         {sections.map(section => (
           <section className="panel public-card" key={section.to}>
-            <h2><Link to={section.to}>{t(section.title)}</Link></h2>
+            <h2>{section.to === '/pathways' && config.mode === 'published'
+              ? <Link to="/resources">{t('nav.resources')}</Link>
+              : <Link to={section.to}>{t(section.title)}</Link>}</h2>
             <p>{t(section.description)}</p>
           </section>
         ))}
@@ -34,7 +36,8 @@ export function PublicHomePage() {
         <h2 id="public-scope-heading">{t('public.home.scopeTitle')}</h2>
         {synthetic ? <p>{t('public.home.scope')}</p> : null}
         <p>{t('public.home.accounts')}</p>
-        <p className="note">{t('public.home.localPreferences')}</p>
+        {config.mode === 'published' ? <p><Link to="/account">{t('nav.account')}</Link> · <Link to="/pathways">{t('nav.pathways')}</Link></p>
+          : <p className="note">{t('public.home.localPreferences')}</p>}
       </section>
     </>
   )

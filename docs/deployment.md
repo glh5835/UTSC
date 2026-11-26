@@ -1,5 +1,10 @@
 # Website delivery and release
 
+The Cloudflare release workflow is documented in [Cloudflare and Supabase
+release](cloud-release.md). `npm run build:production` verifies the exact
+approved package and builds the account-enabled application. The existing demo
+and D7 rehearsal keep their own commands, inputs, and output directories.
+
 Current delivery (2026-11-03): V5 remains deployed, with owner-confirmed checkbox UI
 acceptance and V4 retained for rollback. GitHub PRs #8 and #9 are merged; their merge
 does not publish a Sites version. Exact provenance and remaining acceptance limits

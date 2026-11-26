@@ -48,6 +48,8 @@ const zh: Dictionary = {
   'nav.opportunities': '实践机会',
   'nav.profile': '个人画像',
   'nav.pathways': '推荐与路径',
+  'nav.resources': '学习资源',
+  'resources.empty': '本次快照没有已核验的学习资源。',
 
   'home.title': '首页',
   'home.intro':
@@ -283,7 +285,7 @@ const zh: Dictionary = {
   'compare.note': '每格为该角色自身分母下的 N/D；“—”表示该角色分母为零。',
 
   'account.intro':
-    '使用真实 Supabase 账户登录后，可读取和保存自己的个人资料。无账户时公共样例页面照常可用；个人数据由数据库行级安全保护，不靠隐藏按钮。',
+    '登录后可保存经历、已确认的技能、学习进度和收藏。公开页面无需登录。',
   'account.notConfiguredTitle': '尚未配置 Supabase',
   'account.notConfiguredBody':
     '本构建没有配置 Supabase 端点，账户功能不可用。公共样例页面仍可浏览。页面不展示任何假用户、假 token 或模拟登录成功。',
@@ -297,9 +299,27 @@ const zh: Dictionary = {
   'account.signUp': '注册',
   'account.working': '处理中……',
   'account.switchToSignUp': '还没有账户？注册',
-  'account.switchToSignIn': '已注册？登录',
+  'account.switchToSignIn': '返回登录',
   'account.confirmationRequired':
-    '注册已受理。本项目要求邮箱确认：请查收邮件（本地测试邮件工具 Mailpit：http://127.0.0.1:55424），确认后才能登录。当前并未登录。',
+    '请查收邮件，打开确认链接完成注册。',
+  'account.verifyEmail': '确认邮箱',
+  'account.continueEmailLink': '继续',
+  'account.emailConfirmed': '邮箱已确认。',
+  'account.invalidLink': '链接无效或已过期，请在账号页面重新申请。',
+  'account.forgotPassword': '忘记密码？',
+  'account.resetTitle': '重置密码',
+  'account.sendReset': '发送重置链接',
+  'account.resetSent': '如果该邮箱已注册，请查收密码重置邮件。',
+  'account.newPassword': '设置新密码',
+  'account.savePassword': '保存新密码',
+  'account.passwordUpdated': '密码已更新。',
+  'account.signOutFailed': '退出失败，请重试。',
+  'account.deleteAccount': '删除账号',
+  'account.deleteWarning': '此操作将永久删除你的账号、个人资料、经历、已确认的技能、学习路径与收藏。请输入当前密码继续。',
+  'account.currentPassword': '当前密码',
+  'account.confirmDelete': '永久删除我的账号',
+  'account.deleteFailed': '删除账号失败，请检查当前密码后重试。',
+  'account.deleted': '你的账号和个人记录已删除。',
   'account.errorGeneric': '操作未成功，请重试。',
   'account.signedInAs': '当前登录',
   'account.loadingProfile': '正在加载个人资料……',
@@ -319,11 +339,11 @@ const zh: Dictionary = {
   'account.manageCourses': '管理已完成课程',
   'account.manageSkills': '管理经历与已确认技能',
   'account.scopeNote':
-    'A3 范围：账户身份、显示名称、本人课程自述、私有经历、本地英文抽取与明确确认的技能。课程映射和抽取都不会自动确认技能。',
+    '课程完成情况和经历由你自行填写，技能由你确认。',
 
   'a3.common.cancel': '取消',
   'a3.course.intro':
-    '浏览已批准的 1.0.0 课程／技能样例，标记你本人完成的课程，并明确确认课程映射的候选技能。课程映射本身不代表你已经掌握该技能。',
+    '浏览课程、标记自己已完成的课程，并确认你掌握的技能。',
   'a3.course.synthetic': 'SYNTHETIC 合同样例——不是当前 UTSC 开课、课表或选课资格信息。',
   'a3.course.integration':
     '内部候选数据包——partial 历史数据。课程与技能未经人工核实，该数据包未公开发布。',
@@ -557,6 +577,7 @@ const zh: Dictionary = {
   'errorBoundary.reload': '重新加载页面',
 
   'footer.preview': '职业探索演示，请向原始来源核对详情与参与资格。',
+  'footer.published': '请向原始来源核对最新详情和参与资格。',
   'footer.contract': '合同按字节原样同步自上游提交 {commit}。',
   'footer.dataRepo': '数据仓库（Seraphina）',
   'footer.websiteRepo': '网站仓库',

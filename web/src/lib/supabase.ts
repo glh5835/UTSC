@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
+import { readMailCallback } from '../auth/emailCallback'
 
 /**
  * Browser Supabase client. Configured purely from environment variables; when
@@ -21,13 +22,27 @@ export const SUPABASE_CONFIGURED = Boolean(
 
 let client: SupabaseClient | null = null
 
+// Read default Auth links before the SDK consumes their fragment. Custom
+// links carry a token hash consumed only after the student clicks Continue.
+export const initialMailCallback = typeof window === 'undefined' ? null : readMailCallback(window.location.hash)
+
 if (SUPABASE_CONFIGURED) {
-  client = createClient(supabaseUrl as string, publishableKey as string)
+  client = createClient(supabaseUrl as string, publishableKey as string, {
+    auth: { detectSessionInUrl: import.meta.env.MODE !== 'production' },
+  })
 }
 
 /** Returns the shared browser client, or null when Supabase is unconfigured. */
 export function getSupabase(): SupabaseClient | null {
   return client
+}
+
+/** Keep deletion reauthentication isolated from other tabs and signed-in views. */
+export function createDeletionClient(): SupabaseClient | null {
+  if (!supabaseUrl || !publishableKey) return null
+  return createClient(supabaseUrl, publishableKey, {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false, storageKey: 'utsc-delete-account' },
+  })
 }
 
 export const SUPABASE_ENV_KEYS = {

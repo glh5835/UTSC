@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const publicFiles = JSON.parse(readFileSync(new URL('../deployment/public-files.json', import.meta.url), 'utf8'))
-export function checkDist(directory = resolve(root, 'static-dist')) {
+export function checkDist(directory = resolve(root, 'static-dist'), release) {
   const files = []
   function walk(path) {
     for (const name of readdirSync(path)) {
@@ -17,24 +17,30 @@ export function checkDist(directory = resolve(root, 'static-dist')) {
   }
   walk(directory)
   const paths = files.map(file => relative(directory, file).replaceAll('\\', '/'))
-  const allowed = new Set(['index.html', '_headers', 'robots.txt', ...publicFiles])
+  const allowed = new Set(['index.html', '_headers', 'robots.txt', ...(release?.publicFiles ?? publicFiles)])
   for (const [index, file] of files.entries()) {
     const name = paths[index]
     if (!allowed.has(name) && !/^assets\/[A-Za-z0-9_-]+-[A-Za-z0-9_-]+\.(js|css)$/.test(name)) {
       throw new Error(`Unapproved deployment file: ${name}`)
     }
     const content = readFileSync(file, 'utf8')
-    if (name.endsWith('.js') && /supabase\.co|\/auth\/v1/.test(content)) throw new Error(`Private account SDK is forbidden in the disconnected public entry: ${name}`)
+    if (!release && name.endsWith('.js') && /supabase\.co|\/auth\/v1/.test(content)) throw new Error(`Private account SDK is forbidden in the disconnected public entry: ${name}`)
     if (/sb_secret_[A-Za-z0-9_-]{8,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/.test(content)) {
       throw new Error(`Server credential found in deployment file: ${name}`)
     }
     for (const match of content.matchAll(/eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g)) {
       try {
-        if (JSON.parse(Buffer.from(match[0].split('.')[1], 'base64url').toString()).role === 'service_role') {
+        const claims = JSON.parse(Buffer.from(match[0].split('.')[1], 'base64url').toString())
+        if (claims.role === 'service_role' || (release && claims.role !== 'anon')) {
           throw new Error('forbidden-role')
         }
       } catch (error) {
         if (error.message === 'forbidden-role') throw new Error(`Server JWT found in deployment file: ${name}`)
+      }
+    }
+    if (release) {
+      for (const match of content.matchAll(/sb_publishable_[A-Za-z0-9_-]+/g)) {
+        if (match[0] !== release.key) throw new Error(`Unexpected publishable key detected in ${name}`)
       }
     }
   }
@@ -42,8 +48,8 @@ export function checkDist(directory = resolve(root, 'static-dist')) {
     if (!paths.includes(required)) throw new Error(`Missing deployment file: ${required}`)
   }
   const html = readFileSync(resolve(directory, 'index.html'), 'utf8')
-  if (!html.includes('Content-Security-Policy') || !html.includes('noindex, nofollow, noarchive')) {
-    throw new Error('Missing browser security or demo indexing policy')
+  if (!html.includes('Content-Security-Policy') || html.includes('noindex, nofollow, noarchive') !== (release?.target !== 'production')) {
+    throw new Error('Missing browser security or incorrect indexing policy')
   }
   return paths.length
 }

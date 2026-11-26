@@ -26,7 +26,7 @@ export type OpportunityReviewDecision = 'auto_candidate' | 'human_approved'
 
 export interface DataVersionConfig {
   mode: DataMode
-  schemaVersion: '1.0.0' | '1.1.0'
+  schemaVersion: '1.0.0' | '1.1.0' | '2.0.0'
   schemaBasePath: string
   marketBundlePath: string
   courseBundlePath: string
@@ -39,6 +39,7 @@ export interface DataVersionConfig {
   synthetic?: boolean
   datasetVersion?: string
   runStatus?: Exclude<Manifest['run_status'], 'failed'>
+  deploymentPath?: string
   opportunityReviews?: Readonly<Record<string, OpportunityReviewDecision>>
 }
 
