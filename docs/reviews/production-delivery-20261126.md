@@ -6,7 +6,7 @@
 
 - 网站 `main` 基线为 `98bdb5fce4255d3a1d65d93e05a099a188bd71fd`。任务分支起点为网站 PR #11 的 `1acb0fd8703af135302e63092a128d3ff5740625`，沿用它的 D7 校验、空状态说明和导航改进。PR #11 的实时状态为 `REVIEW_REQUIRED`，规则要求一位有写权限的独立审阅者批准。[网站 PR #11](https://github.com/glh5835/UTSC/pull/11)
 - 数据 `main` 为 `8b37ff4d9556e74fbbdc9067e9a310001365c39a`，数据 PR #8 已合并。核对时数据仓库根目录无 `AGENTS.md`。网站和数据使用各自的任务 checkout 和分支。[数据 PR #8](https://github.com/wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market/pull/8)
-- 网站正式版与数据发布代码各为待审草稿 PR，分别基于网站 PR #11 和数据合同 PR #9。基础 PR 合并后，先复查代码差异与提交，再将后续 PR 改到受保护的 `main`。数据发布代码提交为 `d8bce4b33d3086f6255f672bc6652ff3e3ab6cd5`。[网站 PR #12](https://github.com/glh5835/UTSC/pull/12) · [数据 PR #10](https://github.com/wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market/pull/10)
+- 网站正式版与数据发布代码各为待审草稿 PR，分别基于网站 PR #11 和数据合同 PR #9。基础 PR 合并后，先复查代码差异与提交，再将后续 PR 改到受保护的 `main`。数据发布代码提交为 `d8bce4b33d3086f6255f672bc6652ff3e3ab6cd5`。[网站正式版差异](https://github.com/glh5835/UTSC/compare/codex/utsc-next-stage-20261113...codex/utsc-production-release-20261126) · [数据 PR #10](https://github.com/wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market/pull/10)
 - 按冻结计划采用新的主版本 **2.0.0** 作为正式合同提案。1.1.0 增加必填的组织记录和机会字段，1.0.0 读端拒绝这些额外字段。同步至网站的候选版本固定为上游草稿 `442858c1df4877b2a8e766b57e46dd971c67c106`。正式 pin 应以双方批准的确切提交及包摘要为准。1.0.0 演示与 1.1.0 历史联调仍可运行。[合同 PR #9](https://github.com/wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market/pull/9)
 - 网站 `release/staging` 和 `release/production` 均已创建并复核为受保护，初始指向当前 `main`。专用 GitHub Ruleset `28157854` 要求 PR、一位独立批准者、解决审阅讨论、通过 `website` 检查和禁止强推。现有主分支规则继续生效。[发布分支规则](https://github.com/glh5835/UTSC/rules/28157854)
 
