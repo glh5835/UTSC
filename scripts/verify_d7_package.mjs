@@ -16,10 +16,8 @@ const sidecars = {
   'learning_resources.json': 'resources',
   'opportunities.json': 'opportunities',
 }
-const required = new Set([
-  'bundle.json', ...Object.keys(sidecars), 'reference_statistics.json',
-  'dataset_provenance.json', 'release_attestation.template.json',
-])
+const commonFiles = ['bundle.json', ...Object.keys(sidecars), 'reference_statistics.json', 'dataset_provenance.json']
+const rehearsalFiles = new Set([...commonFiles, 'release_attestation.template.json'])
 const hash = bytes => createHash('sha256').update(bytes).digest('hex')
 const validSha = /^[0-9a-f]{64}$/
 const { isFormalScopeJob } = await loadMarketCriteria()
@@ -40,7 +38,7 @@ function json(bytes) {
   return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes))
 }
 
-function readPackage(directory, expectedSha) {
+function readPackage(directory, expectedSha, required) {
   if (!validSha.test(expectedSha ?? '')) throw new Error('A trusted inventory SHA-256 is required')
   if (!lstatSync(directory).isDirectory()) throw new Error('Expected a regular package directory')
   const names = readdirSync(directory)
@@ -127,7 +125,7 @@ function instant(value) {
   return Date.parse(value)
 }
 
-function verifyProvenance(bundle, provenance) {
+function verifyProvenance(bundle, provenance, formal) {
   const manifest = bundle.manifest
   const datasets = provenance?.datasets
   const market = datasets?.market_jobs
@@ -136,7 +134,7 @@ function verifyProvenance(bundle, provenance) {
   if (provenance?.generated_at !== manifest.generated_at ||
       (provenance.dataset_version !== undefined && provenance.dataset_version !== manifest.dataset_version) ||
       (!synthetic && market?.source !== 'jsearch') ||
-      opportunities?.source !== (synthetic ? 'synthetic' : 'instagram') ||
+      !(synthetic ? ['synthetic'] : formal ? ['instagram', 'official', 'mixed'] : ['instagram']).includes(opportunities?.source) ||
       market.collected_from !== manifest.collected_from ||
       market.collected_to !== manifest.collected_to) {
     throw new Error('D7 provenance does not match the manifest')
@@ -156,6 +154,7 @@ function verifyProvenance(bundle, provenance) {
     new Set(bundle.opportunities.map(item => item.opportunity_id)), 'opportunities')
   const firstSeen = []
   const lastSeen = []
+  const sourceTypes = new Set()
   const entries = bundle.opportunities.map(item => {
     const record = byId.get(item.opportunity_id)
     const eligibility = record.eligibility
@@ -163,6 +162,12 @@ function verifyProvenance(bundle, provenance) {
         eligibility.content_revision !== item.content_revision || item.review_status !== 'approved') {
       throw new Error(`D7 opportunity decision or revision mismatch: ${item.opportunity_id}`)
     }
+    const sourceType = record.source ?? 'instagram'
+    if (formal && sourceType !== 'instagram' &&
+        (sourceType !== 'official' || eligibility.decision !== 'human_approved')) {
+      throw new Error(`Official opportunity requires human review: ${item.opportunity_id}`)
+    }
+    sourceTypes.add(sourceType)
     instant(eligibility.evaluated_at)
     const posts = recordsById(record.source_post_ids, 'source_post_id', new Set(item.source_post_ids), item.opportunity_id)
     for (const post of posts.values()) {
@@ -178,17 +183,22 @@ function verifyProvenance(bundle, provenance) {
       opportunities.collected_to !== (lastSeen.sort().at(-1) ?? null)) {
     throw new Error('D7 opportunity provenance collection range mismatch')
   }
+  if (formal && !synthetic) {
+    const source = sourceTypes.size > 1 ? 'mixed' : (sourceTypes.values().next().value ?? 'instagram')
+    if (opportunities.source !== source) throw new Error('D7 opportunity provenance summary does not match the individual records')
+  }
   return { opportunityReviews: Object.fromEntries(entries), synthetic }
 }
 
-/** Validate immutable input bytes for localhost integration only. */
-export async function verifyD7Package(packageDirectory, expectedInventorySha256) {
-  const files = readPackage(packageDirectory, expectedInventorySha256)
+export const productionBundleFiles = new Set(commonFiles)
+
+export async function verifyD7Package(packageDirectory, expectedInventorySha256, formalContract) {
+  const files = readPackage(packageDirectory, expectedInventorySha256, formalContract?.requiredFiles ?? rehearsalFiles)
   const bundleBytes = files.get('bundle.json')
   const bundle = json(bundleBytes)
   if (bundle?.manifest?.run_status === 'failed') throw new Error('Failed D7 dataset cannot enter integration')
   const { createBundleValidator, checkCrossRecords } = await loadBundleValidation()
-  const { schemas, schemaBytes, contractCommit } = loadCandidateSchemas()
+  const { schemas, schemaBytes, contractCommit } = formalContract ?? loadCandidateSchemas()
   const validate = createBundleValidator(schemas)
   if (!validate(bundle)) throw new Error('D7 bundle schema rejected: ' + validate.errors?.[0]?.message)
   if (checkCrossRecords(bundle).length) throw new Error('D7 bundle cross-record validation failed')
@@ -196,12 +206,14 @@ export async function verifyD7Package(packageDirectory, expectedInventorySha256)
   for (const [name, key] of Object.entries(sidecars)) {
     if (!isDeepStrictEqual(json(files.get(name)), bundle[key])) throw new Error(`D7 sidecar mismatch: ${name}`)
   }
-  const template = json(files.get('release_attestation.template.json'))
-  if (template?.dataset_version !== bundle.manifest.dataset_version || template.reviewer !== '' ||
-      template.confirmed_at !== '' ||
-      attestationKeys.some(key => template.confirmations?.[key] !== false) ||
-      Object.values(template.confirmations).some(value => value !== false)) {
-    throw new Error('D7 candidate release template must match the version and remain unsigned')
+  if (files.has('release_attestation.template.json')) {
+    const template = json(files.get('release_attestation.template.json'))
+    if (template?.dataset_version !== bundle.manifest.dataset_version || template.reviewer !== '' ||
+        template.confirmed_at !== '' ||
+        attestationKeys.some(key => template.confirmations?.[key] !== false) ||
+        Object.values(template.confirmations).some(value => value !== false)) {
+      throw new Error('D7 candidate release template must match the version and remain unsigned')
+    }
   }
   const actual = json(files.get('reference_statistics.json'))
   if (!Array.isArray(actual?.skills) || actual.skills.some(row => typeof row?.skill_id !== 'string') ||
@@ -209,6 +221,6 @@ export async function verifyD7Package(packageDirectory, expectedInventorySha256)
         { ...actual, skills: [...actual.skills].sort((a, b) => a.skill_id < b.skill_id ? -1 : Number(a.skill_id > b.skill_id)) },
         referenceStatistics(bundle.market_jobs),
       )) throw new Error('D7 reference statistics do not match the bundle')
-  const { opportunityReviews, synthetic } = verifyProvenance(bundle, json(files.get('dataset_provenance.json')))
-  return { bundle, bundleBytes, opportunityReviews, synthetic, bundleSha256: hash(bundleBytes), schemaBytes, contractCommit }
+  const { opportunityReviews, synthetic } = verifyProvenance(bundle, json(files.get('dataset_provenance.json')), Boolean(formalContract))
+  return { bundle, bundleBytes, opportunityReviews, synthetic, bundleSha256: hash(bundleBytes), schemaBytes, contractCommit, files }
 }

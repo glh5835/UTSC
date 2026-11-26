@@ -47,6 +47,8 @@ const en = {
   'nav.opportunities': 'Opportunities',
   'nav.profile': 'Profile',
   'nav.pathways': 'Pathways',
+  'nav.resources': 'Resources',
+  'resources.empty': 'This snapshot contains no verified learning resources.',
 
   'home.title': 'Home',
   'home.intro':
@@ -285,7 +287,7 @@ const en = {
   'compare.note': 'Each cell is N/D for that role’s own denominator; “—” means the denominator is zero for that role.',
 
   'account.intro':
-    'Sign in with a real Supabase account to read and save your own profile. Public sample pages stay available without an account; personal data is protected by database-level row security, not by hidden buttons.',
+    'Sign in to save your experiences, confirmed skills, learning progress and favorites. You can browse public pages without an account.',
   'account.notConfiguredTitle': 'Supabase is not configured',
   'account.notConfiguredBody':
     'No Supabase endpoint is set for this build, so account features are unavailable. The public sample pages remain usable. No fake users, tokens or simulated sign-ins are shown.',
@@ -299,9 +301,27 @@ const en = {
   'account.signUp': 'Sign up',
   'account.working': 'Working…',
   'account.switchToSignUp': 'Need an account? Sign up',
-  'account.switchToSignIn': 'Already registered? Sign in',
+  'account.switchToSignIn': 'Back to sign in',
   'account.confirmationRequired':
-    'Registration accepted. This project requires email confirmation: check your inbox (local test mail tool: Mailpit at http://127.0.0.1:55424) and confirm before signing in. You are NOT signed in yet.',
+    'Check your inbox and follow the confirmation link to finish registering.',
+  'account.verifyEmail': 'Confirm your email',
+  'account.continueEmailLink': 'Continue',
+  'account.emailConfirmed': 'Email confirmed.',
+  'account.invalidLink': 'This link is invalid or has expired. Request a fresh email from the account page.',
+  'account.forgotPassword': 'Forgot password?',
+  'account.resetTitle': 'Reset your password',
+  'account.sendReset': 'Send reset link',
+  'account.resetSent': 'If the address has an account, check its inbox for a reset link.',
+  'account.newPassword': 'Choose a new password',
+  'account.savePassword': 'Save new password',
+  'account.passwordUpdated': 'Password updated.',
+  'account.signOutFailed': 'Could not sign out. Try again.',
+  'account.deleteAccount': 'Delete account',
+  'account.deleteWarning': 'This permanently deletes your account, profile, experiences, confirmed skills, learning paths and favorites. Enter your current password to proceed.',
+  'account.currentPassword': 'Current password',
+  'account.confirmDelete': 'Permanently delete my account',
+  'account.deleteFailed': 'Could not delete your account. Check your current password and try again.',
+  'account.deleted': 'Your account and personal records were deleted.',
   'account.errorGeneric': 'That did not work. Please try again.',
   'account.signedInAs': 'Signed in as',
   'account.loadingProfile': 'Loading your profile…',
@@ -321,11 +341,11 @@ const en = {
   'account.manageCourses': 'Manage completed courses',
   'account.manageSkills': 'Manage experiences and confirmed skills',
   'account.scopeNote':
-    'A3 scope: account identity, display name, self-reported courses, private experiences, local English extraction and explicitly confirmed skills. Course mappings and extraction never confirm skills automatically.',
+    'Your course completions and experiences are self-reported. You choose which skills to confirm.',
 
   'a3.common.cancel': 'Cancel',
   'a3.course.intro':
-    'Browse the approved 1.0.0 course/skill sample, mark courses you personally completed, and explicitly confirm any course-mapped candidate skill. A course mapping is never proof that you already have the skill.',
+    'Browse courses, mark courses you personally completed and confirm the skills you gained.',
   'a3.course.synthetic':
     'SYNTHETIC contract fixture — not a current UTSC course offering, timetable entry or eligibility decision.',
   'a3.course.integration':
@@ -563,6 +583,7 @@ const en = {
   'errorBoundary.reload': 'Reload page',
 
   'footer.preview': 'Career exploration preview. Confirm details and eligibility with the original source.',
+  'footer.published': 'Confirm current details and eligibility with the original source.',
   'footer.contract': 'Contract synced verbatim from upstream commit {commit}.',
   'footer.dataRepo': 'Data repository (Seraphina)',
   'footer.websiteRepo': 'Website repository',

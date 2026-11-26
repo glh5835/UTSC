@@ -1,0 +1,116 @@
+{
+  "upstream": "wangzhuxirou-svg/Canadian-Early-Career-Data-Analytics-Job-Market",
+  "commit": "442858c1df4877b2a8e766b57e46dd971c67c106",
+  "files": [
+    {
+      "source": "contracts/schemas/bundle.schema.json",
+      "destination": "schemas/bundle.schema.json",
+      "sha256": "bdef81c1b7920969d87e49b12d0dd5c0eeb564153e56347bac5e0f6445e6e978"
+    },
+    {
+      "source": "contracts/schemas/common.schema.json",
+      "destination": "schemas/common.schema.json",
+      "sha256": "06b1bf0e082e49ae8c1545fe3c49baade923fa0f5cc1182c8900fda52002a6b0"
+    },
+    {
+      "source": "contracts/schemas/market-job.schema.json",
+      "destination": "schemas/market-job.schema.json",
+      "sha256": "9ffb24ea936e56f96f7147c729471371ad056a744c63ae2d0226e36545602cc0"
+    },
+    {
+      "source": "contracts/schemas/skill.schema.json",
+      "destination": "schemas/skill.schema.json",
+      "sha256": "a989714bda3bef2730a4cfbc894534ce2a5db1bb218698364a6e7d4cc566a822"
+    },
+    {
+      "source": "contracts/schemas/course.schema.json",
+      "destination": "schemas/course.schema.json",
+      "sha256": "6504b19da58604b66ba56457562761425da67c633608caa8f58590f170d5c5eb"
+    },
+    {
+      "source": "contracts/schemas/resource.schema.json",
+      "destination": "schemas/resource.schema.json",
+      "sha256": "6164c36a632a12cd138d772401f5738311364a99584a86debb1f68487fae948f"
+    },
+    {
+      "source": "contracts/schemas/opportunity.schema.json",
+      "destination": "schemas/opportunity.schema.json",
+      "sha256": "e5573c0459097c6406dfd5803bdf4434961f5d5bdb18f29e58944500a2dd9b77"
+    },
+    {
+      "source": "contracts/production/2.0.0/organizer.schema.json",
+      "destination": "schemas/organizer.schema.json",
+      "sha256": "b549598b112fed9e39413fb2b7800045adcf2a7a8c647c75c6c78e2b39712d04"
+    },
+    {
+      "source": "contracts/schemas/release-evidence.schema.json",
+      "destination": "schemas/release-evidence.schema.json",
+      "sha256": "86780b8d8d26434b1bcbd6be1aa465e27afb1821ac6002e0f597305e19fccb94"
+    },
+    {
+      "source": "contracts/schemas/release-attestation.schema.json",
+      "destination": "schemas/release-attestation.schema.json",
+      "sha256": "bca487efe20f04b96eab98fa90300e8ef75711e33a417873b77161f288c2208c"
+    },
+    {
+      "source": "contracts/schemas/market-statistics.schema.json",
+      "destination": "schemas/market-statistics.schema.json",
+      "sha256": "24edffba3d3c28f7b3cf6eae56d92eacb0bbc834faf285ef2f152e403b878d37"
+    },
+    {
+      "source": "contracts/schemas/experience-skill-extraction.schema.json",
+      "destination": "schemas/experience-skill-extraction.schema.json",
+      "sha256": "3185c7854218d3288433900a2b9df289d5142118224db2e81ecb7a7877bfcfc3"
+    },
+    {
+      "source": "contracts/production/2.0.0/manifest.schema.json",
+      "destination": "schemas/manifest.schema.json",
+      "sha256": "a6fa1992a52ee74ec21c642e75f0d62d6a8b3882c2b941d4ec6f35a4dddca25c"
+    },
+    {
+      "source": "contracts/production/2.0.0/empty_bundle.json",
+      "destination": "fixtures/empty_bundle.json",
+      "sha256": "b5670df24f2824d440d50880363f5a78073d283f8aeeefbff72b5c425a6b4b1b"
+    },
+    {
+      "source": "contracts/rules/market-statistics.json",
+      "destination": "rules/market-statistics.json",
+      "sha256": "a3e4e0a46d380a0a818c061c42f73c5bcf5a9e09b4ad180e70ba94fab20779c5"
+    },
+    {
+      "source": "contracts/rules/course-skill-mapping.json",
+      "destination": "rules/course-skill-mapping.json",
+      "sha256": "0fb930380f82e7dcc9535461a27ce2745f3e936a9141b6e8dd66277c460bf0a8"
+    },
+    {
+      "source": "contracts/rules/experience-skill-extraction.json",
+      "destination": "rules/experience-skill-extraction.json",
+      "sha256": "13c999b3e1eb44072d068737c4a498bacf6d6a31b0641cca2b3fab42c5f0e993"
+    },
+    {
+      "source": "contracts/rules/recommendation.json",
+      "destination": "rules/recommendation.json",
+      "sha256": "2ca67cddcc605689749bb38221d357fc005efaf6c44be82254fc69779a260d54"
+    },
+    {
+      "source": "contracts/fixtures/market_statistics_cases.json",
+      "destination": "fixtures/market_statistics_cases.json",
+      "sha256": "fc2736d38c55737ad5f2eca6222c2df4443c10fe65f8a6aa212605c02e339910"
+    },
+    {
+      "source": "contracts/fixtures/course-skill-mapping-cases.json",
+      "destination": "fixtures/course-skill-mapping-cases.json",
+      "sha256": "2804f116aa068018d5b3ec10f4bf66290f3bde178082b3e4f04c877884061071"
+    },
+    {
+      "source": "contracts/fixtures/valid_experience_skill_candidates.json",
+      "destination": "fixtures/valid_experience_skill_candidates.json",
+      "sha256": "213501fb43c66a1c31f7156395719e0fe8bb564909a9827b465729ca2a96b409"
+    },
+    {
+      "source": "contracts/production/2.0.0/official_organizer.json",
+      "destination": "fixtures/official_organizer.json",
+      "sha256": "eb511f42499921582116d0f586407224b8dba028aeef482f86ad808bd6eb567c"
+    }
+  ]
+}

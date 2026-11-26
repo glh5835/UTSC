@@ -24,8 +24,8 @@ import assert from 'node:assert/strict'
  * - Account deletion is verified per physical table across all six tables.
  */
 
-const TABLES = ['profiles', 'experiences', 'user_skills', 'favorites', 'learning_paths', 'path_items']
-const OWNER_KEY = (table) => (table === 'profiles' ? 'id' : 'user_id')
+export const TABLES = ['profiles', 'experiences', 'user_skills', 'favorites', 'learning_paths', 'path_items']
+export const OWNER_KEY = (table) => (table === 'profiles' ? 'id' : 'user_id')
 
 function uuid() {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID()
@@ -127,7 +127,10 @@ export function isConstraintRefusal(error) {
 /** Runs the whole matrix. Returns { allPassed, checks, integrity, cleanup, accounts }.
  * config: { url, publicKey, secret, createClient } — createClient comes from
  * @supabase/supabase-js (injected so this module stays dependency-free). */
-export async function runMatrix({ url, publicKey, secret, createClient }, log = () => {}) {
+export async function runMatrix({ url, publicKey, secret, createClient, cloud }, log = () => {}) {
+  if (!cloud && url !== 'http://127.0.0.1:55421') {
+    throw new Error('The local matrix requires the isolated loopback stack')
+  }
   const checks = []
   const options = { auth: { persistSession: false, autoRefreshToken: false } }
   const admin = createClient(url, secret, options)
@@ -167,6 +170,7 @@ export async function runMatrix({ url, publicKey, secret, createClient }, log = 
 
   async function createAccount(label) {
     const client = createClient(url, publicKey, options)
+    if (cloud) return { uid: await cloud.createAccount(label, client), client }
     const signup = await client.auth.signUp({ email: EMAIL(label), password: PASSWORD })
     requireOk(signup, `${label} real signUp`)
     assert.equal(signup.data.session, null, `${label}: signup must NOT yield a session (email confirmation required)`)
@@ -183,7 +187,8 @@ export async function runMatrix({ url, publicKey, secret, createClient }, log = 
   async function cleanupAccounts() {
     const labels = Object.keys(accounts)
     for (const label of labels) {
-      await admin.auth.admin.deleteUser(accounts[label].uid)
+      if (cloud) await cloud.cleanupAccount(label)
+      else await admin.auth.admin.deleteUser(accounts[label].uid)
     }
     const remaining = {}
     for (const label of labels) {
@@ -197,7 +202,7 @@ export async function runMatrix({ url, publicKey, secret, createClient }, log = 
 
   try {
     // ---- 0. Environment sanity (caller guarantees credentials; this proves reachability + migrations) ----
-    const reachable = await admin.from('profiles').select('id').limit(1)
+    const reachable = await admin.from('profiles').select('id').eq('id', '00000000-0000-0000-0000-000000000000')
     if (reachable.error) {
       throw new Error(`Supabase stack unreachable or migrations missing: ${reachable.error.code} ${reachable.error.message}`)
     }
@@ -438,13 +443,31 @@ export async function runMatrix({ url, publicKey, secret, createClient }, log = 
 
     // ---- 8. Account deletion cascades: every physical table empties for both users ----
     await check('account deletion cascades: all six tables empty for both accounts (physical)', async () => {
+      if (cloud) {
+        // Re-create the rows removed by the own-delete checks so the account
+        // deletion is exercised while all six tables have rows to cascade.
+        for (const label of ['A', 'B']) {
+          const { uid, client } = accounts[label]
+          let pathId
+          for (const table of TABLES.slice(1)) {
+            const row = ownBody(table, uid, label)
+            if (table === 'path_items') row.path_id = pathId
+            const [inserted] = requireOk(await client.from(table).insert(row).select(), `restore own ${table}`)
+            if (table === 'learning_paths') pathId = inserted.id
+          }
+          for (const table of TABLES) assert.equal((await physical(table, uid)).length, 1, `missing ${table} before cascade`)
+        }
+        await cloud.deleteAccounts(accounts, anon)
+      }
       const remaining = await cleanupAccounts()
       const nonzero = Object.entries(remaining).filter(([, count]) => count !== 0)
       assert.deepEqual(nonzero, [], `rows survived account deletion: ${JSON.stringify(nonzero)}`)
-      const users = requireOk(await admin.auth.admin.listUsers({ perPage: 200 }), 'list users after deletion')
-      const emails = users.users.map((u) => u.email)
-      assert.equal(emails.includes(EMAIL('A')), false, 'account A still exists')
-      assert.equal(emails.includes(EMAIL('B')), false, 'account B still exists')
+      if (!cloud) {
+        const users = requireOk(await admin.auth.admin.listUsers({ perPage: 200 }), 'list users after deletion')
+        const emails = users.users.map((u) => u.email)
+        assert.equal(emails.includes(EMAIL('A')), false, 'account A still exists')
+        assert.equal(emails.includes(EMAIL('B')), false, 'account B still exists')
+      }
     })
   } catch (fatal) {
     allPassed = false

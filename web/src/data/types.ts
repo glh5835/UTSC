@@ -103,7 +103,7 @@ export interface Resource {
 export interface Organizer {
   organizer_id: string
   name: string
-  username: string
+  username: string | null
   profile_url: string
   enabled: boolean
   priority: number

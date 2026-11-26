@@ -84,6 +84,8 @@ export function OpportunitiesPage() {
           'This partial D7 package contains no opportunity records. Check again after the opportunity data arrives.',
           '此 D7 部分包未包含活动与实践机会记录。请在机会数据交接后查看。',
         )}</p>
+      ) : config.mode === 'published' && bundle.opportunities.length === 0 ? (
+        <p className="empty-state" role="status">{text('This snapshot contains no verified opportunities.', '本次快照没有已核验的活动与实践机会。')}</p>
       ) : (
         <>
           <p role="status">{items.length} {text('matching opportunities', '条匹配机会')}</p>
@@ -92,6 +94,8 @@ export function OpportunitiesPage() {
       )}
       <div className="op-list">{items.map(item => {
         const state = opportunityState(item, now), issue = calendarIssue(item, now)
+        const organizer = bundle.organizers?.find(entry => entry.organizer_id === item.organizer_id)
+        const organizerUrl = safeExternalUrl(organizer?.profile_url ?? null)
         const review = config.opportunityReviews?.[item.opportunity_id]
         const reviewLabel = review === 'auto_candidate' ? text('Automatic candidate', '自动候选')
           : review === 'human_approved' ? text('Human approved', '人工批准')
@@ -100,7 +104,10 @@ export function OpportunitiesPage() {
         const date = (field: 'start' | 'end' | 'deadline') => item[`${field}_precision`] === 'datetime' ? item[`${field}_at`] : item[`${field}_precision`] === 'date' ? item[`${field}_date`] : text('Not stated', '未说明')
         return <article className="panel opportunity-card" key={item.opportunity_id}>
           <h2>{item.title}</h2><p><span className="chip">{labelFor(OPPORTUNITY_KIND_LABELS, item.kind, lang)}</span> <span className="chip">{statusLabels[state]}</span></p>
-          <p>{item.description}</p><p>{text('Organizer', '组织')}: {item.organizer_id}</p>
+          <p>{item.description}</p>
+          <p>{text('Organizer', '组织')}: {organizerUrl
+            ? <a href={organizerUrl} target="_blank" rel="noreferrer">{organizer?.name}</a>
+            : organizer?.name ?? item.organizer_id}</p>
           <p>{text('Start / end', '开始／结束')}: {date('start')} / {date('end')}</p>
           <p>{text('Registration deadline', '报名截止')}: {date('deadline')}</p>
           <p>{text('Source time zone', '来源时区')}: {item.timezone ?? text('Not stated', '未说明')}</p>

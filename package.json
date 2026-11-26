@@ -4,6 +4,7 @@
   "description": "Repository-level tooling for the UTSC A0–A4 website: pinned Supabase CLI for local database migrations and RLS tests. The website itself lives in web/.",
   "version": "0.1.0",
   "scripts": {
+    "build:production": "npm --prefix web run build:production",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
     "supabase:reset": "supabase db reset",

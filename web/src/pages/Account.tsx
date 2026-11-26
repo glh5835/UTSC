@@ -7,23 +7,17 @@ import { SUPABASE_ENV_KEYS } from '../lib/supabase'
 import { usePageTitle } from '../usePageTitle'
 import { useLanguage } from '../i18n/LanguageContext'
 
-/**
- * Minimal account entry: real Supabase Auth (email + password), profile
- * read/save on the owner-scoped profiles table, and sign-out. Deliberately
- * NOT implemented here (later stages): favorites management, learning paths,
- * skill extraction, recommendations.
- */
 export function AccountPage() {
   const { t } = useLanguage()
   usePageTitle(t('nav.account'))
-  const { phase, signUp, signIn, signOut } = useAuth()
-  const [mode, setMode] = useState<'signIn' | 'signUp'>('signIn')
+  const { phase, signUp, signIn, requestReset, mailState, verifyEmailLink, recovery, setNewPassword, accountDeleted } = useAuth()
+  const [mode, setMode] = useState<'signIn' | 'signUp' | 'reset'>('signIn')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState<{ kind: 'info' | 'error'; text: string } | null>(null)
 
-  function switchMode(next: 'signIn' | 'signUp') {
+  function switchMode(next: typeof mode) {
     setMode(next)
     setNotice(null)
     setPassword('')
@@ -35,7 +29,12 @@ export function AccountPage() {
     setBusy(true)
     setNotice(null)
     try {
-      if (mode === 'signUp') {
+      if (mode === 'reset') {
+        const sent = await requestReset(email.trim())
+        setNotice(sent
+          ? { kind: 'info', text: t('account.resetSent') }
+          : { kind: 'error', text: t('account.errorGeneric') })
+      } else if (mode === 'signUp') {
         const result = await signUp(email.trim(), password)
         if (result.outcome === 'confirmation-required') {
           // Registration was accepted by the server, but no session exists:
@@ -52,6 +51,8 @@ export function AccountPage() {
           setNotice({ kind: 'error', text: result.message ?? t('account.errorGeneric') })
         }
       }
+    } catch {
+      setNotice({ kind: 'error', text: t('account.errorGeneric') })
     } finally {
       setBusy(false)
     }
@@ -59,7 +60,7 @@ export function AccountPage() {
 
   const authForm = (
     <form className="account-form" onSubmit={handleSubmit}>
-      <h2>{mode === 'signIn' ? t('account.signInTitle') : t('account.signUpTitle')}</h2>
+      <h2>{t(mode === 'signIn' ? 'account.signInTitle' : mode === 'signUp' ? 'account.signUpTitle' : 'account.resetTitle')}</h2>
       <label className="field">
         <span>{t('account.emailLabel')}</span>
         <input
@@ -70,17 +71,17 @@ export function AccountPage() {
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
-      <label className="field">
+      {mode !== 'reset' ? <label className="field">
         <span>{t('account.passwordLabel')}</span>
         <input
           type="password"
           required
-          minLength={8}
+          minLength={mode === 'signUp' ? 8 : undefined}
           autoComplete={mode === 'signUp' ? 'new-password' : 'current-password'}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-      </label>
+      </label> : null}
       {notice ? (
         <p className={notice.kind === 'error' ? 'banner banner-error' : 'banner banner-warn'} role="alert">
           {notice.text}
@@ -88,14 +89,43 @@ export function AccountPage() {
       ) : null}
       <div className="account-actions">
         <button type="submit" disabled={busy}>
-          {busy ? t('account.working') : mode === 'signIn' ? t('account.signIn') : t('account.signUp')}
+          {t(busy ? 'account.working' : mode === 'signIn' ? 'account.signIn' : mode === 'signUp' ? 'account.signUp' : 'account.sendReset')}
         </button>
-        <button type="button" className="link-button" onClick={() => switchMode(mode === 'signIn' ? 'signUp' : 'signIn')}>
+        <button type="button" className="link-button" disabled={busy} onClick={() => switchMode(mode === 'signIn' ? 'signUp' : 'signIn')}>
           {mode === 'signIn' ? t('account.switchToSignUp') : t('account.switchToSignIn')}
         </button>
+        {mode === 'signIn' ? <button type="button" className="link-button" disabled={busy} onClick={() => switchMode('reset')}>{t('account.forgotPassword')}</button> : null}
       </div>
     </form>
   )
+
+  async function consumeEmailLink() {
+    setBusy(true)
+    try {
+      await verifyEmailLink()
+    } catch {
+      setNotice({ kind: 'error', text: t('account.errorGeneric') })
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function updatePassword(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setNotice(null)
+    try {
+      const saved = await setNewPassword(password)
+      setNotice(saved
+        ? { kind: 'info', text: t('account.passwordUpdated') }
+        : { kind: 'error', text: t('account.errorGeneric') })
+      if (saved) setPassword('')
+    } catch {
+      setNotice({ kind: 'error', text: t('account.errorGeneric') })
+    } finally {
+      setBusy(false)
+    }
+  }
 
   return (
     <>
@@ -114,6 +144,22 @@ export function AccountPage() {
         <p className="state state-loading" role="status" aria-live="polite">
           {t('account.loadingSession')}
         </p>
+      ) : mailState === 'verify' || mailState === 'verify-recovery' ? (
+        <section className="panel">
+          <h2>{t(mailState === 'verify' ? 'account.verifyEmail' : 'account.resetTitle')}</h2>
+          {notice ? <p className="banner banner-error" role="alert">{notice.text}</p> : null}
+          <button type="button" disabled={busy} onClick={() => void consumeEmailLink()}>{t('account.continueEmailLink')}</button>
+        </section>
+      ) : recovery ? (
+        <form className="account-form" onSubmit={updatePassword}>
+          <h2>{t('account.newPassword')}</h2>
+          <label className="field">
+            <span>{t('account.passwordLabel')}</span>
+            <input type="password" required minLength={8} autoComplete="new-password" value={password} onChange={event => setPassword(event.target.value)} />
+          </label>
+          {notice ? <p className="banner banner-error" role="alert">{notice.text}</p> : null}
+          <button type="submit" disabled={busy}>{t('account.savePassword')}</button>
+        </form>
       ) : phase.kind === 'signedOut' ? (
         authForm
       ) : (
@@ -121,20 +167,29 @@ export function AccountPage() {
         // so the previous account's form inputs, save state and errors are
         // dropped immediately; a language switch keeps the key (and the
         // user's unsaved input).
-        <SignedInView key={phase.user.id} user={phase.user} onSignOut={signOut} />
+        <SignedInView key={phase.user.id} user={phase.user} />
       )}
+      {mailState === 'invalid' ? <p className="banner banner-error" role="alert">{t('account.invalidLink')}</p> : null}
+      {mailState === 'confirmed' ? <p className="state state-ok" role="status">{t('account.emailConfirmed')}</p> : null}
+      {accountDeleted && phase.kind === 'signedOut' ? <p className="state state-ok" role="status">{t('account.deleted')}</p> : null}
+      {phase.kind === 'signedIn' && !recovery && notice?.kind === 'info' ? <p className="state state-ok" role="status">{notice.text}</p> : null}
       <p className="note">{t('account.scopeNote')}</p>
     </>
   )
 }
 
-function SignedInView({ user, onSignOut }: { user: User; onSignOut: () => Promise<void> }) {
+function SignedInView({ user }: { user: User }) {
   const { t } = useLanguage()
+  const { signOut, deleteAccount } = useAuth()
   const { phase, save } = useProfile(user)
   const [displayName, setDisplayName] = useState('')
   const [hydrated, setHydrated] = useState(false)
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [saveError, setSaveError] = useState('')
+  const [accountError, setAccountError] = useState('')
+  const [accountBusy, setAccountBusy] = useState(false)
+  const [confirmDeletion, setConfirmDeletion] = useState(false)
+  const [deletePassword, setDeletePassword] = useState('')
 
   // Hydrate the name when the profile arrives — but only once per account, so
   // a language switch never overwrites unsaved text. Course completion is
@@ -162,6 +217,18 @@ function SignedInView({ user, onSignOut }: { user: User; onSignOut: () => Promis
       setSaveError(result.message)
     } else {
       setSaveState('saved')
+    }
+  }
+
+  async function runAccountAction(action: () => Promise<boolean>, error: string) {
+    setAccountBusy(true)
+    setAccountError('')
+    try {
+      if (!await action()) setAccountError(error)
+    } catch {
+      setAccountError(error)
+    } finally {
+      setAccountBusy(false)
     }
   }
 
@@ -207,12 +274,33 @@ function SignedInView({ user, onSignOut }: { user: User; onSignOut: () => Promis
             <button type="submit" disabled={saveState === 'saving'}>
               {saveState === 'saving' ? t('account.saving') : t('account.save')}
             </button>
-            <button type="button" onClick={() => void onSignOut()}>
-              {t('account.signOut')}
-            </button>
           </div>
         </form>
       ) : null}
+      <div className="account-actions">
+        <button type="button" disabled={accountBusy} onClick={() => void runAccountAction(signOut, t('account.signOutFailed'))}>{t('account.signOut')}</button>
+        {user.email && !confirmDeletion ? <button type="button" className="link-button" disabled={accountBusy} onClick={() => setConfirmDeletion(true)}>{t('account.deleteAccount')}</button> : null}
+      </div>
+      {confirmDeletion ? (
+        <form className="account-form" onSubmit={event => {
+          event.preventDefault()
+          const password = deletePassword
+          setDeletePassword('')
+          void runAccountAction(() => deleteAccount(user, password), t('account.deleteFailed'))
+        }}>
+          <h3>{t('account.deleteAccount')}</h3>
+          <p>{t('account.deleteWarning')}</p>
+          <label className="field">
+            <span>{t('account.currentPassword')}</span>
+            <input type="password" autoComplete="current-password" required value={deletePassword} disabled={accountBusy} onChange={event => setDeletePassword(event.target.value)} />
+          </label>
+          <div className="account-actions">
+            <button type="submit" disabled={accountBusy}>{t('account.confirmDelete')}</button>
+            <button type="button" className="link-button" disabled={accountBusy} onClick={() => { setConfirmDeletion(false); setDeletePassword(''); setAccountError('') }}>{t('a3.common.cancel')}</button>
+          </div>
+        </form>
+      ) : null}
+      {accountError ? <p className="banner banner-error" role="alert">{accountError}</p> : null}
     </section>
   )
 }

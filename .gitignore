@@ -54,6 +54,9 @@ supabase/.temp/
 /web/static-dist/
 # Completion builds and machine-local QA launchers
 /web/development-dist/
+/web/production-dist/
+/web/.production-build-*/
+/.wrangler/
 /web/static-dist/
 /scripts/run_browser.py
 /scripts/run_local_qa.py
