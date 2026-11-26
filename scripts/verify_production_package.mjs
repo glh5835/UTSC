@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
+import { isIP } from 'node:net'
 import { contentCheck, loadMarketCriteria } from './publish_bundle.mjs'
 import { productionBundleFiles, verifyD7Package } from './verify_d7_package.mjs'
 
@@ -43,8 +44,9 @@ const isComplete = status => ['verified_publishable', 'checked_no_valid_results'
 
 function isPublicSource(value) {
   const url = new URL(value)
-  return url.protocol === 'https:' &&
-    !/(^|\.)(?:example\.(?:com|net|org)|example|test|invalid|localhost)$/.test(url.hostname)
+  const host = url.hostname.replace(/\.$/, '')
+  return url.protocol === 'https:' && !url.username && !url.password && host.includes('.') && !isIP(host) &&
+    !/(^|\.)(?:example\.(?:com|net|org)|example|test|invalid|localhost)$/.test(host)
 }
 
 function verifyCoverage(bundle, evidence) {
@@ -75,23 +77,29 @@ function verifyCoverage(bundle, evidence) {
   }
   const covered = new Set()
   const sourceIds = new Set()
+  let inspectedOpportunitySources = false
   for (const source of sources) {
     if (sourceIds.has(source.source_id)) throw new Error('Duplicate source in the production source index')
-    if (isComplete(source.status) && !isPublicSource(source.source_url)) throw new Error('A checked evidence source requires a public HTTPS URL')
+    if ((source.status === 'not_checked') !== (source.checked_at === null) ||
+        (source.checked_at && Date.parse(source.checked_at) > Date.parse(manifest.generated_at))) {
+      throw new Error('Release source check time does not match its status or build date')
+    }
     sourceIds.add(source.source_id)
+    const publicUrl = isPublicSource(source.source_url)
+    if (source.dataset === 'opportunities' && isComplete(source.status) && publicUrl) inspectedOpportunitySources = true
     if (source.status === 'verified_publishable') {
-      if (!source.checked_at || !source.usage_ref || !source.record_ids.length) throw new Error('A published source lacks license, time or records')
+      if (!source.record_ids.length) throw new Error('A verified source lacks the records it verified')
       for (const id of source.record_ids) {
         if (!records[source.dataset].has(id)) throw new Error('Source index references a missing record')
-        covered.add(`${source.dataset}/${id}`)
+        if (publicUrl && source.usage_ref) covered.add(`${source.dataset}/${id}`)
       }
-    } else if (source.record_ids.length || (source.status === 'checked_no_valid_results' && !source.checked_at)) {
+    } else if (source.record_ids.length) {
       throw new Error('An incomplete or empty source carries unverified publication evidence')
     }
   }
+  if (!inspectedOpportunitySources) throw new Error('Production source coverage is missing for opportunities')
   for (const [dataset, rows] of Object.entries(records)) {
-    if (![...rows].every(id => covered.has(`${dataset}/${id}`)) ||
-        !sources.some(source => source.dataset === dataset && isComplete(source.status))) {
+    if (![...rows].every(id => covered.has(`${dataset}/${id}`))) {
       throw new Error(`Production source coverage is missing for ${dataset}`)
     }
   }

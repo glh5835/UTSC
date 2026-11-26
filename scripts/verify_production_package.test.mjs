@@ -66,7 +66,7 @@ function withPackage(mutate, check) {
       generated_at: manifest.generated_at,
       datasets: {
         market_jobs: { source: 'jsearch', collected_from: date, collected_to: date },
-        opportunities: { source: 'official', collected_from: null, collected_to: null, records: [] },
+        opportunities: { source: 'instagram', collected_from: null, collected_to: null, records: [] },
         courses: { timestamp_field: 'verified_at', records: bundle.courses.map(({ course_id, verified_at }) => ({ course_id, verified_at })) },
         resources: { timestamp_field: 'verified_at', records: bundle.resources.map(({ resource_id, verified_at }) => ({ resource_id, verified_at })) },
         organizers: { timestamp_field: 'last_verified_at', records: [] },
@@ -104,7 +104,8 @@ const rejections = [
   ['synthetic mode', (_, evidence) => { evidence.data_mode = 'synthetic' }, /complete, real package/],
   ['reserved public URL', bundle => { bundle.resources[0].source_url = 'https://example.org' }, /public HTTPS URLs/],
   ['missing query', (_, evidence) => { evidence.market.queries.pop() }, /query counts do not reconcile/],
-  ['unchecked opportunity source', (_, evidence) => { evidence.sources.at(-1).status = 'not_checked' }, /coverage is missing for opportunities/],
+  ['unchecked opportunity source', (_, evidence) => { Object.assign(evidence.sources.at(-1), { status: 'not_checked', checked_at: null }) }, /coverage is missing for opportunities/],
+  ['verification after package generation', (_, evidence) => { evidence.sources[0].checked_at = '2026-10-29T00:00:00Z' }, /does not match its status or build date/],
   ['unsigned confirmation', (_, __, attestation) => { attestation.confirmations.sources_and_usage = false }, /attestation schema rejected/],
   ['different attested candidate digest', (_, __, attestation) => { attestation.candidate_sha256 = '0'.repeat(64) }, /does not bind/],
 ]

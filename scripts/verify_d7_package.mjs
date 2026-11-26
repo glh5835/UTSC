@@ -154,6 +154,7 @@ function verifyProvenance(bundle, provenance, formal) {
     new Set(bundle.opportunities.map(item => item.opportunity_id)), 'opportunities')
   const firstSeen = []
   const lastSeen = []
+  const sourceTypes = new Set()
   const entries = bundle.opportunities.map(item => {
     const record = byId.get(item.opportunity_id)
     const eligibility = record.eligibility
@@ -161,6 +162,12 @@ function verifyProvenance(bundle, provenance, formal) {
         eligibility.content_revision !== item.content_revision || item.review_status !== 'approved') {
       throw new Error(`D7 opportunity decision or revision mismatch: ${item.opportunity_id}`)
     }
+    const sourceType = record.source ?? 'instagram'
+    if (formal && sourceType !== 'instagram' &&
+        (sourceType !== 'official' || eligibility.decision !== 'human_approved')) {
+      throw new Error(`Official opportunity requires human review: ${item.opportunity_id}`)
+    }
+    sourceTypes.add(sourceType)
     instant(eligibility.evaluated_at)
     const posts = recordsById(record.source_post_ids, 'source_post_id', new Set(item.source_post_ids), item.opportunity_id)
     for (const post of posts.values()) {
@@ -175,6 +182,10 @@ function verifyProvenance(bundle, provenance, formal) {
   if (opportunities.collected_from !== (firstSeen.sort()[0] ?? null) ||
       opportunities.collected_to !== (lastSeen.sort().at(-1) ?? null)) {
     throw new Error('D7 opportunity provenance collection range mismatch')
+  }
+  if (formal && !synthetic) {
+    const source = sourceTypes.size > 1 ? 'mixed' : (sourceTypes.values().next().value ?? 'instagram')
+    if (opportunities.source !== source) throw new Error('D7 opportunity provenance summary does not match the individual records')
   }
   return { opportunityReviews: Object.fromEntries(entries), synthetic }
 }
