@@ -1,0 +1,106 @@
+[
+  {
+    "opportunity_id": "synthetic_exact_event",
+    "kind": "event",
+    "title": "Synthetic Exact-Time Workshop",
+    "organizer_id": "example_club",
+    "source_url": "https://www.instagram.com/p/UTSC_SYNTHETIC_synthetic_exact_event/",
+    "source_post_id": "synthetic_exact_event",
+    "source_post_ids": [
+      "synthetic_exact_event"
+    ],
+    "description": "Synthetic fixture event; not a real UTSC opportunity.",
+    "responsibilities": "Synthetic example responsibilities.",
+    "time_commitment": "Two hours",
+    "compensation_status": "not_stated",
+    "ccr_status": "not_stated",
+    "activity_type_ids": [
+      "workshop"
+    ],
+    "topic_ids": [
+      "data_ai"
+    ],
+    "skill_ids": [
+      "python"
+    ],
+    "beginner_level": "unknown",
+    "eligibility_note": null,
+    "format": "in_person",
+    "location": "Example location",
+    "start_at": "2027-03-14T16:00:00Z",
+    "end_at": "2027-03-14T18:00:00Z",
+    "deadline_at": null,
+    "timezone": "America/Toronto",
+    "date_precision": "datetime",
+    "start_date": "2027-03-14",
+    "end_date": "2027-03-14",
+    "deadline_date": null,
+    "start_precision": "datetime",
+    "end_precision": "datetime",
+    "deadline_precision": "unknown",
+    "start_date_text": "March 14",
+    "end_date_text": "March 14, 2 p.m. Toronto",
+    "deadline_date_text": null,
+    "verified_at": "2027-03-09T16:00:00Z",
+    "review_status": "approved",
+    "classification_reasons": [
+      "Example synthetic evidence for workshop label."
+    ],
+    "registration_url": null,
+    "source_updated_at": null,
+    "content_revision": 1,
+    "change_pending": false
+  },
+  {
+    "opportunity_id": "synthetic_date_only_event",
+    "kind": "event",
+    "title": "Synthetic Date-Only Workshop",
+    "organizer_id": "example_club",
+    "source_url": "https://www.instagram.com/p/UTSC_SYNTHETIC_synthetic_date_only_event/",
+    "source_post_id": "synthetic_date_only_event",
+    "source_post_ids": [
+      "synthetic_date_only_event"
+    ],
+    "description": "Synthetic fixture event; not a real UTSC opportunity.",
+    "responsibilities": "Synthetic example responsibilities.",
+    "time_commitment": "Two hours",
+    "compensation_status": "not_stated",
+    "ccr_status": "not_stated",
+    "activity_type_ids": [
+      "workshop"
+    ],
+    "topic_ids": [
+      "data_ai"
+    ],
+    "skill_ids": [
+      "python"
+    ],
+    "beginner_level": "unknown",
+    "eligibility_note": null,
+    "format": "in_person",
+    "location": "Example location",
+    "start_at": null,
+    "end_at": null,
+    "deadline_at": null,
+    "timezone": "America/Toronto",
+    "date_precision": "date",
+    "start_date": "2027-03-14",
+    "end_date": null,
+    "deadline_date": null,
+    "start_precision": "date",
+    "end_precision": "unknown",
+    "deadline_precision": "unknown",
+    "start_date_text": "March 14",
+    "end_date_text": null,
+    "deadline_date_text": null,
+    "verified_at": "2027-03-09T16:00:00Z",
+    "review_status": "approved",
+    "classification_reasons": [
+      "Example synthetic evidence for workshop label."
+    ],
+    "registration_url": null,
+    "source_updated_at": null,
+    "content_revision": 1,
+    "change_pending": false
+  }
+]

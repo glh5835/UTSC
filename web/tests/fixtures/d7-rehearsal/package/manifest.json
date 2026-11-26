@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.1.0",
+  "dataset_version": "1.1.1",
+  "generated_at": "2027-03-10T16:00:00Z",
+  "collected_from": "2026-10-19T08:00:00Z",
+  "collected_to": "2026-10-26T15:00:00Z",
+  "posting_from": "2026-09-21",
+  "posting_to": "2026-10-26",
+  "query_config_version": "1.0.0",
+  "run_status": "complete",
+  "sample_count": 3
+}

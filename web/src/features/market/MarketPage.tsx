@@ -6,7 +6,7 @@ import { useDataVersion } from '../../data/DataVersionContext'
 import { isFilterEmpty, type MarketFilter } from './criteria'
 import { computeMarketOverview } from './stats'
 import { parseFilter, serializeFilter } from './filterParams'
-import { DatasetPicker, MARKET_DATASETS } from './DatasetPicker'
+import { DatasetPicker, marketDatasets } from './DatasetPicker'
 import { DatasetPanel } from './DatasetPanel'
 import { FilterPanel } from './FilterPanel'
 import { RoleDistribution, SkillStatsPanels, StatsSummary, SubtypeLegend } from './StatsPanels'
@@ -29,8 +29,9 @@ export function MarketPage() {
   const { config } = useDataVersion()
   usePageTitle(t('nav.market'))
   const [searchParams, setSearchParams] = useSearchParams()
-  const [selectedId, setSelectedId] = useState(MARKET_DATASETS[0].id)
-  const dataset = MARKET_DATASETS.find((entry) => entry.id === selectedId) ?? MARKET_DATASETS[0]
+  const datasets = marketDatasets(config)
+  const [selectedId, setSelectedId] = useState(datasets[0].id)
+  const dataset = datasets.find((entry) => entry.id === selectedId) ?? datasets[0]
   const { phase, stale, reload } = useMarketBundle(dataset.path)
 
   const filter = useMemo(() => parseFilter(searchParams), [searchParams])
@@ -51,10 +52,12 @@ export function MarketPage() {
       <h1>{t('nav.market')}</h1>
       <p className="lead">{t('market.intro')}</p>
       <p className="note provenance">
-        {t('market.upstreamNote', { commit: config.contractCommit.slice(0, 7) })}
+        {t(config.mode === 'integration' ? 'market.integrationSchemaNote' : 'market.upstreamNote', {
+          commit: config.contractCommit.slice(0, 7),
+        })}
       </p>
 
-      <DatasetPicker selected={selectedId} onSelect={setSelectedId} />
+      <DatasetPicker datasets={datasets} selected={selectedId} onSelect={setSelectedId} />
       <DatasetStatePanels phase={phase} onRetry={reload} />
 
       {phase.phase === 'ok' && overview ? (
